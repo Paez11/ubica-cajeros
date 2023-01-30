@@ -2,5 +2,6 @@
     "lang" : "Idioma",
     "offices": "Lista de oficinas cercanas",
     "clientLocation": "Tu posicion actual",
-    "search": "Buscar"
+    "search": "Buscar",
+    "find": "Buscando Localización"
 }

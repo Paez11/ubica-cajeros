@@ -1,7 +1,31 @@
 
 .map-container {
-  width:500px;
-  height:500px;
-  //860
+  padding: 0;
+  width:100%;
+  height:100%;
+  position: relative;
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100%;
+  position: absolute;
+  z-index:9999;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  text-align: center;
+  color:white;
+  font-size: large;
+  padding:0px;
+  margin:auto;
+}
+
+.overlay {
   position: inherit;
+  top: 21px;
+  left: 30px;
+  z-index: 1000;
+  background-color: transparent;
 }

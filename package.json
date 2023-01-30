@@ -21,6 +21,7 @@
     "@asymmetrik/ngx-leaflet": "^15.0.1",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "bootstrap": "^5.3.0-alpha1",
     "leaflet": "^1.9.3",
     "leaflet-routing-machine": "^3.2.12",
     "rxjs": "~7.8.0",

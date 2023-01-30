@@ -1,2 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/leaflet/dist/leaflet.css';
+body{
+    margin:0px;
+}
+.leaflet-touch .leaflet-bar a {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(240, 248, 255, 0.653);
+}

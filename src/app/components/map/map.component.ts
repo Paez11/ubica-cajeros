@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Observable,Subscriber } from 'rxjs';
@@ -19,8 +19,24 @@ export class MapComponent implements OnInit{
   cordoba = new L.Marker([37.884531, -4.777390]).bindPopup('cordoba');
   cashiersMarkers = new L.LayerGroup([this.cordoba]);
   myPos:L.Marker;
-
+  markers:L.Marker[];
   popup = L.popup();
+  //carga y localizacion
+  @Output() ready: EventEmitter<any> = new EventEmitter();
+  _ready:boolean=false;
+
+  //detalles del cajero
+  @Output() detailsEmitter: EventEmitter<any> = new EventEmitter();
+
+  //icons
+  userIcon = L.icon({
+    iconUrl: './assets/icons/user.png',
+    iconSize:     [45, 45], // size of the icon
+  });
+  cashierIcon = L.icon({
+    iconUrl: './assets/icons/atm-machine.png',
+    iconSize:     [45, 45], // size of the icon
+  })
 
   constructor(){
   }
@@ -35,6 +51,12 @@ export class MapComponent implements OnInit{
     this.map.locate({setView: false, enableHighAccuracy:true})
     .once("locationfound" , async (e:L.LocationEvent)=>{
       this.currentLocation(e);
+      this._ready=true;
+      this.ready.emit({
+        event:"located",
+        pos:e.latlng
+      });
+
     })
     .once('locationerror',(e)=>{
       this.onLocationError(e);
@@ -43,6 +65,10 @@ export class MapComponent implements OnInit{
   this.map.on('click',(e)=>{
     this.onMapClick(e);
     //this.addPos(e);
+    this.ready.emit({
+      event:"relocated",
+      pos:e.latlng
+    });
   });    
 
       
@@ -50,7 +76,9 @@ export class MapComponent implements OnInit{
   }
 
   loadMap(){
-    this.map = L.map('map').fitWorld();
+    this.map = L.map('map', {
+      zoomControl: false
+    }).fitWorld();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -72,30 +100,51 @@ export class MapComponent implements OnInit{
       ]
       */
     }).addTo(this.map);
+
+    L.control.zoom({
+      position: 'bottomleft'
+    }).addTo(this.map);
   }
 
   currentLocation(e:L.LocationEvent|L.LeafletMouseEvent){
     this.removePos();
-    let circle = L.circle([e.latlng.lat,e.latlng.lng],{
+    L.circle([e.latlng.lat,e.latlng.lng],{
       color: 'blue',
       fillOpacity: 0.2,
-      radius: 500
+      radius: 500,
     }).addTo(this.map);
-    this.myPos= L.marker(e.latlng).addTo(this.map)
+    this.myPos= L.marker(e.latlng,{
+      icon: this.userIcon
+    }).addTo(this.map)
      .bindPopup('Your current location')
      .openPopup();
      this.map.setView(e.latlng,16);
   }
 
-  currentCashierLocation(circle:L.Circle){
-
+  public addMarkers(els:Array<any>){
+    // lat, lng, icon, descript
+    this.removeAllMarkers();
+    for(let el of els){
+      let m=L.marker(el.latlng,{
+        icon: this.cashierIcon
+      }).addTo(this.map)
+      .bindPopup(el.desc);  //personalizar el icon
+      this.markers.push(m);
+    }
+    this.map.setView(this.myPos.getLatLng(),16);
   }
-
-
+  public removeAllMarkers(){
+    for(let m of this.markers){
+      if(m){
+        m.removeFrom(this.map);
+      }
+    }
+    this.markers=[];
+  }
   addPos(e:L.LocationEvent|L.LeafletMouseEvent){
     this.removePos();
     this.myPos= L.marker(e.latlng).addTo(this.map)
-     .bindPopup("")
+     .bindPopup("") //personalizar icon
      this.map.setView(e.latlng,16);
   }
 
@@ -110,7 +159,7 @@ export class MapComponent implements OnInit{
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(this.map);
-}
+  }
 
   onLocationError(e:any) {
     alert(e.message);
