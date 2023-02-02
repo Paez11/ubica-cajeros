@@ -1,10 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Observable,Subscriber } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
-import { environment } from 'src/environments/environment';
+import { SlideService } from 'src/app/services/slide.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -13,20 +13,26 @@ L.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit{
+  
   client!: IClient;
   cashiers: ICashier[] = [];
+
+  //Marcas para el mapa
   map!: L.Map;
-  cordoba = new L.Marker([37.884531, -4.777390]).bindPopup('cordoba');
-  cashiersMarkers = new L.LayerGroup([this.cordoba]);
   myPos:L.Marker;
+  actualRadius: L.Circle;
   markers:L.Marker[];
   popup = L.popup();
+
   //carga y localizacion
   @Output() ready: EventEmitter<any> = new EventEmitter();
   _ready:boolean=false;
 
   //detalles del cajero
   @Output() detailsEmitter: EventEmitter<any> = new EventEmitter();
+
+  //radio de deteccion de cajeros
+  radius:number = 50;
 
   //icons
   userIcon = L.icon({
@@ -38,7 +44,8 @@ export class MapComponent implements OnInit{
     iconSize:     [45, 45], // size of the icon
   })
 
-  constructor(){
+  constructor(private slideService:SlideService){
+
   }
 
 
@@ -48,6 +55,7 @@ export class MapComponent implements OnInit{
       this.map.remove();
     }
     this.loadMap();
+
     this.map.locate({setView: false, enableHighAccuracy:true})
     .once("locationfound" , async (e:L.LocationEvent)=>{
       this.currentLocation(e);
@@ -57,22 +65,28 @@ export class MapComponent implements OnInit{
         pos:e.latlng
       });
 
-    })
-    .once('locationerror',(e)=>{
+    }).once('locationerror',(e)=>{
       this.onLocationError(e);
     });
 
-  this.map.on('click',(e)=>{
-    this.onMapClick(e);
-    //this.addPos(e);
-    this.ready.emit({
-      event:"relocated",
-      pos:e.latlng
+    this.map.on('click',(e)=>{
+      this.addPos(e);
+      this.ready.emit({
+        event:"relocated",
+        pos:e.latlng
+      });
     });
-  });    
-
-      
-   
+    
+    /*
+    this.map.on('update',()=>{
+      this.slideService.sliderTrigger.subscribe(e =>{
+        this.radius=e;
+      })
+    })
+    */
+    this.slideService.circleRadius$.subscribe(e =>{
+      this.radius=e;
+    })
   }
 
   loadMap(){
@@ -80,7 +94,7 @@ export class MapComponent implements OnInit{
       zoomControl: false
     }).fitWorld();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
+      maxZoom: 20,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
     
@@ -108,17 +122,34 @@ export class MapComponent implements OnInit{
 
   currentLocation(e:L.LocationEvent|L.LeafletMouseEvent){
     this.removePos();
-    L.circle([e.latlng.lat,e.latlng.lng],{
-      color: 'blue',
+    this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
+      color: '#005442',
       fillOpacity: 0.2,
-      radius: 500,
+      radius: this.radius,
     }).addTo(this.map);
     this.myPos= L.marker(e.latlng,{
       icon: this.userIcon
     }).addTo(this.map)
      .bindPopup('Your current location')
      .openPopup();
-     this.map.setView(e.latlng,16);
+     this.map.setView(e.latlng,18);
+  }
+
+  setCurrentLocation(){
+    this.removePos();
+    navigator.geolocation.getCurrentPosition(e =>{
+      this.map.setView([e.coords.latitude,e.coords.longitude],18);
+      this.actualRadius = L.circle([e.coords.latitude,e.coords.longitude],{
+        color: '#005442',
+        fillOpacity: 0.2,
+        radius: this.radius,
+      }).addTo(this.map);
+      this.myPos= L.marker([e.coords.latitude,e.coords.longitude],{
+        icon: this.userIcon
+      }).addTo(this.map)
+       .bindPopup('Your current location')
+       .openPopup();
+    })
   }
 
   public addMarkers(els:Array<any>){
@@ -141,16 +172,25 @@ export class MapComponent implements OnInit{
     }
     this.markers=[];
   }
-  addPos(e:L.LocationEvent|L.LeafletMouseEvent){
+  addPos(e){
     this.removePos();
-    this.myPos= L.marker(e.latlng).addTo(this.map)
-     .bindPopup("") //personalizar icon
-     this.map.setView(e.latlng,16);
+    this.myPos= L.marker(e.latlng,{
+      icon: this.userIcon,
+      draggable: true,
+      autoPan: true,
+    }).addTo(this.map)
+    this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
+      color: '#005442',
+      fillOpacity: 0.2,
+      radius: this.radius,
+    }).addTo(this.map);
+    this.map.setView(e.latlng,16);
   }
 
   removePos(){
     if(this.myPos){
       this.myPos.removeFrom(this.map);
+      this.actualRadius.remove();
     }
   }
 
@@ -165,6 +205,9 @@ export class MapComponent implements OnInit{
     alert(e.message);
   }
 
-
+  updateRadius(radius:number){
+    console.log("actualizando")
+    this.actualRadius.setRadius(radius);
+  }
   
 }

@@ -11,6 +11,11 @@ import { ContainerComponent } from './components/container/container.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatSliderModule} from '@angular/material/slider';
+import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
+import { FormsModule } from '@angular/forms';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -22,12 +27,14 @@ export function createTranslateLoader(http: HttpClient) {
     MapComponent,
     SearchbarComponent,
     DetailsComponent,
-    ContainerComponent
+    ContainerComponent,
+    RadioSliderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LeafletModule,
+    FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -35,7 +42,9 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
     }
-    })
+    }),
+    BrowserAnimationsModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

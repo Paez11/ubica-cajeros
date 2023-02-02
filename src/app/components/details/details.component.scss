@@ -2,8 +2,18 @@
     background-color: transparent;
     border-radius: 60%;
     border-width: 0;
+    padding: 0px;
 }
 
 .icn{
     position: relative;
+}
+
+.divisor{
+    background: #005442;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 1px;
+    border-radius: 70%;
+    opacity: 0.9;
 }

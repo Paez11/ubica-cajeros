@@ -21,3 +21,28 @@
   padding:0px;
   margin:auto;
 }
+
+.locationbtn{
+  border: 2px solid rgba(0,0,0,0.2);
+  box-shadow: rgb(190, 190, 190) 1px 1px 3px;
+  background-color: rgba(240, 248, 255, 0.653);
+  font-size: 22px;
+  padding: 0;
+  width: 33.5px;
+  height: 33.5px;
+  line-height: 30px;
+  font: bold 18px 'Lucida Console', Monaco, monospace;
+  text-indent: 1px;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 1000;
+  top: 560px;
+  margin-left: 3%;
+  -webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}::after, ::before {
+  box-sizing: border-box;
+}
+
+.locationbtn:active{
+  border: 2px solid rgba(0,0,0,0.2);
+}
