@@ -1,0 +1,11 @@
+.sliderContainer{
+    border: 2px solid rgba(0,0,0,0.2);
+    box-shadow: rgb(190, 190, 190) 1px 1px 3px;
+    background-color: rgba(240, 248, 255, 0.653);
+    padding: -10px;
+}
+
+mat-slider {
+    width: 100px;
+    color: #005442;
+}

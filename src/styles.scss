@@ -1,5 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
 @import '../node_modules/leaflet/dist/leaflet.css';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+
 body{
     margin:0px;
 }
@@ -9,3 +19,7 @@ body{
     line-height: 30px;
     background-color: rgba(240, 248, 255, 0.653);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
