@@ -17,10 +17,14 @@ export class MapComponent implements OnInit{
   
   client!: IClient;
   cashiers: ICashier[] = [];
-  mockCashiers:L.markers= [
-    [37.687149, -4.733906],
-    [37.690776, -4.736738],
-    [37.69032, -4.736127]
+  mockCashiers:L.Marker = [
+    {lat:37.687149, lng:-4.733906},
+    {lat:37.690776, lng:-4.736738},
+    {lat:37.69032, lng:-4.736127},
+    {lat:37.912357, lng:-4.800441},
+    {lat:37.912835, lng:-4.800317},
+    {lat:37.912585, lng:-4.799883},
+    {lat:37.911933, lng:-4.800172}
   ];
 
   //Marcas para el mapa
@@ -77,7 +81,8 @@ export class MapComponent implements OnInit{
         event:"located",
         pos:e.latlng
       });
-      this.addMarkers(this.cashiers);
+      this.addMarkers2(this.mockCashiers);
+
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
     });
@@ -108,7 +113,7 @@ export class MapComponent implements OnInit{
       zoomControl: false
     }).fitWorld();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 20,
+      maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
     
@@ -167,7 +172,7 @@ export class MapComponent implements OnInit{
   }
 
   addMarkers(els:Array<any>){
-    this.removeAllMarkers();
+    //this.removeAllMarkers();
     for(let el of els){
       let m=L.marker(el.latlng,{
         icon: this.cashierIcon
@@ -175,6 +180,16 @@ export class MapComponent implements OnInit{
       .bindPopup("cashier");
       this.markers.push(m);
     }
+  }
+
+  addMarkers2(markers: Array<{lat:number,lng:number}>){
+    markers.forEach(marker => {
+      if(this.isMarkeInsideRadius(marker,this.actualRadius)){
+        let m = L.marker([marker.lat, marker.lng],{
+          icon: this.cashierIcon
+        }).addTo(this.map).bindPopup("cashier");
+      }
+    });
   }
 
   removeAllMarkers(){
@@ -222,6 +237,11 @@ export class MapComponent implements OnInit{
   updateRadius(radius:number){
     console.log("actualizando")
     this.actualRadius.setRadius(radius);
+  }
+
+  isMarkeInsideRadius(marker: {lat: number, lng: number}, circle: L.Circle) {
+    let insideMark = L.latLng(marker.lat, marker.lng);
+    return circle.getBounds().contains(insideMark);
   }
   
 }
