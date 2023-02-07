@@ -11,17 +11,17 @@
   }
 
 .overlayDetails {
-    position: relative;
     z-index: 1000;
-    top: 175px;
-    /*align-self: center;*/
+    align-self: center;
     justify-self: end;
+    position: absolute;
+    top: 570px;
 }
 
 .overlaySlider {
-    position: relative;
+    position: absolute;
     z-index: 1000;
-    top: 414px;
+    bottom: 110px;
     justify-self: start;
     margin-left: 10px;
     margin-bottom: 10px;
@@ -29,18 +29,18 @@
 
 @media only screen and (min-width: 1240px){
     .overlayDetails {
-        top: 365px;
+        top: 570px;
     }
 }
 
 @media only screen and (min-width: 1440px){
     .overlayDetails {
-        top: 398px;
+        top: 570px;
     }
 }
 
-@media only screen and (min-width: 2550px){
+@media only screen and (min-width: 2540px){
     .overlayDetails {
-        top: 875px;
+        top: 675px;
     }
 }
