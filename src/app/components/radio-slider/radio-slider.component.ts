@@ -17,12 +17,12 @@ export class RadioSliderComponent {
 
   constructor(private slideService:SlideService){}
 
-  formatLabel(value: number): string {
+  formatLabel(value: number){
     if (value >= 1000) {
       return Math.round(value / 1000) + 'km';
     }
     this.radius=value;
-    return `${value}`;
+    return value;
   }
   onRadiusChange() {
     this.slideService.updateRadius(this.radius);

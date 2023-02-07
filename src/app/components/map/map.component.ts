@@ -4,6 +4,7 @@ import 'leaflet-routing-machine';
 import { Observable,Subscriber } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
+import { MapService } from 'src/app/services/map.service';
 import { SlideService } from 'src/app/services/slide.service';
 
 L.Icon.Default.imagePath = 'assets/';
@@ -16,6 +17,11 @@ export class MapComponent implements OnInit{
   
   client!: IClient;
   cashiers: ICashier[] = [];
+  mockCashiers:L.markers= [
+    [37.687149, -4.733906],
+    [37.690776, -4.736738],
+    [37.69032, -4.736127]
+  ];
 
   //Marcas para el mapa
   map!: L.Map;
@@ -44,8 +50,15 @@ export class MapComponent implements OnInit{
     iconSize:     [45, 45], // size of the icon
   })
 
-  constructor(private slideService:SlideService){
-
+  constructor(private slideService:SlideService, private cashierService:MapService){
+    /*
+    this.cashierService.getAll().subscribe(e =>{ 
+      this.cashiers=e
+    });
+    */
+    this.slideService.circleRadius$.subscribe(e =>{
+      this.radius=e;
+    });
   }
 
 
@@ -64,17 +77,20 @@ export class MapComponent implements OnInit{
         event:"located",
         pos:e.latlng
       });
-
+      this.addMarkers(this.cashiers);
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
     });
 
     this.map.on('click',(e)=>{
+      this.onMapClick(e);
+      /*
       this.addPos(e);
       this.ready.emit({
         event:"relocated",
         pos:e.latlng
       });
+      */
     });
     
     /*
@@ -84,9 +100,7 @@ export class MapComponent implements OnInit{
       })
     })
     */
-    this.slideService.circleRadius$.subscribe(e =>{
-      this.radius=e;
-    })
+    
   }
 
   loadMap(){
@@ -152,19 +166,18 @@ export class MapComponent implements OnInit{
     })
   }
 
-  public addMarkers(els:Array<any>){
-    // lat, lng, icon, descript
+  addMarkers(els:Array<any>){
     this.removeAllMarkers();
     for(let el of els){
       let m=L.marker(el.latlng,{
         icon: this.cashierIcon
       }).addTo(this.map)
-      .bindPopup(el.desc);  //personalizar el icon
+      .bindPopup("cashier");
       this.markers.push(m);
     }
-    this.map.setView(this.myPos.getLatLng(),16);
   }
-  public removeAllMarkers(){
+
+  removeAllMarkers(){
     for(let m of this.markers){
       if(m){
         m.removeFrom(this.map);
@@ -172,6 +185,7 @@ export class MapComponent implements OnInit{
     }
     this.markers=[];
   }
+
   addPos(e){
     this.removePos();
     this.myPos= L.marker(e.latlng,{
