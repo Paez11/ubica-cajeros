@@ -1,3 +1,9 @@
 export const environment = {
-    production: false
+    production: false,
+    api:{
+        url:'http://172.16.16.103:8080',
+        endpoint:{
+            cashiersbyradius:'/api/cashiers/distance'
+        }
+    }
 };

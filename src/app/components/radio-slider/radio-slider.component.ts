@@ -11,20 +11,18 @@ export class RadioSliderComponent {
 
   color: ThemePalette
   disabled: boolean
-  radius: number;
+  public radius: number=50;
 
   @Output() updateRadius = new EventEmitter<number>();
 
   constructor(private slideService:SlideService){}
 
-  formatLabel(value: number){
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'km';
-    }
-    this.radius=value;
-    return value;
-  }
-  onRadiusChange() {
+ 
+  onRadiusChange(event: any) {
+    this.radius=event.value;
     this.slideService.updateRadius(this.radius);
+  }
+  onRadiusChangeTerminated() {
+    this.slideService.updateRadiusTerminated(this.radius);
   }
 }

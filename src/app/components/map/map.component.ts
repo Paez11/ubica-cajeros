@@ -4,7 +4,7 @@ import 'leaflet-routing-machine';
 import { Observable,Subscriber } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
-import { MapService } from 'src/app/services/map.service';
+import { CashierService } from 'src/app/services/cashier.service';
 import { SlideService } from 'src/app/services/slide.service';
 
 L.Icon.Default.imagePath = 'assets/';
@@ -24,14 +24,17 @@ export class MapComponent implements OnInit{
     {lat:37.912357, lng:-4.800441},
     {lat:37.912835, lng:-4.800317},
     {lat:37.912585, lng:-4.799883},
-    {lat:37.911933, lng:-4.800172}
+    {lat:37.911933, lng:-4.800172},
+    {lat:37.66643, lng:-4.724818},
+    {lat:37.666714, lng:-4.723296},
+    {lat:37.667389, lng:-4.724084}
   ];
 
   //Marcas para el mapa
   map!: L.Map;
   myPos:L.Marker;
   actualRadius: L.Circle;
-  markers:L.Marker[];
+  markers:L.Marker = this.mockCashiers;
   popup = L.popup();
 
   //carga y localizacion
@@ -51,17 +54,33 @@ export class MapComponent implements OnInit{
   });
   cashierIcon = L.icon({
     iconUrl: './assets/icons/atm-machine.png',
-    iconSize:     [45, 45], // size of the icon
+    iconSize:     [35, 35], // size of the icon
   })
 
-  constructor(private slideService:SlideService, private cashierService:MapService){
+  constructor(private slideService:SlideService, private cashierService:CashierService){
     /*
     this.cashierService.getAll().subscribe(e =>{ 
       this.cashiers=e
     });
     */
-    this.slideService.circleRadius$.subscribe(e =>{
-      this.radius=e;
+   console.log("VAMOS ALLÁ")
+      try{   this.cashierService.GetCachiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
+        console.log(e)
+      })
+      }catch(error){
+        console.error(error);
+      }
+
+
+    this.slideService.circleRadius.subscribe(e =>{
+      this.radius=e.radius;
+      this.updateRadius(this.radius)
+      console.log(this.radius)
+      if(e.request){
+        //llamo al servicio de localización y pintado de cajeros
+        this.addMarkers2(this.markers);
+      }
+      //hacer algo con request
     });
   }
 
@@ -81,21 +100,19 @@ export class MapComponent implements OnInit{
         event:"located",
         pos:e.latlng
       });
-      this.addMarkers2(this.mockCashiers);
-
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
     });
 
     this.map.on('click',(e)=>{
-      this.onMapClick(e);
-      /*
+      //this.onMapClick(e);
+
       this.addPos(e);
       this.ready.emit({
         event:"relocated",
         pos:e.latlng
       });
-      */
+      
     });
     
     /*
@@ -183,22 +200,20 @@ export class MapComponent implements OnInit{
   }
 
   addMarkers2(markers: Array<{lat:number,lng:number}>){
+    this.removeAllMarkers();
     markers.forEach(marker => {
       if(this.isMarkeInsideRadius(marker,this.actualRadius)){
         let m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
-        }).addTo(this.map).bindPopup("cashier");
+        }).addTo(this.map).bindPopup('<app-modal></app-modal>');
       }
     });
   }
 
   removeAllMarkers(){
-    for(let m of this.markers){
-      if(m){
-        m.removeFrom(this.map);
-      }
-    }
-    this.markers=[];
+    this.markers.forEach(marker =>{
+      this.map.remove(marker);
+    })
   }
 
   addPos(e){
@@ -208,6 +223,7 @@ export class MapComponent implements OnInit{
       draggable: true,
       autoPan: true,
     }).addTo(this.map)
+
     this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
       color: '#005442',
       fillOpacity: 0.2,
@@ -215,7 +231,7 @@ export class MapComponent implements OnInit{
     }).addTo(this.map);
     this.map.setView(e.latlng,16);
   }
-
+  
   removePos(){
     if(this.myPos){
       this.myPos.removeFrom(this.map);
@@ -235,7 +251,7 @@ export class MapComponent implements OnInit{
   }
 
   updateRadius(radius:number){
-    console.log("actualizando")
+    console.log("actualizando-->"+radius)
     this.actualRadius.setRadius(radius);
   }
 

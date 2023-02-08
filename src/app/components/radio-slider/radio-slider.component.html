@@ -2,14 +2,14 @@
     <mat-slider 
         color="primary" 
         vertical="true" 
-        min="100" 
+        min="50" 
         max="1000" 
         tickInterval="1"
         step="1"
         aria-label="units"
-        discrete [displayWith]="formatLabel" 
         [(ngModel)]="radius" 
-        (input)="onRadiusChange()">
+        (input)="onRadiusChange($event)"
+        (change)="onRadiusChangeTerminated()">
             <input matSliderThumb>
     </mat-slider>
 </div>
