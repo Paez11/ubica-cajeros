@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-routing-machine';
-import { Observable,Subscriber } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
@@ -58,19 +56,21 @@ export class MapComponent implements OnInit{
   })
 
   constructor(private slideService:SlideService, private cashierService:CashierService){
+    console.log("HOLA")
     /*
     this.cashierService.getAll().subscribe(e =>{ 
       this.cashiers=e
     });
     */
-   console.log("VAMOS ALLÁ")
-      try{   this.cashierService.GetCachiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
-        console.log(e)
-      })
-      }catch(error){
-        console.error(error);
-      }
-
+   /*
+    console.log("VAMOS ALLÁ")
+    try{   this.cashierService.GetCachiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
+      console.log(e)
+    })
+    }catch(error){
+      console.error(error);
+    }
+    */
 
     this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
@@ -115,14 +115,6 @@ export class MapComponent implements OnInit{
       
     });
     
-    /*
-    this.map.on('update',()=>{
-      this.slideService.sliderTrigger.subscribe(e =>{
-        this.radius=e;
-      })
-    })
-    */
-    
   }
 
   loadMap(){
@@ -132,23 +124,6 @@ export class MapComponent implements OnInit{
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
-    
-    L.Routing.control({
-        router: L.Routing.osrmv1({
-          serviceUrl: `http://router.project-osrm.org/route/v1/`
-      }),
-      showAlternatives: true,
-      //lineOptions: {styles: [{color: 'blue', weight: 7}]},
-      fitSelectedRoutes: false,
-      show: false,
-      routeWhileDragging: true,
-      /*
-      waypoints: [
-        this.currentLocation(),
-        this.onMapClick()
-      ]
-      */
     }).addTo(this.map);
 
     L.control.zoom({
@@ -200,12 +175,13 @@ export class MapComponent implements OnInit{
   }
 
   addMarkers2(markers: Array<{lat:number,lng:number}>){
-    this.removeAllMarkers();
     markers.forEach(marker => {
       if(this.isMarkeInsideRadius(marker,this.actualRadius)){
         let m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
         }).addTo(this.map).bindPopup('<app-modal></app-modal>');
+      }else{
+        //this.removeAllMarkers();
       }
     });
   }

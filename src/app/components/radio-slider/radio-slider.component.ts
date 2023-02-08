@@ -11,7 +11,7 @@ export class RadioSliderComponent {
 
   color: ThemePalette
   disabled: boolean
-  public radius: number=50;
+  public radius: number=100;
 
   @Output() updateRadius = new EventEmitter<number>();
 
