@@ -23,6 +23,7 @@ export class MapComponent implements OnInit{
     {lat:37.912835, lng:-4.800317},
     {lat:37.912585, lng:-4.799883},
     {lat:37.911933, lng:-4.800172},
+    {lat:37.9114, lng:-4.800328},
     {lat:37.66643, lng:-4.724818},
     {lat:37.666714, lng:-4.723296},
     {lat:37.667389, lng:-4.724084}
@@ -33,6 +34,7 @@ export class MapComponent implements OnInit{
   myPos:L.Marker;
   actualRadius: L.Circle;
   markers:L.Marker = this.mockCashiers;
+  markerObjects = [];
   popup = L.popup();
 
   //carga y localizacion
@@ -43,7 +45,7 @@ export class MapComponent implements OnInit{
   @Output() detailsEmitter: EventEmitter<any> = new EventEmitter();
 
   //radio de deteccion de cajeros
-  radius:number = 50;
+  radius:number = 100;
 
   //icons
   userIcon = L.icon({
@@ -56,12 +58,6 @@ export class MapComponent implements OnInit{
   })
 
   constructor(private slideService:SlideService, private cashierService:CashierService){
-    console.log("HOLA")
-    /*
-    this.cashierService.getAll().subscribe(e =>{ 
-      this.cashiers=e
-    });
-    */
    /*
     console.log("VAMOS ALLÁ")
     try{   this.cashierService.GetCachiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
@@ -71,14 +67,13 @@ export class MapComponent implements OnInit{
       console.error(error);
     }
     */
-
     this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
-      this.updateRadius(this.radius)
-      console.log(this.radius)
+      this.updateRadius(this.radius);
       if(e.request){
         //llamo al servicio de localización y pintado de cajeros
         this.addMarkers2(this.markers);
+        
       }
       //hacer algo con request
     });
@@ -106,7 +101,7 @@ export class MapComponent implements OnInit{
 
     this.map.on('click',(e)=>{
       //this.onMapClick(e);
-
+      
       this.addPos(e);
       this.ready.emit({
         event:"relocated",
@@ -144,12 +139,13 @@ export class MapComponent implements OnInit{
      .bindPopup('Your current location')
      .openPopup();
      this.map.setView(e.latlng,18);
+     this.addMarkers2(this.markers);
   }
 
   setCurrentLocation(){
     this.removePos();
     navigator.geolocation.getCurrentPosition(e =>{
-      this.map.setView([e.coords.latitude,e.coords.longitude],18);
+      this.map.setView([e.coords.latitude,e.coords.longitude]);
       this.actualRadius = L.circle([e.coords.latitude,e.coords.longitude],{
         color: '#005442',
         fillOpacity: 0.2,
@@ -160,7 +156,15 @@ export class MapComponent implements OnInit{
       }).addTo(this.map)
        .bindPopup('Your current location')
        .openPopup();
-    })
+    });
+
+    /*Cannot read properties of null (reading 'layerPointToLatLng')
+    
+    this.updateRadius(this.radius);
+    this.map.fitBounds(this.actualRadius.getBounds());
+    this.removeAllMarkers();
+    this.addMarkers2(this.markers);
+    */
   }
 
   addMarkers(els:Array<any>){
@@ -175,21 +179,22 @@ export class MapComponent implements OnInit{
   }
 
   addMarkers2(markers: Array<{lat:number,lng:number}>){
+    let m;
     markers.forEach(marker => {
       if(this.isMarkeInsideRadius(marker,this.actualRadius)){
-        let m = L.marker([marker.lat, marker.lng],{
+        m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
         }).addTo(this.map).bindPopup('<app-modal></app-modal>');
-      }else{
-        //this.removeAllMarkers();
+        this.markerObjects.push(m);
       }
     });
   }
 
   removeAllMarkers(){
-    this.markers.forEach(marker =>{
-      this.map.remove(marker);
-    })
+    this.markerObjects.forEach(marker =>{
+      this.map.removeLayer(marker);
+    });
+    this.markerObjects = [];
   }
 
   addPos(e){
@@ -205,7 +210,11 @@ export class MapComponent implements OnInit{
       fillOpacity: 0.2,
       radius: this.radius,
     }).addTo(this.map);
-    this.map.setView(e.latlng,16);
+    this.map.setView(e.latlng);
+    this.updateRadius(this.radius);
+    this.map.fitBounds(this.actualRadius.getBounds());
+    this.removeAllMarkers();
+    this.addMarkers2(this.markers);
   }
   
   removePos(){
@@ -227,8 +236,9 @@ export class MapComponent implements OnInit{
   }
 
   updateRadius(radius:number){
-    console.log("actualizando-->"+radius)
+    this.removeAllMarkers();
     this.actualRadius.setRadius(radius);
+    this.map.fitBounds(this.actualRadius.getBounds());
   }
 
   isMarkeInsideRadius(marker: {lat: number, lng: number}, circle: L.Circle) {
