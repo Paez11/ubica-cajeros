@@ -64,7 +64,7 @@ export class MapComponent implements OnInit{
     });
     */
    console.log("VAMOS ALLÁ")
-      try{   this.cashierService.GetCachiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
+      try{   this.cashierService.getCashiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
         console.log(e)
       })
       }catch(error){
