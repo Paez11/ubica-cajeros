@@ -8,3 +8,32 @@
     <img src="./assets/icons/crosshair.png" width="15" height="15" alt="" title="" class="icn">
 </button>
 <div id="map" class="map-container"></div>
+<!-- Modal -->
+<button id="launchModal" type="button" class="btn btn-primary" style="display:none" data-bs-toggle="modal" data-bs-target="#myModal">
+    Hidden
+</button>
+<div class="modal modal-centered fade myModal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{"operation" | translate}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src=""  alt="Image not found" onerror="this.onerror=null;this.src='image-not-found.png';">
+                <hr>
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                    <span class="input-group-text">€</span>
+                    <span class="input-group-text">0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="getQR()" data-bs-dismiss="modal">{{'deposit' | translate}}</button>
+                <button type="button" class="btn btn-primary" (click)="getQR()" data-bs-dismiss="modal">{{'draw' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--QR-->
+<img [src]="qrUrl" *ngIf="showQR" alt="QR" class="QR" width="300" height="300">

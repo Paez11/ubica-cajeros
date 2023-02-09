@@ -3,5 +3,8 @@
     "offices": "list of close offices",
     "clientLocation": "Your current location",
     "search": "Search",
-    "find": "Searching for location"
+    "find": "Searching for location",
+    "deposit": "deposit",
+    "draw": "draw",
+    "operation": "operation"
 }

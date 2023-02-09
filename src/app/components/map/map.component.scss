@@ -46,3 +46,27 @@
 .locationbtn:active{
   border: 2px solid rgba(0,0,0,0.2);
 }
+
+.myModal{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.btn-primary{
+  background-color: #005442;
+  border-color: #005442;
+}
+.modal-footer{
+  justify-content: center;
+}
+
+.QR{
+  z-index: 10001 !important;
+  position: absolute;
+  top: 180px;
+  left: 450px;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  text-align: center;
+}

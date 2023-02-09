@@ -3,5 +3,8 @@
     "offices": "Lista de oficinas cercanas",
     "clientLocation": "Tu posicion actual",
     "search": "Buscar",
-    "find": "Buscando Localización"
+    "find": "Buscando Localización",
+    "deposit": "depositar",
+    "draw": "extraer",
+    "operation": "operación"
 }
