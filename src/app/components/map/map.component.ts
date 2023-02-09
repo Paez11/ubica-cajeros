@@ -57,24 +57,39 @@ export class MapComponent implements OnInit{
     iconSize:     [35, 35], // size of the icon
   })
 
+  //modal
+  isModalOpen:boolean = false;
+
+  //QR
+  qrUrl = './assets/icons/codigo-qr.png';
+  showQR = false;
+
   constructor(private slideService:SlideService, private cashierService:CashierService){
+   
+    /*
    console.log("VAMOS ALLÁ")
-      try{   this.cashierService.getCashiersByRadius(1,37.666,-4.7241,500).subscribe(e=>{
-        console.log(e)
+    try{   
+      this.cashierService.getCashiersByRadius(1,37.6664,-4.7241,1000).subscribe(e=>{
+      console.log(e)
+      /*
+      this.cashiers.push(e);
+      console.log("mis cajeros -->"+this.cashiers)
+      this.cashiers.forEach(cashier =>{
+        this.markers={lat:cashier.latitude,lng:cashier.longitude};
       })
-      }catch(error){
-        console.error(error);
-      }
+      
+      })
+    }catch(error){
+      console.error(error);
+    }
+    */
 
     this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
       this.updateRadius(this.radius);
       if(e.request){
-        //llamo al servicio de localización y pintado de cajeros
         this.addMarkers2(this.markers);
-        
       }
-      //hacer algo con request
     });
   }
 
@@ -89,6 +104,7 @@ export class MapComponent implements OnInit{
     this.map.locate({setView: false, enableHighAccuracy:true})
     .once("locationfound" , async (e:L.LocationEvent)=>{
       this.currentLocation(e);
+      console.log(this.myPos)
       this._ready=true;
       this.ready.emit({
         event:"located",
@@ -100,13 +116,12 @@ export class MapComponent implements OnInit{
 
     this.map.on('click',(e)=>{
       //this.onMapClick(e);
-      
-      this.addPos(e);
-      this.ready.emit({
-        event:"relocated",
-        pos:e.latlng
-      });
-      
+        this.markOnClose();
+        this.addPos(e);
+        this.ready.emit({
+          event:"relocated",
+          pos:e.latlng
+        });
     });
     
   }
@@ -137,6 +152,8 @@ export class MapComponent implements OnInit{
     }).addTo(this.map)
      .bindPopup('Your current location')
      .openPopup();
+     //this.client.lat=e.latLng.lat;
+     //this.client.lng=e.latLng.lng;
      this.map.setView(e.latlng,18);
      this.addMarkers2(this.markers);
   }
@@ -183,7 +200,7 @@ export class MapComponent implements OnInit{
       if(this.isMarkeInsideRadius(marker,this.actualRadius)){
         m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
-        }).addTo(this.map).bindPopup('<app-modal></app-modal>');
+        }).addTo(this.map).on('click', () => this.markOnClick());
         this.markerObjects.push(m);
       }
     });
@@ -244,5 +261,19 @@ export class MapComponent implements OnInit{
     let insideMark = L.latLng(marker.lat, marker.lng);
     return circle.getBounds().contains(insideMark);
   }
+
+  markOnClick(){
+    document.getElementById("launchModal")?.click();
+    this.isModalOpen=true;
+  }
+
+  markOnClose(){
+    document.getElementById('myModal').style.display = 'none';
+    this.isModalOpen=false;
+  }
   
+  getQR(){
+    this.showQR = true;
+    console.log("QR ABIERTO")
+  }
 }
