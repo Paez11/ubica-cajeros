@@ -10,14 +10,14 @@ import { ICashier } from '../model/ICashier';
 })
 export class CashierService {
   
-  private url:string = "http://localhost:8080/api/cashiers";
+  private url:string = environment.api.url;
 
   constructor(private http:HttpClient) { 
       
   }
 
   getAll():Observable<ICashier[]>{
-    return this.http.get<ICashier[]>(this.url);
+    return this.http.get<ICashier[]>(this.url+environment.api.endpoint.cashiersAll);
   }
 
   get(id:number):Observable<ICashier>{

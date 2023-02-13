@@ -1,7 +1,7 @@
 export interface IClient{
-    id: BigInteger,
+    id: number,
     name: string,
     account: string,
-    lat: number,
-    lng: number
+    lat?: number,
+    lng?: number
 }
