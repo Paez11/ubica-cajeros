@@ -1,5 +1,5 @@
 export interface ICashier{
-    id: BigInt,
+    id: number,
     photo: string,
     adress: string,
     cp: string,
