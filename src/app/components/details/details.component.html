@@ -7,11 +7,27 @@
       <h5 class="offcanvas-title" id="offcanvasRightLabel">{{'offices' | translate}}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-      <hr class="divisor">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">An item</li>
-      </ul>
+    <div class="offcanvas-body" >
+      <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of this.cashiers">
+       
+        <ng-template [ngIf]="cashier.photo!=null" [ngIfElse]="notImage">
+          <img src="" class="card-img-top" alt="imagen de cajero">
+        </ng-template>
+        <ng-template #notImage>
+          <img src="../../../assets/img/noDisponible.jpg"  height="250" class="card-img-top" alt="imagen no disponible">
+        </ng-template>
+        
+        <div class="card-body">
+          <h4 class="card-title">{{cashier.address}}</h4>
+          <ng-template [ngIf]="cashier.available" [ngIfElse]="notAvailable">
+            <p class="card-text" class="text-success">Disponible</p>
+          </ng-template> 
+          <ng-template #notAvailable>
+            <p class="card-text" class="text-danger">No disponible</p>
+          </ng-template>
+          
+          <button type="button" href="#" class="bg-primary text-white border border-0">Transacciones</button>
+        </div>
+      </div>
     </div>
 </div>
