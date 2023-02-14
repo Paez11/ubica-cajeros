@@ -6,5 +6,9 @@
     "find": "Searching for location",
     "deposit": "deposit",
     "draw": "draw",
-    "operation": "operation"
+    "operation": "operation",
+    "cashierImage": "Cashier Image",
+    "cashierAvailable": "Available",
+    "cashierNotAvailable": "Not available",
+    "transactions": "Transactions"
 }

@@ -20,13 +20,13 @@
         <div class="card-body">
           <h4 class="card-title">{{cashier.address}}</h4>
           <ng-template [ngIf]="cashier.available" [ngIfElse]="notAvailable">
-            <p class="card-text" class="text-success">Disponible</p>
+            <p class="card-text" class="text-success">{{'cashierAvailable' | translate}}</p>
           </ng-template> 
           <ng-template #notAvailable>
-            <p class="card-text" class="text-danger">No disponible</p>
+            <p class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</p>
           </ng-template>
           
-          <button type="button" href="#" class="bg-primary text-white border border-0">Transacciones</button>
+          <button type="button" href="#" class="bg-primary text-white border border-0" (click)="openTransactions(cashier.id)">{{'transactions' | translate}}</button>
         </div>
       </div>
     </div>
