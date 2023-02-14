@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { DTO_CashierByRadius_Request } from '../model/DTO_CashierByRadius_Request';
 import { ICashier } from '../model/ICashier';
@@ -11,9 +11,20 @@ import { ICashier } from '../model/ICashier';
 export class CashierService {
   
   private url:string = environment.api.url;
+  private cashiers:any[] = [];
+  private cashiersSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this.cashiers);
 
   constructor(private http:HttpClient) { 
       
+  }
+
+  addItem(item: any):void{
+    this.cashiers.push(item);
+    this.cashiersSubject.next(this.cashiers);
+  }
+
+  getCashiers():BehaviorSubject<any[]>{
+    return this.cashiersSubject;
   }
 
   getAll():Observable<ICashier[]>{
