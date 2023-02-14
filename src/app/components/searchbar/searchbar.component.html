@@ -1,8 +1,15 @@
 <div class="container-fluid searchbar">
   <form class="d-flex" role="search">
-    <input class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}">
-    <button class="btn searchButton" type="submit">
+    <input class="searchInput" list="datalistOptions" type="search" aria-label="Search" placeholder="{{'search' | translate}}">
+    <button class="btn searchButton" type="submit" onclick="search()">
       <img src="./assets/icons/search.png" width="20px" height="20px" class="searchIcon">
     </button>
   </form>
+  <datalist id="datalistOptions">
+    <option value="San Francisco">
+    <option value="New York">
+    <option value="Seattle">
+    <option value="Los Angeles">
+    <option value="Chicago">
+  </datalist>
 </div>
