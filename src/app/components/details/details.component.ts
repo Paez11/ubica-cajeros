@@ -15,8 +15,6 @@ export class DetailsComponent implements OnInit{
     this.cashierS.getAll().subscribe(e =>{
       this.cashiers.push(...e)
     });
-    
-    console.log("Listado de cajeros"+this.cashiers)
   }
 
   ngOnInit() {
