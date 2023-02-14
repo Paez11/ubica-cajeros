@@ -99,7 +99,7 @@ export class MapComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
+    this.clientS.user=this.client;
     console.log(this.cashiers)
     if(this.map != undefined){
       this.map.off();
