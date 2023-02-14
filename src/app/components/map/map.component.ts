@@ -39,7 +39,7 @@ export class MapComponent implements OnInit{
   map!: L.Map;
   myPos:L.Marker;
   actualRadius: L.Circle;
-  markers:L.Marker;
+  markers:L.Marker = [];
   markerObjects = [];
   popup = L.popup();
 
@@ -93,12 +93,13 @@ export class MapComponent implements OnInit{
       this.radius=e.radius;
       this.updateRadius(this.radius);
       if(e.request){
-        this.addMarkers(this.markers);
+        this.setCashiers();
       }
     });
   }
 
   ngOnInit(): void {
+    
     console.log(this.cashiers)
     if(this.map != undefined){
       this.map.off();
@@ -121,22 +122,7 @@ export class MapComponent implements OnInit{
         lat:e.latlng.lat,
         lng:e.latlng.lng
       }
-      console.log(this.client)
-  
-      try{   
-        this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,this.radius).subscribe(e=>{
-          console.log(e)
-          console.log("mis cajeros -->"+this.cashiers)
-          this.cashiers.forEach(cashier =>{
-            this.markers={lat:cashier.latitude,lng:cashier.longitude};
-          })
-        })
-      }catch(error){
-        console.log(this.markers)
-        console.error(error);
-      }
-      console.log(this.markers)
-      this.addMarkers(this.markers);
+      this.setCashiers();
       
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
@@ -177,10 +163,8 @@ export class MapComponent implements OnInit{
     this.myPos= L.marker(e.latlng,{
       icon: this.userIcon
     }).addTo(this.map)
-     .bindPopup('<p>${"clientLocation" | translate}</p>')
-     .openPopup();
+     .bindPopup('<p>${"clientLocation" | translate}</p>');
      this.map.setView(e.latlng,18);
-     //this.addMarkers(this.markers);
   }
 
   setCurrentLocation(){
@@ -195,17 +179,30 @@ export class MapComponent implements OnInit{
       this.myPos= L.marker([e.coords.latitude,e.coords.longitude],{
         icon: this.userIcon
       }).addTo(this.map)
-       .bindPopup('<p>${"clientLocation" | translate}</p>')
-       .openPopup();
+       .bindPopup('<p>${"clientLocation" | translate}</p>');
     });
 
-    /*Cannot read properties of null (reading 'layerPointToLatLng')
-    
+    //Cannot read properties of null (reading 'layerPointToLatLng')
+    /*
     this.updateRadius(this.radius);
     this.map.fitBounds(this.actualRadius.getBounds());
-    this.removeAllMarkers();
-    this.addMarkers(this.markers);
     */
+  }
+
+  setCashiers(){
+    try{   
+      this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,this.radius).subscribe(cashier=>{
+        cashier.forEach(mark =>{
+          if((mark.lattitude && mark.longitude) != undefined){
+            this.markers.push({lat: mark.lattitude, lng:mark.longitude})
+          }
+        })
+      })
+    }catch(error){
+      console.error(error);
+    }
+    console.log(this.markers)
+    this.addMarkers(this.markers);
   }
 
   addMarkers(markers: Array<{lat:number,lng:number}>){
@@ -243,8 +240,7 @@ export class MapComponent implements OnInit{
     this.map.setView(e.latlng);
     this.updateRadius(this.radius);
     this.map.fitBounds(this.actualRadius.getBounds());
-    this.removeAllMarkers();
-    this.addMarkers(this.markers);
+    this.setCashiers();
   }
   
   removePos(){
