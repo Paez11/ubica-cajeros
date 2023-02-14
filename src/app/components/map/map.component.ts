@@ -4,6 +4,7 @@ import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
 import { SlideService } from 'src/app/services/slide.service';
+import { ClientService } from 'src/app/services/client.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -18,6 +19,7 @@ export class MapComponent implements OnInit{
     name: "mock",
     account: "bancaMarch"
   };
+
   cashiers: ICashier[] = [];
   mockCashiers:L.Marker = [
     {lat:37.687149, lng:-4.733906},
@@ -72,14 +74,17 @@ export class MapComponent implements OnInit{
   //regex
   @Input('regexInput')regexInput:string;
 
-  constructor(private slideService:SlideService, private cashierService:CashierService){
+  constructor(
+    private slideService:SlideService, 
+    private cashierService:CashierService,
+    private clientS:ClientService){
 
     /*
     this.cashierService.getCashiers().subscribe(e =>{
       this.cashiers.push(...e);
     });
     */
-   
+
     this.cashierService.getAll().subscribe(e =>{
       this.cashiers.push(...e);
     })
@@ -146,8 +151,6 @@ export class MapComponent implements OnInit{
           pos:e.latlng
         });
     });
-    
-
   }
 
   loadMap(){

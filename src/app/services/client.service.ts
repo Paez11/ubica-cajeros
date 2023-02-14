@@ -10,7 +10,13 @@ export class ClientService {
 
   private url:string = 'http://localhost:8080/api/client';
 
+  public user: IClient;
+
   constructor(private http:HttpClient) { }
+
+  getClient(): IClient {
+    return this.user;
+  }
 
   getAll():Observable<IClient[]>{
     return this.http.get<IClient[]>(this.url);
