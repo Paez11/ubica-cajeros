@@ -6,5 +6,9 @@
     "find": "Buscando Localización",
     "deposit": "depositar",
     "draw": "extraer",
-    "operation": "operación"
+    "operation": "operación",
+    "cashierImage": "Imagen de cajero",
+    "cashierAvailable": "Disponible",
+    "cashierNotAvailable": "No disponible",
+    "transactions": "Transacciones"
 }

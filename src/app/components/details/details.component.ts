@@ -12,14 +12,17 @@ export class DetailsComponent implements OnInit{
   public cashiers:ICashier[] = []
   
   constructor(private cashierS:CashierService) {
-    this.cashierS.getAll().subscribe(e =>{
+    this.cashierS.getCashiers().subscribe(e =>{
       this.cashiers.push(...e)
     });
-    
-    console.log("Listado de cajeros"+this.cashiers)
   }
 
   ngOnInit() {
     
+  }
+
+  openTransactions(cashierId:number) {
+    //Generar codigo
+    console.log("Abriendo pantalla de transacciones..."+cashierId)  
   }
 }
