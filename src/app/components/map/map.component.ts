@@ -73,8 +73,13 @@ export class MapComponent implements OnInit{
   @Input('regexInput')regexInput:string;
 
   constructor(private slideService:SlideService, private cashierService:CashierService){
-    console.log("entra");
 
+    /*
+    this.cashierService.getCashiers().subscribe(e =>{
+      this.cashiers.push(...e);
+    });
+    */
+   
     this.cashierService.getAll().subscribe(e =>{
       this.cashiers.push(...e);
     })
@@ -95,7 +100,6 @@ export class MapComponent implements OnInit{
       this.map.remove();
     }
     this.loadMap();
-    console.log("hola")
     this.map.locate({setView: false, enableHighAccuracy:true})
     .once("locationfound" , async (e:L.LocationEvent)=>{
       this.currentLocation(e);
@@ -105,7 +109,6 @@ export class MapComponent implements OnInit{
         pos:e.latlng
       });
       
-      console.log("este es el cliente (no coordenadas) --> "+this.client)
       this.client = {
         id:1,
         name:"mock",
@@ -124,9 +127,11 @@ export class MapComponent implements OnInit{
           })
         })
       }catch(error){
+        console.log(this.markers)
         console.error(error);
       }
-      //this.addMarkers(this.markers);
+      console.log(this.markers)
+      this.addMarkers(this.markers);
       
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
