@@ -110,13 +110,13 @@ export class MapComponent implements OnInit{
         id:1,
         name:"mock",
         account:"mock",
-        lat:e.lat,
-        lng:e.lng
+        lat:e.latlng.lat,
+        lng:e.latlng.lng
       }
       console.log(this.client)
   
       try{   
-        this.cashierService.getCashiersByRadius(this.client.id,e.lat,e.lng,1000).subscribe(e=>{
+        this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,this.radius).subscribe(e=>{
           console.log(e)
           console.log("mis cajeros -->"+this.cashiers)
           this.cashiers.forEach(cashier =>{
@@ -126,6 +126,7 @@ export class MapComponent implements OnInit{
       }catch(error){
         console.error(error);
       }
+      //this.addMarkers(this.markers);
       
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
@@ -170,8 +171,6 @@ export class MapComponent implements OnInit{
     }).addTo(this.map)
      .bindPopup('<p>${"clientLocation" | translate}</p>')
      .openPopup();
-     //this.client.lat=e.latLng.lat;
-     //this.client.lng=e.latLng.lng;
      this.map.setView(e.latlng,18);
      //this.addMarkers(this.markers);
   }
