@@ -16,6 +16,8 @@ import {MatSliderModule} from '@angular/material/slider';
 import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ModalTransactionComponent } from './components/modal-transaction/modal-transaction.component';
+import { ModalQRComponent } from './components/modal-qr/modal-qr.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +31,8 @@ export function createTranslateLoader(http: HttpClient) {
     DetailsComponent,
     ContainerComponent,
     RadioSliderComponent,
+    ModalTransactionComponent,
+    ModalQRComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,7 @@
             <p class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</p>
           </ng-template>
           
-          <button type="button" href="#" class="bg-primary text-white border border-0" (click)="openTransactions(cashier.id)">{{'transactions' | translate}}</button>
+          <button type="button" class="bg-primary text-white border border-0" (click)="openModal(cashier.id)">{{'transactions' | translate}}</button>
         </div>
       </div>
     </div>
