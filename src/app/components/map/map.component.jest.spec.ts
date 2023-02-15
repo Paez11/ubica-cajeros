@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MapComponent } from './map.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -8,9 +9,14 @@ describe('MapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot()
+      ],
+      declarations: [MapComponent],
+      providers: [TranslateService]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MapComponent);
     component = fixture.componentInstance;
@@ -19,5 +25,9 @@ describe('MapComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should removeAllMarkers', () => {
+    component.removeAllMarkers();
+    expect(component.markerObjects).toEqual([]);
   });
 });

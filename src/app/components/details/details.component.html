@@ -19,14 +19,14 @@
         
         <div class="card-body">
           <h4 class="card-title">{{cashier.address}}</h4>
+          <h5 class="card-text">{{cashier.locality}}</h5>
           <ng-template [ngIf]="cashier.available" [ngIfElse]="notAvailable">
-            <p class="card-text" class="text-success">{{'cashierAvailable' | translate}}</p>
+            <h5 class="card-text" class="text-success">{{'cashierAvailable' | translate}}</h5>
           </ng-template> 
           <ng-template #notAvailable>
-            <p class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</p>
+            <h5 class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</h5>
           </ng-template>
-          
-          <button type="button" href="#" class="bg-primary text-white border border-0" (click)="openTransactions(cashier.id)">{{'transactions' | translate}}</button>
+          <button type="button" class="bg-primary text-white border border-0" (click)="openModal(cashier.id)">{{'transactions' | translate}}</button>
         </div>
       </div>
     </div>

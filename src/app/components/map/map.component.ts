@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
-import { CashierService } from 'src/app/services/cashier.service';
-import { SlideService } from 'src/app/services/slide.service';
-import { ClientService } from 'src/app/services/client.service';
+import { CashierService } from '../../services/cashier.service';
+import { SlideService } from '../../services/slide.service';
+import { ClientService } from '../../services/client.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -66,10 +66,6 @@ export class MapComponent implements OnInit{
   //modal
   isModalOpen:boolean = false;
   cash:number;
-
-  //QR
-  qrUrl = './assets/icons/codigo-qr.png';
-  showQR = false;
 
   //regex
   @Input('regexInput')regexInput:string;
@@ -195,6 +191,7 @@ export class MapComponent implements OnInit{
         cashier.forEach(mark =>{
           if((mark.lattitude && mark.longitude) != undefined){
             this.markers.push({lat: mark.lattitude, lng:mark.longitude})
+            this.cashierService.addItem(this.markers);
           }
         })
       })
@@ -273,17 +270,12 @@ export class MapComponent implements OnInit{
   }
 
   markOnClick(){
-    document.getElementById("launchModal")?.click();
-    this.isModalOpen=true;
+    //document.getElementById("launchModal")?.click();
+    //this.isModalOpen=true;
   }
 
   markOnClose(){
-    document.getElementById('myModal').style.display = 'none';
-    this.isModalOpen=false;
-  }
-  
-  getQR(){
-    //this.showQR = true;
-    console.log("QR ABIERTO")
+    //document.getElementById('myModal').style.display = 'none';
+    //this.isModalOpen=false;
   }
 }

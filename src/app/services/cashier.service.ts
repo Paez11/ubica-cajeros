@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { DTO_CashierByRadius_Request } from '../model/DTO_CashierByRadius_Request';
 import { ICashier } from '../model/ICashier';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
