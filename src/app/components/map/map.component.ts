@@ -67,10 +67,6 @@ export class MapComponent implements OnInit{
   isModalOpen:boolean = false;
   cash:number;
 
-  //QR
-  qrUrl = './assets/icons/codigo-qr.png';
-  showQR = false;
-
   //regex
   @Input('regexInput')regexInput:string;
 
@@ -195,6 +191,7 @@ export class MapComponent implements OnInit{
         cashier.forEach(mark =>{
           if((mark.lattitude && mark.longitude) != undefined){
             this.markers.push({lat: mark.lattitude, lng:mark.longitude})
+            this.cashierService.addItem(this.markers);
           }
         })
       })
@@ -273,17 +270,12 @@ export class MapComponent implements OnInit{
   }
 
   markOnClick(){
-    document.getElementById("launchModal")?.click();
-    this.isModalOpen=true;
+    //document.getElementById("launchModal")?.click();
+    //this.isModalOpen=true;
   }
 
   markOnClose(){
-    document.getElementById('myModal').style.display = 'none';
-    this.isModalOpen=false;
-  }
-  
-  getQR(){
-    //this.showQR = true;
-    console.log("QR ABIERTO")
+    //document.getElementById('myModal').style.display = 'none';
+    //this.isModalOpen=false;
   }
 }

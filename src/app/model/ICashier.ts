@@ -3,7 +3,7 @@ export interface ICashier{
     photo: string,
     address: string,
     cp: string,
-    location: string,
+    locality: string,
     latitude: number,
     longitude: number,
     balance: number,

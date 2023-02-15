@@ -1,6 +1,6 @@
  import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { DTOTransaction } from '../model/DTOTransaction';
 
@@ -11,7 +11,19 @@ export class TransactionService {
 
   //private url:string = "http://localhost:8080/api/transactions";
 
+  private showModal = new Subject<boolean>();
+
+  showModal$ = this.showModal.asObservable();
+
   constructor(private http:HttpClient) { }
+
+  show() {
+    this.showModal.next(true);
+  }
+
+  hide() {
+    this.showModal.next(false);
+  }
 
   createTransaction(client, cashier, type, amount):Observable<any> {
     if(!client || !cashier || !type || !amount || amount<0) {
