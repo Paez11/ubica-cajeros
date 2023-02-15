@@ -1,0 +1,9 @@
+1: Uninstall all karma jasmine packages
+2: Remove test object from angular.json
+3: Delete karma.conf.js file and test.ts file
+4: npm i jest @types/jest jest-preset-angular
+5: Create setup.jest.ts file
+6: Update tsconfig.spec.json file
+7: Add jest configuration in package.json
+8: Add scripts in package.json to run JEST
+9: Rename every test with .jest.spect.ts
