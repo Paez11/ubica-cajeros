@@ -93,4 +93,14 @@ export class CashierService {
                headers: { 'Content-Type': 'application/json' }
             });
   }
+
+  getCashiersByAddress(street):Observable<any>{
+    if(street==null){
+      throw new Error("Error en datos");
+    };
+    const endpoint =environment.api.url+environment.api.endpoint.cashiersbycp;
+    return this.http.get(endpoint+"/"+street, {
+      headers: { 'Content-Type': 'application/json' }
+   });
+  }
 }

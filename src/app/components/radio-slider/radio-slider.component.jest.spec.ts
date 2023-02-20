@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RadioSliderComponent } from './radio-slider.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('RadioSliderComponent', () => {
   let component: RadioSliderComponent;
@@ -8,7 +9,12 @@ describe('RadioSliderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RadioSliderComponent ]
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot()
+      ],
+      declarations: [ RadioSliderComponent ],
+      providers: [TranslateService]
     })
     .compileComponents();
 
@@ -20,4 +26,14 @@ describe('RadioSliderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should onRadiusChange', () =>{
+    let value:any;
+    component.onRadiusChange(value);
+    expect(component.radius).toEqual(value.value);
+  });
+
+  it('should onRadiusChangeTerminated', () =>{
+    expect(component.onRadiusChangeTerminated()).toBeDefined();
+  })
 });
