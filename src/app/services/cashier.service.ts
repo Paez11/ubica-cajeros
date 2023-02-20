@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DTO_CashierByRadius_Request } from '../model/DTO_CashierByRadius_Request';
 import { ICashier } from '../model/ICashier';
 import { environment } from '../../environments/environment.development';
+import { ClientService } from './client.service';
+import { IClient } from '../model/IClient';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class CashierService {
   private url:string = environment.api.url;
   private cashiers:any[] = [];
   private cashiersSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this.cashiers);
-
+  
   constructor(private http:HttpClient) { 
       
   }

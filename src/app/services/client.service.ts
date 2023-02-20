@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IClient } from '../model/IClient';
 
 @Injectable({
@@ -11,8 +11,20 @@ export class ClientService {
   private url:string = 'http://localhost:8080/api/client';
 
   public user: IClient;
+  private userSubject: BehaviorSubject<IClient>;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { 
+    this.userSubject = new BehaviorSubject<IClient>(this.user);
+  }
+
+  public setUser(user: IClient) {
+    this.user = user;
+    this.userSubject.next(this.user);
+  }
+
+  public getUserObservable(): Observable<IClient> {
+    return this.userSubject.asObservable();
+  }
 
   getClient(): IClient {
     return this.user;

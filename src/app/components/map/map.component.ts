@@ -80,11 +80,12 @@ export class MapComponent implements OnInit{
       this.cashiers.push(...e);
     });
     */
-
+    /*
     this.cashierService.getAll().subscribe(e =>{
       this.cashiers.push(...e);
     })
-    
+    */
+
     this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
       this.updateRadius(this.radius);
@@ -116,9 +117,11 @@ export class MapComponent implements OnInit{
         name:"mock",
         account:"mock",
         lat:e.latlng.lat,
-        lng:e.latlng.lng
+        lng:e.latlng.lng,
+        distance:this.radius
       }
       this.setCashiers();
+      this.setClient();
       
     }).once('locationerror',(e)=>{
       this.onLocationError(e);
@@ -187,19 +190,28 @@ export class MapComponent implements OnInit{
 
   setCashiers(){
     try{   
+      this.markers=[];
       this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,this.radius).subscribe(cashier=>{
         cashier.forEach(mark =>{
+          //console.log(mark)
           if((mark.lattitude && mark.longitude) != undefined){
             this.markers.push({lat: mark.lattitude, lng:mark.longitude})
             this.cashierService.addItem(this.markers);
           }
         })
+        this.addMarkers(this.markers);
       })
     }catch(error){
       console.error(error);
     }
-    console.log(this.markers)
-    this.addMarkers(this.markers);
+   
+  }
+
+  setClient(){
+    this.clientS.user.id=this.client.id;
+    this.clientS.user.lat=this.client.lat;
+    this.clientS.user.lng=this.client.lng;
+    this.clientS.user.distance=this.radius;
   }
 
   addMarkers(markers: Array<{lat:number,lng:number}>){
@@ -227,17 +239,21 @@ export class MapComponent implements OnInit{
       icon: this.userIcon,
       draggable: true,
       autoPan: true,
-    }).addTo(this.map)
+    }).addTo(this.map);
 
     this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
       color: '#005442',
       fillOpacity: 0.2,
       radius: this.radius,
     }).addTo(this.map);
+
+    this.client.lat=e.latlng.lat;
+    this.client.lng=e.latlng.lng;
     this.map.setView(e.latlng);
     this.updateRadius(this.radius);
     this.map.fitBounds(this.actualRadius.getBounds());
     this.setCashiers();
+    this.setClient();
   }
   
   removePos(){
@@ -262,6 +278,7 @@ export class MapComponent implements OnInit{
     this.removeAllMarkers();
     this.actualRadius.setRadius(radius);
     this.map.fitBounds(this.actualRadius.getBounds());
+    this.setClient();
   }
 
   isMarkeInsideRadius(marker: {lat: number, lng: number}, circle: L.Circle) {

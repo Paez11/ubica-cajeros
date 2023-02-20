@@ -1,4 +1,4 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" (click)="ngOnInit()">
     <img src="./assets/icons/circle-arrow.png" width="21" height="36" alt="" title="" class="icn">
 </button>
 
@@ -7,6 +7,7 @@
       <h5 class="offcanvas-title" id="offcanvasRightLabel">{{'offices' | translate}}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+    <hr class="divisor">
     <div class="offcanvas-body" >
       <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of this.cashiers">
        
@@ -26,8 +27,10 @@
           <ng-template #notAvailable>
             <h5 class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</h5>
           </ng-template>
-          <button type="button" class="bg-primary text-white border border-0" (click)="openModal(cashier.id)">{{'transactions' | translate}}</button>
+          <button type="button" class="bg-primary text-white border border-0 transactionBtn" (click)="openModal(cashier.id)" data-bs-dismiss="offcanvas">{{'transactions' | translate}}</button>
         </div>
       </div>
     </div>
 </div>
+
+<app-modal-transaction></app-modal-transaction>

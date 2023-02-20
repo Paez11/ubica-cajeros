@@ -3,5 +3,6 @@ export interface IClient{
     name: string,
     account: string,
     lat?: number,
-    lng?: number
+    lng?: number,
+    distance?: number
 }

@@ -17,3 +17,17 @@
     border-radius: 70%;
     opacity: 0.9;
 }
+
+.transactionBtn{
+    background-color: #005442;
+    border-color: #005442;
+}
+
+.border-primary {
+    border-color: rgb(0,84,66,var(--bs-border-opacity))!important;
+}
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(0,84,66,var(--bs-bg-opacity))!important;
+}
