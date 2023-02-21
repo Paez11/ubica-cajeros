@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from '../../services/cashier.service';
 import { SlideService } from '../../services/slide.service';
 import { ClientService } from '../../services/client.service';
+import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -67,6 +68,7 @@ export class MapComponent implements OnInit{
   isModalOpen:boolean = false;
   cash:number;
 
+  @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
   //regex
   @Input('regexInput')regexInput:string;
 
@@ -129,7 +131,7 @@ export class MapComponent implements OnInit{
 
     this.map.on('click',(e)=>{
       //this.onMapClick(e);
-        this.markOnClose();
+        //this.markOnClose();
         this.addPos(e);
         this.ready.emit({
           event:"relocated",
@@ -195,7 +197,7 @@ export class MapComponent implements OnInit{
         cashier.forEach(mark =>{
           //console.log(mark)
           if((mark.lattitude && mark.longitude) != undefined){
-            this.markers.push({lat: mark.lattitude, lng:mark.longitude})
+            this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
             this.cashierService.addItem(this.markers);
           }
         })
@@ -214,13 +216,13 @@ export class MapComponent implements OnInit{
     this.clientS.user.distance=this.radius;
   }
 
-  addMarkers(markers: Array<{lat:number,lng:number}>){
+  addMarkers(markers: Array<{id:number,lat:number,lng:number}>){
     let m;
     markers.forEach(marker => {
       if(this.isMarkeInsideRadius(marker,this.actualRadius)){
         m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
-        }).addTo(this.map).on('click', () => this.markOnClick());
+        }).addTo(this.map).on('click', () => this.markOnClick(marker.id));
         this.markerObjects.push(m);
       }
     });
@@ -286,8 +288,8 @@ export class MapComponent implements OnInit{
     return circle.getBounds().contains(insideMark);
   }
 
-  markOnClick(){
-    document.getElementById("launchModal")?.click();
+  markOnClick(id:number){
+    this.modal.open(id);
     //this.isModalOpen=true;
   }
 

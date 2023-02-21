@@ -3,6 +3,7 @@ import { ICashier } from 'src/app/model/ICashier';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 
 @Component({
   selector: 'app-details',
@@ -12,6 +13,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 export class DetailsComponent implements OnInit{
   
   public cashiers:ICashier[] = [];
+  @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
   
   constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService) {
     console.log("client -->"+clientS.user)
@@ -45,7 +47,6 @@ export class DetailsComponent implements OnInit{
       console.log(this.clientS.user);
       this.cashierS.getCashiersByRadius(this.clientS.user.id,this.clientS.user.lat,this.clientS.user.lng,this.clientS.user.distance).subscribe(cashiers =>{
         this.cashiers.push(...cashiers);
-        console.log(this.cashiers)
         //this.cashierS.addItem(this.cashiers);
       });
     }catch(error){
@@ -53,9 +54,8 @@ export class DetailsComponent implements OnInit{
     }
   }
 
-  openModal(cashierId: number) {
-    console.log("ENTRA")
-    document.getElementById("launchModal")?.click();
+  openModal(id: number) {
+    this.modal.open(id);
     //this.transactionS.show();
   }
   /*
