@@ -30,4 +30,20 @@ describe('MapComponent', () => {
     component.removeAllMarkers();
     expect(component.markerObjects).toEqual([]);
   });
+
+  it('should addMarkers', ()=>{
+    component.addMarkers(component.markers);
+    expect(component.markers).toBeDefined();
+  });
+
+  it('should loadMap', () =>{
+    component.loadMap();
+    expect(component.map).toBeDefined();
+  });
+
+  it('should updateRadius', () =>{
+    expect(component.updateRadius(component.radius)).toBeDefined;
+  })
+
+
 });

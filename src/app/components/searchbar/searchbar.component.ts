@@ -27,8 +27,12 @@ export class SearchbarComponent {
   }
 
   search(){
-    this.cashierService.getCashiersByAddress(this.street);
+    //this.cashierService.getCashiersByAddress(this.street);
     console.log(this.street)
+    if(this.street==""){
+      //algo
+      console.log("no hay calle")
+    }
   }
 
   private _filter(value: string): string[] {
