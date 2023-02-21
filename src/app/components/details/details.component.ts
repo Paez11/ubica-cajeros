@@ -11,7 +11,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class DetailsComponent implements OnInit{
   
-  public cashiers:ICashier[] = []
+  public cashiers:ICashier[] = [];
   
   constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService) {
     console.log("client -->"+clientS.user)
@@ -56,7 +56,7 @@ export class DetailsComponent implements OnInit{
   openModal(cashierId: number) {
     console.log("ENTRA")
     document.getElementById("launchModal")?.click();
-    this.transactionS.show();
+    //this.transactionS.show();
   }
   /*
   ngAfterViewInit() {

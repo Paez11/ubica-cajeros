@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CashierService } from 'src/app/services/cashier.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 
 @Component({
@@ -10,13 +11,15 @@ export class ModalTransactionComponent implements OnInit {
 
   show: boolean = false;
   cash:number;
+  @Input() openModal: any;
 
-  constructor(public transactionS:TransactionService) { 
+  constructor(public transactionS:TransactionService, private cashierS:CashierService) { 
   
   }
 
   ngOnInit(): void {
-    this.transactionS.showModal$.subscribe(show => this.show = show);
+    //this.transactionS.showModal$.subscribe(show => this.show = show);
+    //this.openModal(1);
   }
 
   close(){

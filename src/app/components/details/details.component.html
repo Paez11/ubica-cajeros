@@ -9,7 +9,7 @@
     </div>
     <hr class="divisor">
     <div class="offcanvas-body" >
-      <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of this.cashiers">
+      <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiers">
        
         <ng-template [ngIf]="cashier.photo!=null" [ngIfElse]="notImage">
           <img src="" class="card-img-top" alt="imagen de cajero">
@@ -27,10 +27,12 @@
           <ng-template #notAvailable>
             <h5 class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</h5>
           </ng-template>
-          <button type="button" class="bg-primary text-white border border-0 transactionBtn" (click)="openModal(cashier.id)" data-bs-dismiss="offcanvas">{{'transactions' | translate}}</button>
+          <button type="button" class="bg-primary text-white border border-0 transactionBtn" (click)="openModal(cashier.id)" data-bs-target="#myModal">
+            {{'transactions' | translate}}
+          </button>
         </div>
       </div>
     </div>
 </div>
 
-<app-modal-transaction></app-modal-transaction>
+<app-modal-transaction id="myModal" [openModal]="openModal"></app-modal-transaction>

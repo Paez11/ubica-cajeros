@@ -287,12 +287,12 @@ export class MapComponent implements OnInit{
   }
 
   markOnClick(){
-    //document.getElementById("launchModal")?.click();
+    document.getElementById("launchModal")?.click();
     //this.isModalOpen=true;
   }
 
   markOnClose(){
-    //document.getElementById('myModal').style.display = 'none';
+    document.getElementById('myModal').style.display = 'none';
     //this.isModalOpen=false;
   }
 }
