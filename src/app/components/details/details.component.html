@@ -1,4 +1,4 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" (click)="ngOnInit()">
     <img src="./assets/icons/circle-arrow.png" width="21" height="36" alt="" title="" class="icn">
 </button>
 
@@ -7,8 +7,9 @@
       <h5 class="offcanvas-title" id="offcanvasRightLabel">{{'offices' | translate}}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+    <hr class="divisor">
     <div class="offcanvas-body" >
-      <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of this.cashiers">
+      <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiers">
        
         <ng-template [ngIf]="cashier.photo!=null" [ngIfElse]="notImage">
           <img src="" class="card-img-top" alt="imagen de cajero">
@@ -19,15 +20,19 @@
         
         <div class="card-body">
           <h4 class="card-title">{{cashier.address}}</h4>
+          <h5 class="card-text">{{cashier.locality}}</h5>
           <ng-template [ngIf]="cashier.available" [ngIfElse]="notAvailable">
-            <p class="card-text" class="text-success">{{'cashierAvailable' | translate}}</p>
+            <h5 class="card-text" class="text-success">{{'cashierAvailable' | translate}}</h5>
           </ng-template> 
           <ng-template #notAvailable>
-            <p class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</p>
+            <h5 class="card-text" class="text-danger">{{'cashierNotAvailable' | translate}}</h5>
           </ng-template>
-          
-          <button type="button" href="#" class="bg-primary text-white border border-0" (click)="openTransactions(cashier.id)">{{'transactions' | translate}}</button>
+          <button type="button" class="bg-primary text-white border border-0 transactionBtn" (click)="openModal(cashier.id)" data-bs-target="#myModal">
+            {{'transactions' | translate}}
+          </button>
         </div>
       </div>
     </div>
 </div>
+
+<app-modal-transaction></app-modal-transaction>

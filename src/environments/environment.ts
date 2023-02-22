@@ -5,6 +5,7 @@ export const environment = {
         endpoint:{
             cashiersbyradius:'/api/cashiers/distance',
             cashiersbycp:'/api/cashiers/cp',
+            cashiersbystreet:'/api/cashiers/street',
             cashiersbydefaultradius:'/api/cashiers/distancedefault',
             transactions:'/api/transactions',
             incidences:'/api/incidences',

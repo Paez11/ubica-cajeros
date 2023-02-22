@@ -6,5 +6,6 @@ export interface IClient{
     password: string,
     email?: string,
     lat?: number,
-    lng?: number
+    lng?: number,
+    distance?: number
 }

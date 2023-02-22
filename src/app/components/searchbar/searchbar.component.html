@@ -1,8 +1,11 @@
 <div class="container-fluid searchbar">
-  <form class="d-flex" role="search">
-    <input class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}">
-    <button class="btn searchButton" type="submit">
+    <input matInput class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}"  [formControl]="streetControl" [(ngModel)]="street">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+        {{ street }}
+      </mat-option>
+    </mat-autocomplete>
+    <button class="btn searchButton" type="submit" (click)="search()">
       <img src="./assets/icons/search.png" width="20px" height="20px" class="searchIcon">
     </button>
-  </form>
 </div>
