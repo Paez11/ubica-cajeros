@@ -17,7 +17,9 @@ export class MapComponent implements OnInit{
   client: IClient ={
     id: 1,
     name: "mock",
-    account: "bancaMarch"
+    account: "bancaMarch",
+    dni: "",
+    password: ""
   };
 
   cashiers: ICashier[] = [];
@@ -119,6 +121,8 @@ export class MapComponent implements OnInit{
         id:1,
         name:"mock",
         account:"mock",
+        dni:"",
+        password:"",
         lat:e.latlng.lat,
         lng:e.latlng.lng
       }

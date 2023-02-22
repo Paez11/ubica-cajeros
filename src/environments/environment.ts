@@ -8,7 +8,8 @@ export const environment = {
             cashiersbydefaultradius:'/api/cashiers/distancedefault',
             transactions:'/api/transactions',
             incidences:'/api/incidences',
-            cashiersAll:'/api/cashiers'
+            cashiersAll:'/api/cashiers',
+            clientbydni:'/api/client/dni'
         }
     }
 };
