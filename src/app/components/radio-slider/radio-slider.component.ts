@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { SlideService } from 'src/app/services/slide.service';
+import { SlideService } from '../../services/slide.service';
 
 @Component({
   selector: 'app-radio-slider',

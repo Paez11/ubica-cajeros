@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MapService } from 'src/app/map.service';
 import { CashierService } from 'src/app/services/cashier.service';
 
 
@@ -12,12 +14,15 @@ import { CashierService } from 'src/app/services/cashier.service';
 })
 export class SearchbarComponent {
 
+  @Input() postalCode:string;
+  @Output() searchLocation = new EventEmitter<{ lat: number, lng: number }>();
+
   streetControl = new FormControl();
   searchList:string[] = []; // This will be populated with street data from an API
   filteredStreets:Observable<string[]>;
   @Input() street:string;
 
-  constructor(private cashierService:CashierService){
+  constructor(private cashierService:CashierService, private http: HttpClient, private mapService:MapService){
     // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
     this.filteredStreets = this.streetControl.valueChanges.pipe(
       startWith(''),
@@ -27,12 +32,30 @@ export class SearchbarComponent {
   }
 
   search(){
-    //this.cashierService.getCashiersByAddress(this.street);
     console.log(this.street)
     if(this.street==""){
       //algo
-      console.log("no hay calle")
+      console.log("no hay calle o codigo postal");
     }
+  }
+
+  onSubmit(){
+    this.http.
+    get(`https://nominatim.openstreetmap.org/search?q=${this.street}&countrycode=es&polygon_geojson=1&format=json`)
+    .subscribe((data: any) => {
+        if (data.length > 0) {
+          const lat = data[0].lat;
+          const lng = data[0].lon;
+          //const polygonGeoJSON = JSON.parse(data[0].geojson);
+          console.log(lat,lng)
+          this.mapService.setLocation(lat, lng);
+          //this.mapService.setPolygon(polygonGeoJSON);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   private _filter(value: string): string[] {
