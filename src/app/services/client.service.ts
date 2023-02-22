@@ -38,6 +38,10 @@ export class ClientService {
     return this.http.get<IClient>(this.url+'/'+id);
   }
 
+  getByDni(dni:string):Observable<IClient>{
+    return this.http.get<IClient>(this.url+'/'+dni);
+  }
+
   create(client:IClient):Observable<IClient>{
     return this.http.post<IClient>(this.url, client);
   }

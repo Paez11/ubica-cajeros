@@ -16,6 +16,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LoginComponent } from './components/login/login.component';
 import { ModalTransactionComponent } from './components/modal-transaction/modal-transaction.component';
 import { ModalQRComponent } from './components/modal-qr/modal-qr.component';
 
@@ -37,6 +38,7 @@ export function createTranslateLoader(http: HttpClient) {
     DetailsComponent,
     ContainerComponent,
     RadioSliderComponent,
+    LoginComponent,
     ModalTransactionComponent,
     ModalQRComponent,
   ],
