@@ -10,20 +10,25 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class LoginComponent implements OnInit {
   
-  @ViewChild('account') account!:ElementRef
+  dni:string
   @ViewChild('password') password!:ElementRef
   @ViewChild('email') email!:ElementRef
 
   client:IClient
 
-  constructor(private clientS:ClientService) { }
+  constructor(private clientS:ClientService) {
+
+   }
 
   ngOnInit(): void {
+    console.log(this.dni)
   }
 
   public auth():IClient{
-    this.clientS.getByDni(this.client.dni)
-    if(this.client.dni==null){
+    console.log(this.dni)
+    this.client.dni = this.dni
+    console.log(this.client)
+    if(this.clientS.getByDni(this.dni)){
       this.showErrorToast();
       
       //close component and still in map
