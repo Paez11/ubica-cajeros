@@ -16,9 +16,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-<<<<<<< HEAD
 import { LoginComponent } from './components/login/login.component';
-=======
 import { ModalTransactionComponent } from './components/modal-transaction/modal-transaction.component';
 import { ModalQRComponent } from './components/modal-qr/modal-qr.component';
 
@@ -27,7 +25,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { CashierService } from './services/cashier.service';
 import { ClientService } from './services/client.service';
->>>>>>> dc5945721158ed9211b5236ac16a1f280b462061
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,12 +38,9 @@ export function createTranslateLoader(http: HttpClient) {
     DetailsComponent,
     ContainerComponent,
     RadioSliderComponent,
-<<<<<<< HEAD
     LoginComponent,
-=======
     ModalTransactionComponent,
     ModalQRComponent,
->>>>>>> dc5945721158ed9211b5236ac16a1f280b462061
   ],
   imports: [
     BrowserModule,
