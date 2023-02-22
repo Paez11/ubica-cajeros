@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RadioSliderComponent } from './radio-slider.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ThemePalette } from '@angular/material/core';
 
 describe('RadioSliderComponent', () => {
   let component: RadioSliderComponent;
