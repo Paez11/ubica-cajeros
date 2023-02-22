@@ -6,6 +6,7 @@ import { CashierService } from '../../services/cashier.service';
 import { SlideService } from '../../services/slide.service';
 import { ClientService } from '../../services/client.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
+import { MapService } from 'src/app/map.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -45,6 +46,9 @@ export class MapComponent implements OnInit{
   markers:L.Marker = [];
   markerObjects = [];
   popup = L.popup();
+  cpMarker: L.Marker;
+
+  polygon: L.Polygon;
 
   //carga y localizacion
   @Output() ready: EventEmitter<any> = new EventEmitter();
@@ -77,7 +81,8 @@ export class MapComponent implements OnInit{
   constructor(
     private slideService:SlideService, 
     private cashierService:CashierService,
-    private clientS:ClientService){
+    private clientS:ClientService,
+    private mapService:MapService){
 
     /*
     this.cashierService.getCashiers().subscribe(e =>{
@@ -94,7 +99,7 @@ export class MapComponent implements OnInit{
       this.radius=e.radius;
       this.updateRadius(this.radius);
       if(e.request){
-        this.setCashiers();
+        this.setCashiers(this.radius);
       }
     });
   }
@@ -126,7 +131,7 @@ export class MapComponent implements OnInit{
         lng:e.latlng.lng,
         distance:this.radius
       }
-      this.setCashiers();
+      this.setCashiers(this.radius);
       this.setClient();
       
     }).once('locationerror',(e)=>{
@@ -141,6 +146,10 @@ export class MapComponent implements OnInit{
           event:"relocated",
           pos:e.latlng
         });
+    });
+
+    this.mapService.getLocationObservable().subscribe(location => {
+      this.setLocationByCP(location.lat, location.lng);
     });
   }
 
@@ -194,10 +203,28 @@ export class MapComponent implements OnInit{
     */
   }
 
-  setCashiers(){
+  setLocationByCP(lat: number, lng: number){
+    const newLatLng = new L.LatLng(lat, lng);
+    this.map.setView(newLatLng, 13);
+    if (this.cpMarker) {
+      this.cpMarker.setLatLng(newLatLng);
+    } else {
+      this.cpMarker = L.marker(newLatLng).addTo(this.map);
+      this.mapService.getPolygonObservable().subscribe(
+        (polygonGeoJSON: any) => {
+          // draw polygon
+          this.drawPolygon(polygonGeoJSON);
+        }
+      );
+      //let area = L.GeometryUtil.geodesicArea(this.polygon.getLatLngs);
+      this.setCashiers(2000);
+    }
+  }
+
+  setCashiers(distance:number){
     try{   
       this.markers=[];
-      this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,this.radius).subscribe(cashier=>{
+      this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,distance).subscribe(cashier=>{
         cashier.forEach(mark =>{
           //console.log(mark)
           if((mark.lattitude && mark.longitude) != undefined){
@@ -239,6 +266,26 @@ export class MapComponent implements OnInit{
     this.markerObjects = [];
   }
 
+  drawPolygon(polygonGeoJSON: any) {
+    if (!this.polygon) {
+      this.polygon = new L.Polygon(polygonGeoJSON,{
+        fillColor: 'green',
+        color: '#005442',
+        weight: 2,
+        opacity: 0.2
+      }).addTo(this.map);
+    }else{
+      this.map.removeLayer(this.polygon);
+      this.polygon = new L.Polygon(polygonGeoJSON,{
+        fillColor: 'green',
+        color: '#005442',
+        weight: 2,
+        opacity: 0.2
+      }).addTo(this.map);
+    }
+  }
+  
+
   addPos(e){
     this.removePos();
     this.myPos= L.marker(e.latlng,{
@@ -258,7 +305,7 @@ export class MapComponent implements OnInit{
     this.map.setView(e.latlng);
     this.updateRadius(this.radius);
     this.map.fitBounds(this.actualRadius.getBounds());
-    this.setCashiers();
+    this.setCashiers(this.radius);
     this.setClient();
   }
   
