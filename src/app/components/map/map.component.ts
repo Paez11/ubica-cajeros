@@ -6,7 +6,7 @@ import { CashierService } from '../../services/cashier.service';
 import { SlideService } from '../../services/slide.service';
 import { ClientService } from '../../services/client.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
-import { MapService } from 'src/app/map.service';
+import { MapService } from 'src/app/services/map.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({

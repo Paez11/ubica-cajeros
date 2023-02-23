@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MapService } from 'src/app/map.service';
+import { MapService } from 'src/app/services/map.service';
 import { CashierService } from 'src/app/services/cashier.service';
 
 

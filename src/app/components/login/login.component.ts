@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IClient } from 'src/app/model/IClient';
-import {Toast} from 'bootstrap';
+//import {Toast} from 'bootstrap';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
 
   showErrorToast(){
     const toastElement = document.getElementById('errorToast')
-    const toast = new Toast(toastElement)
-    toast.show()
+    //const toast = new Toast(toastElement)
+    //toast.show()
     
   }
 }
