@@ -10,7 +10,17 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Password</label>
-        <input #password type="password" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
+        <input [(ngModel)]="password" name="password" type="password" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
+      </div>
+      <div [(ngModel)]="toast" id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Attention</strong>
+          <small>Error</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          DNI or Password are wrong. Please rewrite the fields
+        </div>
       </div>
       <div class="mb-3">
         <a data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot the password?</a>

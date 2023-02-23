@@ -11,25 +11,32 @@ import { ClientService } from 'src/app/services/client.service';
 export class LoginComponent implements OnInit {
   
   dni:string
-  @ViewChild('password') password!:ElementRef
+  password:string
   @ViewChild('email') email!:ElementRef
 
-  client:IClient
+  toast:Toast
+
+  client:IClient = {
+    id: 0,
+    name: '',
+    account: '',
+    dni: '',
+    password: ''
+  }
 
   constructor(private clientS:ClientService) {
 
    }
 
   ngOnInit(): void {
-    console.log(this.dni)
   }
 
   public auth():IClient{
-    console.log(this.dni)
     this.client.dni = this.dni
+    this.client.password = this.password
     console.log(this.client)
     if(this.clientS.getByDni(this.dni)){
-      this.showErrorToast();
+      
       
       //close component and still in map
     }else if(this.client==null){
@@ -48,12 +55,5 @@ export class LoginComponent implements OnInit {
 
   public cancel(){
     console.log("Canceled")
-  }
-
-  showErrorToast(){
-    const toastElement = document.getElementById('errorToast')
-    const toast = new Toast(toastElement)
-    toast.show()
-    
   }
 }
