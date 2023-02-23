@@ -20,7 +20,7 @@ export class SearchbarComponent {
   streetControl = new FormControl();
   searchList:string[] = []; // This will be populated with street data from an API
   filteredStreets:Observable<string[]>;
-  @Input() street:string;
+  @Output() street:string;
 
   constructor(private cashierService:CashierService, private http: HttpClient, private mapService:MapService){
     // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
@@ -40,22 +40,8 @@ export class SearchbarComponent {
   }
 
   onSubmit(){
-    this.http.
-    get(`https://nominatim.openstreetmap.org/search?q=${this.street}&countrycode=es&polygon_geojson=1&format=json`)
-    .subscribe((data: any) => {
-        if (data.length > 0) {
-          const lat = data[0].lat;
-          const lng = data[0].lon;
-          //const polygonGeoJSON = JSON.parse(data[0].geojson);
-          console.log(lat,lng)
-          this.mapService.setLocation(lat, lng);
-          //this.mapService.setPolygon(polygonGeoJSON);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    console.log("street -->",this.street)
+    this.mapService.searchByPostalCode(this.street);
   }
 
   private _filter(value: string): string[] {

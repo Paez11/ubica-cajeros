@@ -7,6 +7,7 @@ import { SlideService } from '../../services/slide.service';
 import { ClientService } from '../../services/client.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { MapService } from 'src/app/services/map.service';
+import { Subscription } from 'rxjs';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -77,6 +78,8 @@ export class MapComponent implements OnInit{
   @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
   //regex
   @Input('regexInput')regexInput:string;
+
+  private polygonSubscription: Subscription;
 
   constructor(
     private slideService:SlideService, 
@@ -207,11 +210,25 @@ export class MapComponent implements OnInit{
     const newLatLng = new L.LatLng(lat, lng);
     this.map.setView(newLatLng, 13);
     if (this.cpMarker) {
+      console.log("ENTRA Y SE CALLA")
       this.cpMarker.setLatLng(newLatLng);
+      this.cpMarker = L.marker(newLatLng).addTo(this.map);
+      console.log("PRIMERA ENTRADA")
+      this.polygonSubscription = this.mapService.getPolygonObservable().subscribe(
+        (polygonGeoJSON: any) => {
+          console.log("SEGUNDA ENTRADA -->", polygonGeoJSON);
+          // draw polygon
+          this.drawPolygon(polygonGeoJSON);
+        }
+      );
+      //let area = L.GeometryUtil.geodesicArea(this.polygon.getLatLngs);
+      //this.cashierService.getCashiersByCP(polygonGeoJSON);
     } else {
       this.cpMarker = L.marker(newLatLng).addTo(this.map);
+      console.log("PRIMERA ENTRADA")
       this.mapService.getPolygonObservable().subscribe(
         (polygonGeoJSON: any) => {
+          console.log("SEGUNDA ENTRADA -->", polygonGeoJSON);
           // draw polygon
           this.drawPolygon(polygonGeoJSON);
         }
@@ -347,5 +364,11 @@ export class MapComponent implements OnInit{
   markOnClose(){
     document.getElementById('myModal').style.display = 'none';
     //this.isModalOpen=false;
+  }
+
+  ngOnDestroy() {
+    if (this.polygonSubscription) {
+      this.polygonSubscription.unsubscribe();
+    }
   }
 }
