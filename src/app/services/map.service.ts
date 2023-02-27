@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { SearchbarComponent } from '../components/searchbar/searchbar.component';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,21 @@ export class MapService {
   private lng: number;
   private locationSubject: BehaviorSubject<{ lat: number, lng: number }>;
   private polygonSubject = new Subject<any>();
+  private street:string;
+  private streetSubject: BehaviorSubject<string>;
 
-  constructor(private http: HttpClient, private searchBar:SearchbarComponent) {
+  constructor(private http: HttpClient) {
     this.locationSubject = new BehaviorSubject<{ lat: number, lng: number }>({ lat: 0, lng: 0 });
+    this.streetSubject = new BehaviorSubject<string>(this.street);
   }
 
   public searchByPostalCode(postalCode: string){
+    if(postalCode==null){
+      throw new Error("Error en datos");
+    }
+    const endpoint =environment.nominatimAPI.url+environment.nominatimAPI.endpoint.postalCode;
     this.http.
-    get(`https://nominatim.openstreetmap.org/search?q=${this.searchBar.street}&format=jsonv2&countrycode=es&polygon_geojson=1`)
+    get(`https://nominatim.openstreetmap.org/search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1`)
     .subscribe((data: any) => {
         if (data.length > 0) {
           const lat = data[0].lat;
@@ -52,7 +59,14 @@ export class MapService {
   }
 
   public getPolygonObservable() {
-    console.log("HAY POLIGONO")
     return this.polygonSubject.asObservable();
+  }
+
+  public setStreet(street: string) {
+    this.streetSubject.next(street);
+  }
+
+  public getstreetObservable(): Observable<string> {
+    return this.streetSubject.asObservable();
   }
 }

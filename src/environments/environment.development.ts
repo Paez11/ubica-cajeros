@@ -12,5 +12,11 @@ export const environment = {
             cashiersAll:'/api/cashiers',
             clientbydni:'/api/client/dni'
         }
+    },
+    nominatimAPI:{
+        url:'https://nominatim.openstreetmap.org/',
+        endpoint:{
+            postalCode:'search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1'
+        }
     }
 };

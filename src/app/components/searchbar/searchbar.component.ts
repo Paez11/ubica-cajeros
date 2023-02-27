@@ -14,12 +14,13 @@ import { CashierService } from 'src/app/services/cashier.service';
 })
 export class SearchbarComponent {
 
-  @Input() postalCode:string;
   @Output() searchLocation = new EventEmitter<{ lat: number, lng: number }>();
+  @Output() streetChange = new EventEmitter<string>();
 
   streetControl = new FormControl();
   searchList:string[] = []; // This will be populated with street data from an API
   filteredStreets:Observable<string[]>;
+  
   @Output() street:string;
 
   constructor(private cashierService:CashierService, private http: HttpClient, private mapService:MapService){
@@ -28,11 +29,9 @@ export class SearchbarComponent {
       startWith(''),
       map(value => this._filter(value))
     );
-    console.log(this.filteredStreets);
   }
 
   search(){
-    console.log(this.street)
     if(this.street==""){
       //algo
       console.log("no hay calle o codigo postal");
@@ -40,7 +39,7 @@ export class SearchbarComponent {
   }
 
   onSubmit(){
-    console.log("street -->",this.street)
+    this.mapService.setStreet(this.street);
     this.mapService.searchByPostalCode(this.street);
   }
 

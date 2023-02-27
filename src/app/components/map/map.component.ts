@@ -8,6 +8,7 @@ import { ClientService } from '../../services/client.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
+import { SearchbarComponent } from '../searchbar/searchbar.component';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -47,16 +48,13 @@ export class MapComponent implements OnInit{
   markers:L.Marker = [];
   markerObjects = [];
   popup = L.popup();
-  cpMarker: L.Marker;
+  searchMarker: L.Marker;
 
   polygon: L.Polygon;
 
   //carga y localizacion
   @Output() ready: EventEmitter<any> = new EventEmitter();
   _ready:boolean=false;
-
-  //detalles del cajero
-  @Output() detailsEmitter: EventEmitter<any> = new EventEmitter();
 
   //radio de deteccion de cajeros
   radius:number = 100;
@@ -73,30 +71,22 @@ export class MapComponent implements OnInit{
 
   //modal
   isModalOpen:boolean = false;
-  cash:number;
 
   @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
+
   //regex
   @Input('regexInput')regexInput:string;
 
+  //Subscription to draw the polygon
   private polygonSubscription: Subscription;
+  street: string;
 
   constructor(
     private slideService:SlideService, 
     private cashierService:CashierService,
     private clientS:ClientService,
-    private mapService:MapService){
-
-    /*
-    this.cashierService.getCashiers().subscribe(e =>{
-      this.cashiers.push(...e);
-    });
-    */
-    /*
-    this.cashierService.getAll().subscribe(e =>{
-      this.cashiers.push(...e);
-    })
-    */
+    private mapService:MapService,
+    private searchBar:SearchbarComponent){
 
     this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
@@ -109,7 +99,6 @@ export class MapComponent implements OnInit{
 
   ngOnInit(): void {
     this.clientS.user=this.client;
-    console.log(this.cashiers)
     if(this.map != undefined){
       this.map.off();
       this.map.remove();
@@ -151,8 +140,13 @@ export class MapComponent implements OnInit{
         });
     });
 
+    this.mapService.getstreetObservable().subscribe(street =>{
+      this.street = street;
+    });
     this.mapService.getLocationObservable().subscribe(location => {
-      this.setLocationByCP(location.lat, location.lng);
+      if(this.searchBar.street==null){
+        this.setLocationBySearch(location.lat, location.lng);
+      }
     });
   }
 
@@ -186,6 +180,7 @@ export class MapComponent implements OnInit{
 
   setCurrentLocation(){
     this.removePos();
+    this.removeSearchMark();
     navigator.geolocation.getCurrentPosition(e =>{
       this.map.setView([e.coords.latitude,e.coords.longitude]);
       this.actualRadius = L.circle([e.coords.latitude,e.coords.longitude],{
@@ -206,14 +201,14 @@ export class MapComponent implements OnInit{
     */
   }
 
-  setLocationByCP(lat: number, lng: number){
+  setLocationBySearch(lat: number, lng: number){
+    this.removeSearchMark();
     const newLatLng = new L.LatLng(lat, lng);
     this.map.setView(newLatLng, 13);
-    if (this.cpMarker) {
-      console.log("ENTRA Y SE CALLA")
-      this.cpMarker.setLatLng(newLatLng);
-      this.cpMarker = L.marker(newLatLng).addTo(this.map);
-      console.log("PRIMERA ENTRADA")
+    if (this.searchMarker) {
+      this.searchMarker.setLatLng(newLatLng);
+      this.searchMarker = L.marker(newLatLng).addTo(this.map);
+      this.setCashiersBySearch(this.street);
       this.polygonSubscription = this.mapService.getPolygonObservable().subscribe(
         (polygonGeoJSON: any) => {
           console.log("SEGUNDA ENTRADA -->", polygonGeoJSON);
@@ -222,28 +217,16 @@ export class MapComponent implements OnInit{
         }
       );
       //let area = L.GeometryUtil.geodesicArea(this.polygon.getLatLngs);
-      //this.cashierService.getCashiersByCP(polygonGeoJSON);
     } else {
-      this.cpMarker = L.marker(newLatLng).addTo(this.map);
-      console.log("PRIMERA ENTRADA")
-      this.mapService.getPolygonObservable().subscribe(
-        (polygonGeoJSON: any) => {
-          console.log("SEGUNDA ENTRADA -->", polygonGeoJSON);
-          // draw polygon
-          this.drawPolygon(polygonGeoJSON);
-        }
-      );
-      //let area = L.GeometryUtil.geodesicArea(this.polygon.getLatLngs);
-      this.setCashiers(2000);
+      this.searchMarker = L.marker(newLatLng).addTo(this.map);
     }
   }
 
   setCashiers(distance:number){
     try{   
       this.markers=[];
-      this.cashierService.getCashiersByRadius(this.client.id,this.client.lat,this.client.lng,distance).subscribe(cashier=>{
+      this.cashierService.getCashiersByRadius(this.client,this.client.lat,this.client.lng,distance).subscribe(cashier=>{
         cashier.forEach(mark =>{
-          //console.log(mark)
           if((mark.lattitude && mark.longitude) != undefined){
             this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
             this.cashierService.addItem(this.markers);
@@ -251,6 +234,37 @@ export class MapComponent implements OnInit{
         })
         this.addMarkers(this.markers);
       })
+    }catch(error){
+      console.error(error);
+    }
+   
+  }
+
+  setCashiersBySearch(street:string){
+    const regex = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+    try{   
+      this.markers=[];
+      if(regex.test(street)){
+        this.cashierService.getCashiersByCP(street).subscribe(cashier=>{
+          cashier.forEach(mark =>{
+            if((mark.lattitude && mark.longitude) != undefined){
+              this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
+              this.cashierService.addItem(this.markers);
+            }
+          })
+          this.addMarkers(this.markers);
+        })
+      }else{
+        this.cashierService.getCashiersByAddress(street).subscribe(cashier=>{
+          cashier.forEach(mark =>{
+            if((mark.lattitude && mark.longitude) != undefined){
+              this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
+              this.cashierService.addItem(this.markers);
+            }
+          })
+          this.addMarkers(this.markers);
+        })
+      }
     }catch(error){
       console.error(error);
     }
@@ -305,6 +319,7 @@ export class MapComponent implements OnInit{
 
   addPos(e){
     this.removePos();
+    this.removeSearchMark();
     this.myPos= L.marker(e.latlng,{
       icon: this.userIcon,
       draggable: true,
@@ -333,6 +348,13 @@ export class MapComponent implements OnInit{
     }
   }
 
+  removeSearchMark(){
+    if(this.searchMarker){
+      this.searchMarker.removeFrom(this.map);
+      //this.polygon.removeFrom(this.map);
+    }
+  }
+
   onMapClick(e) {
     this.popup
         .setLatLng(e.latlng)
@@ -346,6 +368,7 @@ export class MapComponent implements OnInit{
 
   updateRadius(radius:number){
     this.removeAllMarkers();
+    this.removeSearchMark();
     this.actualRadius.setRadius(radius);
     this.map.fitBounds(this.actualRadius.getBounds());
     this.setClient();

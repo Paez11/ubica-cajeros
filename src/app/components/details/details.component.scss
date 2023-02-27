@@ -22,6 +22,9 @@
     background-color: #005442;
     border-color: #005442;
 }
+.transactionBtn:active{
+    background: #0ae3b4de;
+}
 
 .border-primary {
     border-color: rgb(0,84,66,var(--bs-border-opacity))!important;

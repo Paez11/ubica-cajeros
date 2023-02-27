@@ -61,7 +61,6 @@ export class CashierService {
       distance:distance
     }
     const endpoint =environment.api.url+environment.api.endpoint.cashiersbyradius;
-    console.log(data)
     return this.http.post(endpoint, data, {
                headers: { 'Content-Type': 'application/json' }
             });
@@ -78,7 +77,6 @@ export class CashierService {
       lng:lng,
     }
     const endpoint =environment.api.url+environment.api.endpoint.cashiersbydefaultradius;
-    console.log(data)
     return this.http.post(endpoint, data, {
                headers: { 'Content-Type': 'application/json' }
             });
@@ -88,9 +86,7 @@ export class CashierService {
     if(!cp || cp < 0 ){
       throw new Error("Error en datos");
     };
-
     const endpoint =environment.api.url+environment.api.endpoint.cashiersbycp;
-
     return this.http.get(endpoint+"/"+cp, {
                headers: { 'Content-Type': 'application/json' }
             });
