@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IClient } from 'src/app/model/IClient';
-import {Toast} from 'bootstrap';
+//import {Toast} from 'bootstrap';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   password:string
   @ViewChild('email') email!:ElementRef
 
-  toast:Toast
+  //toast:Toast
 
   client:IClient = {
     id: 0,
@@ -55,5 +55,12 @@ export class LoginComponent implements OnInit {
 
   public cancel(){
     console.log("Canceled")
+  }
+
+  showErrorToast(){
+    const toastElement = document.getElementById('errorToast')
+    //const toast = new Toast(toastElement)
+    //toast.show()
+    
   }
 }

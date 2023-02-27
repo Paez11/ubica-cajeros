@@ -25,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { CashierService } from './services/cashier.service';
 import { ClientService } from './services/client.service';
+import { MapService } from './services/map.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,7 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatInputModule,
     ReactiveFormsModule
   ],
-  providers: [CashierService,ClientService],
+  providers: [CashierService,ClientService,SearchbarComponent,MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
