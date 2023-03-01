@@ -11,19 +11,7 @@ export class TransactionService {
 
   //private url:string = "http://localhost:8080/api/transactions";
 
-  private showModal = new Subject<boolean>();
-
-  showModal$ = this.showModal.asObservable();
-
   constructor(private http:HttpClient) { }
-
-  show() {
-    this.showModal.next(true);
-  }
-
-  hide() {
-    this.showModal.next(false);
-  }
 
   createTransaction(client, cashier, type, amount):Observable<any> {
     if(!client || !cashier || !type || !amount || amount<0) {
@@ -34,8 +22,9 @@ export class TransactionService {
       client:client,
       cashier:cashier,
       type:type,
-      amount:amount
+      amount:amount,
     }
+
     const endpoint = environment.api.url+environment.api.endpoint.transactions;
     return this.http.post(endpoint, data, {
         headers: { 'Content-Type': 'application/json' }

@@ -11,5 +11,6 @@
     "cashierAvailable": "Disponible",
     "cashierNotAvailable": "No disponible",
     "transactions": "Transacciones",
-    "close": "cerrar"
+    "close": "cerrar",
+    "time": "tiempo"
 }
