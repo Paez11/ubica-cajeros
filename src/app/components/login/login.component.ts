@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IClient } from 'src/app/model/IClient';
-import {Toast} from 'bootstrap';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -9,12 +8,18 @@ import { ClientService } from 'src/app/services/client.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  arr: any[] = []
   
+  dniLogin:string
+  passwordLogin:string
+  emailLogin:string
+
+  name:string
   dni:string
   password:string
-  @ViewChild('email') email!:ElementRef
-
-  toast:Toast
+  account:string
+  email:string
 
   client:IClient = {
     id: 0,
@@ -24,25 +29,40 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
-  constructor(private clientS:ClientService) {
-
-   }
+  constructor(private clientS:ClientService) {}
 
   ngOnInit(): void {
+    
   }
 
-  public auth():IClient{
-    this.client.dni = this.dni
-    this.client.password = this.password
-    console.log(this.client)
-    if(this.clientS.getByDni(this.dni)){
-      
+  public auth():boolean{
+    let result:boolean = false
+    this.client.dni = this.dniLogin
+    this.client.password = this.passwordLogin
+
+    
+    
+    if(true){
+      result = false;
+      console.log("Is in database")
       
       //close component and still in map
     }else if(this.client==null){
+      console.log("Doesnt exist")
       //open modal register
     }
-    return this.client
+    return result
+  }
+
+  public createAccount(){
+    let clientCreated:IClient = {
+      id: 0,
+      name: this.name,
+      account: this.account,
+      dni: this.dni,
+      password: this.password
+    }
+    this.clientS.create(clientCreated)
   }
 
   public sendMail(){
