@@ -10,5 +10,6 @@
     "cashierImage": "Imagen de cajero",
     "cashierAvailable": "Disponible",
     "cashierNotAvailable": "No disponible",
-    "transactions": "Transacciones"
+    "transactions": "Transacciones",
+    "close": "cerrar"
 }

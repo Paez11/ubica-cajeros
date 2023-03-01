@@ -18,7 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LoginComponent } from './components/login/login.component';
 import { ModalTransactionComponent } from './components/modal-transaction/modal-transaction.component';
-import { ModalQRComponent } from './components/modal-qr/modal-qr.component';
 
 //searchbar
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -41,7 +40,6 @@ export function createTranslateLoader(http: HttpClient) {
     RadioSliderComponent,
     LoginComponent,
     ModalTransactionComponent,
-    ModalQRComponent,
   ],
   imports: [
     BrowserModule,

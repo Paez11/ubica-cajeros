@@ -15,6 +15,11 @@ export class ModalTransactionComponent implements OnInit {
   show: boolean = false;
   id:any;
   cash:number;
+
+  //QR
+  qrUrl = './assets/icons/codigo-qr.png';
+  showQR = false;
+
   constructor(public transactionS:TransactionService, private cashierS:CashierService) { 
   
   }
@@ -36,7 +41,15 @@ export class ModalTransactionComponent implements OnInit {
   }
 
   getQR(){
-    //this.showQR = true;
+    this.close();
+    this.showQR = true;
     console.log("QR ABIERTO")
+    const timeout = setTimeout(() =>{
+      
+    },5000);
+  }
+
+  ngAfterInit(){
+
   }
 }

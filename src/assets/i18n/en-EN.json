@@ -10,5 +10,6 @@
     "cashierImage": "Cashier Image",
     "cashierAvailable": "Available",
     "cashierNotAvailable": "Not available",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "close": "close"
 }

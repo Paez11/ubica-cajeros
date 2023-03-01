@@ -5,12 +5,14 @@ export const environment = {
         endpoint:{
             cashiersbyradius:'/api/cashiers/distance',
             cashiersbycp:'/api/cashiers/cp',
-            cashiersbystreet:'/api/cashiers/street',
+            cashiersbystreet:'/api/cashiers/address',
             cashiersbydefaultradius:'/api/cashiers/distancedefault',
             transactions:'/api/transactions',
             incidences:'/api/incidences',
             cashiersAll:'/api/cashiers',
-            clientbydni:'/api/client/dni'
+            clientAll:'/api/client',
+            clientbydni:'/api/client',
+            clientbyid:'/api/client'
         }
     },
     nominatimAPI:{
