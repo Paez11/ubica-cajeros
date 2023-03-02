@@ -14,8 +14,8 @@
                 <p>Min. 5.00 - Max. 3000.00</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="getQR(true)" data-bs-dismiss="modal">{{'deposit' | translate}}</button>
-                <button type="button" class="btn btn-primary" (click)="getQR(false)" data-bs-dismiss="modal">{{'draw' | translate}}</button>
+                <button type="button" class="btn btn-primary" (click)="getQR(true)" data-bs-dismiss="modal" routerLink="/qr">{{'deposit' | translate}}</button>
+                <button type="button" class="btn btn-primary" (click)="getQR(false)" data-bs-dismiss="modal" routerLink="/qr">{{'draw' | translate}}</button>
             </div>
         </div>
     </div>
