@@ -8,9 +8,9 @@ pipeline {
             }
         }
 
-        stage ('BancaMarchFRONT: Build project: ng b -c des') {
+        stage ('BancaMarchFRONT: Build project: ng b -c prod') {
             steps {
-                sh 'ng b -c des --aot'
+                sh 'ng b -c prod --aot'
             }
         }
 
