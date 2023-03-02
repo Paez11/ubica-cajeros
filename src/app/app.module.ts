@@ -18,13 +18,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LoginComponent } from './components/login/login.component';
 import { ModalTransactionComponent } from './components/modal-transaction/modal-transaction.component';
-import { ModalQRComponent } from './components/modal-qr/modal-qr.component';
 
 //searchbar
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { CashierService } from './services/cashier.service';
 import { ClientService } from './services/client.service';
+import { MapService } from './services/map.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,7 +40,6 @@ export function createTranslateLoader(http: HttpClient) {
     RadioSliderComponent,
     LoginComponent,
     ModalTransactionComponent,
-    ModalQRComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +60,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatInputModule,
     ReactiveFormsModule
   ],
-  providers: [CashierService,ClientService],
+  providers: [CashierService,ClientService,SearchbarComponent,MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

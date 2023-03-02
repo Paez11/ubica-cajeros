@@ -1,4 +1,4 @@
-<div *ngIf="!auth()">
+<div>
   <div class="container">
     <img class="img" src="../../../assets/img/Logo Atmira.png">
   </div>
@@ -55,21 +55,15 @@
                   </div>
                   <div class="modal-body">
                     <div class="mb-3 row">
-                      <label class="col-sm-2 col-form-label">Name</label>
-                      <div class="col-sm-10">
-                        <input [(ngModel)]="name" name="name" placeholder="Felipe Reyes" type="text" class="form-control" regexInput="^[0-9]{8}[A-Z]{1}$">
-                      </div>
-                    </div>
-                    <div class="mb-3 row">
                       <label class="col-sm-2 col-form-label">DNI</label>
                       <div class="col-sm-10">
-                        <input [(ngModel)]="dni" name="dni" placeholder="12345678A" type="text" class="form-control" regexInput="^[0-9]{8}[A-Z]{1}$">
+                        <input [(ngModel)]="dni" name="dni" placeholder="12345678A" type="text" class="form-control" regexInput="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$">
                       </div>
                     </div>
                     <div class="mb-3 row">
                       <label class="col-sm-2 col-form-label">Password</label>
                       <div class="col-sm-10">
-                        <input [(ngModel)]="password" name="password" placeholder="******" type="password" class="form-control" regexInput="^([a-z0-9A-Z]*[<>-´ç`+*^Ç¨_:;,.¡¿?'!|\ºª@#·$%&¬/()=[]{}€]?)*$">
+                        <input [(ngModel)]="password" name="password" placeholder="******" type="password" class="form-control" regexInput="^([a-z0-9A-Z]*[<>-´ç`+*^Ç¨_:;,.¡¿?'!|ºª@#·$%&¬/()=[]{}€]?)*$">
                       </div>
                     </div>
                     <div class="mb-3 row">
@@ -81,13 +75,13 @@
                     <div class="mb-3 row">
                       <label class="col-sm-2 col-form-label">Email</label>
                       <div class="col-sm-10">
-                        <input [(ngModel)]="email" name="email" placeholder="doggy@gmail.com" type="email" class="form-control" regexInput="^[A-Z]*[a-z0-9A-Z]*[@]{1}[a-z]*[.]{1}[a-z]+$">
+                        <input [(ngModel)]="email" name="email" placeholder="doggy@gmail.com" type="email" class="form-control" regexInput="^[A-Z]*[a-z0-9A-Z]*[@]{1}[a-z]*[.]{1}[a-z]*$">
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                    <button (click)="sendMail()" type="button" class="btn">Send</button>
+                    <button (click)="createAccount()" type="button" class="btn">Send</button>
                   </div>
                 </div>
               </div>

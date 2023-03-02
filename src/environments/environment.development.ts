@@ -5,12 +5,21 @@ export const environment = {
         endpoint:{
             cashiersbyradius:'/api/cashiers/distance',
             cashiersbycp:'/api/cashiers/cp',
-            cashiersbystreet:'/api/cashiers/street',
+            cashiersbystreet:'/api/cashiers/address',
             cashiersbydefaultradius:'/api/cashiers/distancedefault',
             transactions:'/api/transactions',
             incidences:'/api/incidences',
             cashiersAll:'/api/cashiers',
-            clientbydni:'/api/client/dni'
+            clientAll:'/api/client',
+            clientbydni:'/api/client/dni',
+            clientbyid:'/api/client',
+            newclient:'/api/client'     
+        }
+    },
+    nominatimAPI:{
+        url:'https://nominatim.openstreetmap.org/',
+        endpoint:{
+            postalCode:'search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1'
         }
     }
 };

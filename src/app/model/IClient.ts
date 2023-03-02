@@ -1,6 +1,5 @@
 export interface IClient{
-    id: number,
-    name: string,
+    id?: number,
     account: string,
     dni: string,
     password: string,

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MapService } from 'src/app/map.service';
+import { MapService } from 'src/app/services/map.service';
 import { CashierService } from 'src/app/services/cashier.service';
 
 
@@ -14,13 +14,14 @@ import { CashierService } from 'src/app/services/cashier.service';
 })
 export class SearchbarComponent {
 
-  @Input() postalCode:string;
   @Output() searchLocation = new EventEmitter<{ lat: number, lng: number }>();
+  @Output() streetChange = new EventEmitter<string>();
 
   streetControl = new FormControl();
   searchList:string[] = []; // This will be populated with street data from an API
   filteredStreets:Observable<string[]>;
-  @Input() street:string;
+  
+  @Output() street:string;
 
   constructor(private cashierService:CashierService, private http: HttpClient, private mapService:MapService){
     // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
@@ -28,11 +29,9 @@ export class SearchbarComponent {
       startWith(''),
       map(value => this._filter(value))
     );
-    console.log(this.filteredStreets);
   }
 
   search(){
-    console.log(this.street)
     if(this.street==""){
       //algo
       console.log("no hay calle o codigo postal");
@@ -40,22 +39,8 @@ export class SearchbarComponent {
   }
 
   onSubmit(){
-    this.http.
-    get(`https://nominatim.openstreetmap.org/search?q=${this.street}&countrycode=es&polygon_geojson=1&format=json`)
-    .subscribe((data: any) => {
-        if (data.length > 0) {
-          const lat = data[0].lat;
-          const lng = data[0].lon;
-          //const polygonGeoJSON = JSON.parse(data[0].geojson);
-          console.log(lat,lng)
-          this.mapService.setLocation(lat, lng);
-          //this.mapService.setPolygon(polygonGeoJSON);
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.mapService.setStreet(this.street);
+    this.mapService.searchByPostalCode(this.street);
   }
 
   private _filter(value: string): string[] {

@@ -16,7 +16,7 @@ export class DetailsComponent implements OnInit{
   @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
   
   constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService) {
-    console.log("client -->"+clientS.user)
+    
   }
 
   ngOnInit() {
@@ -44,7 +44,6 @@ export class DetailsComponent implements OnInit{
   initializeMyComponent(): void | PromiseLike<void> {
     try{
       this.cashiers=[];
-      console.log(this.clientS.user);
       this.cashierS.getCashiersByRadius(this.clientS.user.id,this.clientS.user.lat,this.clientS.user.lng,this.clientS.user.distance).subscribe(cashiers =>{
         this.cashiers.push(...cashiers);
         //this.cashierS.addItem(this.cashiers);
