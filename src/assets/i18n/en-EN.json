@@ -11,5 +11,6 @@
     "cashierAvailable": "Available",
     "cashierNotAvailable": "Not available",
     "transactions": "Transactions",
-    "close": "close"
+    "close": "close",
+    "time": "time"
 }

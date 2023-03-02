@@ -12,6 +12,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import {MatCardModule} from '@angular/material/card';
 import {MatSliderModule} from '@angular/material/slider';
 import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CashierService } from './services/cashier.service';
 import { ClientService } from './services/client.service';
 import { MapService } from './services/map.service';
+import { QrComponent } from './components/qr/qr.component';
+import { Error404Component } from './components/error404/error404.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,6 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     RadioSliderComponent,
     LoginComponent,
     ModalTransactionComponent,
+    QrComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ export function createTranslateLoader(http: HttpClient) {
     }
     }),
     BrowserAnimationsModule,
+    MatCardModule,
     MatSliderModule,
     MatAutocompleteModule,
     MatInputModule,
