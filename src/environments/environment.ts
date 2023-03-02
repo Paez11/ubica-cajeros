@@ -12,7 +12,8 @@ export const environment = {
             cashiersAll:'/api/cashiers',
             clientAll:'/api/client',
             clientbydni:'/api/client',
-            clientbyid:'/api/client'
+            clientbyid:'/api/client',
+            newclient:'/api/client'
         }
     },
     nominatimAPI:{
