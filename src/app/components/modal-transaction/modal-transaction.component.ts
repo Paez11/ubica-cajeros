@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatCard } from '@angular/material/card';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -55,18 +54,23 @@ export class ModalTransactionComponent implements OnInit {
   getQR(type:boolean){
     this.type=type;
     this.close();
-    this._ready=false;
+    /*this._ready=false;
     this.transactionS.createTransaction(this.client,this.cashierId,this.type,this.amount).subscribe(transaction =>{
       this.transaction=transaction;
       console.log(this.transaction)
       //this.generateQRCodeImageFromBase64(transaction.securityCode)
       this._ready=true;
     })
+    */
     this.showQR=true;
     console.log("QR ABIERTO")
     const timeout = setTimeout(() =>{
 
     },6000);
+  }
+
+  closeQR(){
+    
   }
 
   generateQRCodeImageFromBase64(filePath:string){

@@ -242,12 +242,13 @@ export class MapComponent implements OnInit{
 
   setCashiersBySearch(street:string){
     const regex = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-    try{   
+    try{ 
       this.markers=[];
       if(regex.test(street)){
         this.cashierService.getCashiersByCP(street).subscribe(cashier=>{
           cashier.forEach(mark =>{
             if((mark.lattitude && mark.longitude) != undefined){
+              console.log(mark)
               this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
               this.cashierService.addItem(this.markers);
             }
@@ -258,6 +259,7 @@ export class MapComponent implements OnInit{
         this.cashierService.getCashiersByAddress(street).subscribe(cashier=>{
           cashier.forEach(mark =>{
             if((mark.lattitude && mark.longitude) != undefined){
+              console.log(mark)
               this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
               this.cashierService.addItem(this.markers);
             }

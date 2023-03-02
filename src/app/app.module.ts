@@ -26,6 +26,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CashierService } from './services/cashier.service';
 import { ClientService } from './services/client.service';
 import { MapService } from './services/map.service';
+import { QrComponent } from './components/qr/qr.component';
+import { Error404Component } from './components/error404/error404.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,6 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     RadioSliderComponent,
     LoginComponent,
     ModalTransactionComponent,
+    QrComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,

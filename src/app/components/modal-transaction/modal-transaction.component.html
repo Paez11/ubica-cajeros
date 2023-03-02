@@ -20,23 +20,3 @@
         </div>
     </div>
 </div>
-<!-- QR -->
-<div class="loading" *ngIf="!_ready"> 
-    <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden"></span>
-    </div> 
-</div>
-<div class="myCardQR">
-    <mat-card id="cardQR" *ngIf="showQR">
-        <mat-card-header>
-            <mat-card-title>QR</mat-card-title>
-            <mat-card-subtitle>{{"time" | translate}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <img mat-card-image [src]="qrUrl" alt="QR" class="QR" width="300" height="300">
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button>{{"close" | translate}}</button>
-        </mat-card-actions>
-    </mat-card>
-</div>
