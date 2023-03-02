@@ -11,8 +11,9 @@ export const environment = {
             incidences:'/api/incidences',
             cashiersAll:'/api/cashiers',
             clientAll:'/api/client',
-            clientbydni:'/api/client',
-            clientbyid:'/api/client'
+            clientbydni:'/api/client/dni',
+            clientbyid:'/api/client',
+            newclient:'/api/client'     
         }
     },
     nominatimAPI:{

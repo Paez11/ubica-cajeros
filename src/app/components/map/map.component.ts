@@ -20,7 +20,6 @@ export class MapComponent implements OnInit{
   
   client: IClient ={
     id: 1,
-    name: "mock",
     account: "bancaMarch",
     dni: "",
     password: ""
@@ -115,7 +114,6 @@ export class MapComponent implements OnInit{
       
       this.client = {
         id:1,
-        name:"mock",
         account:"mock",
         dni:"",
         password:"",
