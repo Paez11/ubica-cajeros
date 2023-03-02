@@ -17,9 +17,6 @@ export const environment = {
         }
     },
     nominatimAPI:{
-        url:'https://nominatim.openstreetmap.org/',
-        endpoint:{
-            postalCode:'search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1'
-        }
+        url:'https://nominatim.openstreetmap.org/'
     }
 };
