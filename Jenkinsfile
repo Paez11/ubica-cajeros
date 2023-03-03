@@ -8,15 +8,15 @@ pipeline {
             }
         }
 
-        stage ('BancaMarchFRONT: Build project: ng b -c prod') {
+        stage ('BancaMarchFRONT: Build project: ng b -c --prod') {
             steps {
-                sh 'ng b -c prod --aot'
+                sh 'ng b -c --prod --aot'
             }
         }
 
         stage ('BancaMarchFRONT: Deploying in nginx') {
             steps {
-                sh 'cd dist && cp -vr . /usr/share/nginx/www/public'
+                sh 'cd dist && cp -vr . /var/www/vps-3fdb8b00.vps.ovh.net'
             }
         }
     }

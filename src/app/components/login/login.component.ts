@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   account: string
   email: string
 
+  toast:string
+
   client: IClient = {
     id: 0,
     dni: '',
@@ -56,6 +58,10 @@ export class LoginComponent implements OnInit {
     } else {
       console.log("Doesnt exist")
       //open modal register
+    }
+
+    if(this.client.dni != this.dniLogin || this.client.password != this.passwordLogin){
+      
     }
   }
 
