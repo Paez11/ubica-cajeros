@@ -10,8 +10,8 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'main', component:ContainerComponent},
   {path:'qr', component:QrComponent},
-  {path:'', component:Error404Component},
-  {path:'**', redirectTo:'login', pathMatch:'full'}
+  {path:'', redirectTo:'login', pathMatch:'full'},
+  {path:'**', component:Error404Component}
 ];
 
 @NgModule({

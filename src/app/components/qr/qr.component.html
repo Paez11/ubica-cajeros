@@ -5,17 +5,39 @@
     </div> 
 </div>
 -->
-<div class="myCardQR">
-    <mat-card id="cardQR">
-        <mat-card-header>
-            <mat-card-title>QR</mat-card-title>
-            <mat-card-subtitle>{{"time" | translate}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <img mat-card-image [src]="qrUrl" alt="QR" class="QR" width="300" height="300">
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button routerLink="/main">{{"close" | translate}}</button>
-        </mat-card-actions>
-    </mat-card>
+<div class="container-fluid myQR">
+    <div class="header">
+        <img src="./../assets/img/logoAtmira.png" alt="logo" class="logo">
+        <div class="time">
+            {{"time" | translate}}
+        </div>
+        <div class="text">
+            {{"scanQR" | translate}}
+        </div>
+    </div>
+    <hr class="divisor">
+    <div class="qrContainer">
+        <img [src]="qrUrl" alt="QR" class="QR" width="300" height="300">
+    </div>
+    <hr class="divisor">
+    <div class="botton">
+        <button type="button" class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#closeModal">
+            {{"cancel" | translate}}
+        </button>
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            {{"cancelText" | translate}}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary b" routerLink="/main" data-bs-dismiss="modal">{{"confirm" | translate}}</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancel" | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

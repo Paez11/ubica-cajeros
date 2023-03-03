@@ -11,6 +11,10 @@
     "cashierAvailable": "Available",
     "cashierNotAvailable": "Not available",
     "transactions": "Transactions",
-    "close": "close",
-    "time": "time"
+    "close": "Close",
+    "time": "time",
+    "scanQR": "please scan the QR in the ATM machine before the time runs out",
+    "cancelText": "Are you sure you want to cancel the transaction?",
+    "confirm": "Yes",
+    "cancel": "Cancel"
 }

@@ -11,6 +11,10 @@
     "cashierAvailable": "Disponible",
     "cashierNotAvailable": "No disponible",
     "transactions": "Transacciones",
-    "close": "cerrar",
-    "time": "tiempo"
+    "close": "Cerrar",
+    "time": "tiempo",
+    "scanQR": "Por favor, escanee el código QR antes de que  el tiempo se agote",
+    "cancelText": "¿Estás seguro que quieres cancelar la transacción?",
+    "confirm": "Si",
+    "cancel": "Cancelar"
 }
