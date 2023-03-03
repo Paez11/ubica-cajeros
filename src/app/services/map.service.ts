@@ -24,9 +24,9 @@ export class MapService {
     if(postalCode==null){
       throw new Error("Error en datos");
     }
-    const endpoint =environment.nominatimAPI.url+environment.nominatimAPI.endpoint.postalCode;
+    const endpoint =environment.nominatimAPI.url;
     this.http.
-    get(`https://nominatim.openstreetmap.org/search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1`)
+    get(endpoint+`search?q=${postalCode}&format=jsonv2&countrycodes=es&polygon_geojson=1`)
     .subscribe((data: any) => {
         if (data.length > 0) {
           const lat = data[0].lat;

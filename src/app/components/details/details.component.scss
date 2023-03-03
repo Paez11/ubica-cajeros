@@ -40,3 +40,25 @@
     top: 0;
     left: 0;
 }
+
+.toggler:focus{
+    border-color: none;
+    outline: 0;
+}
+.toggler:active{
+    border-color: none;
+    outline: 0;
+}
+.toggler{
+    border: none;
+    outline: 0;
+    background-color: rgba(240, 248, 255, 0.653);
+    padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    color: var(--bs-navbar-color);
+    background-color: transparent;
+    border-radius: var(--bs-navbar-toggler-border-radius);
+    transition: var(--bs-navbar-toggler-transition);
+    cursor: pointer;
+}
