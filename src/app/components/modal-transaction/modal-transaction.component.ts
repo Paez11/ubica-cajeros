@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -16,14 +17,15 @@ export class ModalTransactionComponent implements OnInit {
   _modal;
 
   show: boolean = false;
-  amount:number;
+  @Output() amount:number;
+  isValid: boolean = true;
 
   _ready:boolean = true;
 
   transaction:DTOTransaction;
   client:IClient;
   cashierId:number;
-  type:boolean = false;
+  @Output() type:boolean = false;
   //false extraer
   //true ingresar
 
@@ -31,7 +33,7 @@ export class ModalTransactionComponent implements OnInit {
   qrUrl = './assets/icons/codigo-qr.png';
   showQR = false;
 
-  constructor(public transactionS:TransactionService, private cashierS:CashierService) { 
+  constructor(public transactionS:TransactionService, private cashierS:CashierService, private router: Router) { 
   
   }
 
@@ -51,39 +53,20 @@ export class ModalTransactionComponent implements OnInit {
     this.show=true;
   }
 
-  getQR(type:boolean){
-    this.type=type;
-    this.close();
-    /*this._ready=false;
-    this.transactionS.createTransaction(this.client,this.cashierId,this.type,this.amount).subscribe(transaction =>{
-      this.transaction=transaction;
-      console.log(this.transaction)
-      //this.generateQRCodeImageFromBase64(transaction.securityCode)
-      this._ready=true;
-    })
-    */
-    this.showQR=true;
-    console.log("QR ABIERTO")
-    const timeout = setTimeout(() =>{
-
-    },6000);
-  }
-
-  closeQR(){
-    
-  }
-
-  generateQRCodeImageFromBase64(filePath:string){
-    const canvas = document.createElement('canvas');
-    canvas.width = 400;
-    canvas.height = 200;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000000';
-    ctx.font = 'bold 30px sans-serif';
-    ctx.fillText(filePath, 20, 100);
-    return canvas.toDataURL();
+  doTransaction(type:boolean){
+    if(isNaN(this.amount) || (this.amount<5.00 || this.amount>3000.00)){
+      this.isValid = false;
+    } else{
+      this.isValid = true;
+      this.transaction = {
+        client:1,       //Recuerda cambiarlo melon
+        amount:this.amount,
+        cashier:this.cashierId,
+        type:type
+      }
+      this.transactionS.setTransaction(this.transaction);
+      this.router.navigate(['/qr']);
+    }
   }
 
   ngAfterInit(){

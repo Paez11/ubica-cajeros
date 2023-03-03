@@ -66,7 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatInputModule,
     ReactiveFormsModule
   ],
-  providers: [CashierService,ClientService,SearchbarComponent,MapService],
+  providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTransactionComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
