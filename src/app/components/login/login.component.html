@@ -1,6 +1,6 @@
 <div>
   <div class="container">
-    <img class="img" src="../../../assets/img/Logo Atmira.png">
+    <img class="img" src="../../../assets/img/logoAtmira.png">
   </div>
   <div class="container">
     <form class="form">
@@ -13,7 +13,7 @@
           <label class="form-label">Password</label>
           <input [(ngModel)]="passwordLogin" name="passwordLogin" type="password" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
         </div>
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div [(ngModel)]="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <strong class="me-auto">Attention</strong>
             <small>Error</small>
