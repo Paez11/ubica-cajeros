@@ -14,7 +14,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 export class QrComponent implements OnInit {
   _ready:boolean = true;
   base64QR:string;
-  base64Image:any;
+  base64Image:SafeResourceUrl;
   transaction:DTOTransaction;
   client:IClient ={
     id:1,
@@ -35,7 +35,8 @@ export class QrComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getQR(this.transaction.type,this.transaction.cashier,this.transaction.amount);
+    //this.getQR(this.transaction.type,this.transaction.cashier,this.transaction.amount);
+    this.getQR(true,1,5);
   }
 
   getQR(type:boolean,id:number,amount:number){
@@ -43,9 +44,10 @@ export class QrComponent implements OnInit {
     this.transactionS.createTransaction(this.client.id,id,type,amount).subscribe(transaction =>{
       this.transaction=transaction;
       console.log(this.transaction)
-      this.base64QR = "data:image/png;base64,"+ this.generateQRCodeImageFromBase64(transaction.securityCode);
-      this.base64Image = this.domSanitizer.bypassSecurityTrustResourceUrl(this.base64QR) as SafeResourceUrl;
-      console.log(this.base64Image);
+      this.base64QR = this.generateQRCodeImageFromBase64(transaction.securityCode);
+      console.log("QR -->", this.base64QR)
+      this.base64Image = this.domSanitizer.bypassSecurityTrustResourceUrl(this.base64QR);
+      console.log("IMG -->",this.base64Image);
       this._ready=true;
     })
     
