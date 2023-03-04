@@ -5,6 +5,7 @@ import { IClient } from 'src/app/model/IClient';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-qr',
@@ -23,11 +24,16 @@ export class QrComponent implements OnInit {
     password: "1234",
   };
 
+  timeLeft: number = 60000;
+  
   //QR
   qrUrl = './assets/icons/codigo-qr.png';
   showQR = false;
 
-  constructor(private transactionS:TransactionService, private modal: ModalTransactionComponent, private domSanitizer: DomSanitizer) { 
+  constructor(private transactionS:TransactionService, 
+    private modal: ModalTransactionComponent, 
+    private domSanitizer: DomSanitizer,
+    private router:Router) { 
     transactionS.getTransaction().subscribe(data =>{
       this.transaction=data;
     });
@@ -54,8 +60,11 @@ export class QrComponent implements OnInit {
     this.showQR=true;
     console.log("QR ABIERTO")
     const timeout = setTimeout(() =>{
-
-    },6000);
+      this.router.navigate(['/main']);
+    },60000);
+    setInterval(() => {
+      this.timeLeft = this.timeLeft - 1000; // reduce the time left by 1 second
+    }, 1000)
   }
 
   closeQR(){
