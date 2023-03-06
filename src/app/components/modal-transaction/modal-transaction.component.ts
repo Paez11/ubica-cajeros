@@ -46,6 +46,7 @@ export class ModalTransactionComponent implements OnInit {
   close(){
     this._modal.hide();
     this.show=false;
+    this.isValid = true;
   }
   open(id){
     this.cashierId=id;
@@ -65,7 +66,8 @@ export class ModalTransactionComponent implements OnInit {
         type:type
       }
       this.transactionS.setTransaction(this.transaction);
-      this.router.navigate(['/qr']);
+      this.close();
+      this.router.navigate(['/QR']);
     }
   }
 

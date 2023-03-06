@@ -6,82 +6,82 @@
     <form class="form">
       <div class="window">
         <div class="mb-3">
-          <label class="form-label">DNI</label>
+          <label class="form-label">{{"DNI" | translate}}</label>
           <input [(ngModel)]="dniLogin" name="dniLogin" type="text" class="form-control">
         </div>
         <div class="mb-3">
-          <label class="form-label">Password</label>
+          <label class="form-label">{{"password" | translate}}</label>
           <input [(ngModel)]="passwordLogin" name="passwordLogin" type="password" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
         </div>
         <div [(ngModel)]="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
-            <strong class="me-auto">Attention</strong>
+            <strong class="me-auto">{{"attention" | translate}}</strong>
             <small>Error</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
           <div class="toast-body">
-            DNI or Password are wrong. Please rewrite the fields
+            {{"wrongCredencial" | translate}}
           </div>
         </div>
         <div class="mb-3">
-          <a class="openModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot the password?</a>
+          <a class="openModal" data-bs-toggle="modal" data-bs-target="#exampleModal">{{"forgotPassword" | translate}}</a>
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Write an email account</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">{{"writeEmail" | translate}}</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <input [(ngModel)]="emailLogin" name="emailLogin" type="email" class="form-control">
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                  <button (click)="sendMail()" type="button" class="btn">Send</button>
+                  <button type="button" class="btn" data-bs-dismiss="modal">{{"cancel" | translate}}</button>
+                  <button (click)="sendMail()" type="button" class="btn">{{"send" | translate}}</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="mb-3">
-          <a class="openModal" data-bs-toggle="modal" data-bs-target="#exampleModal2">Create a new account</a>
+          <a class="openModal" data-bs-toggle="modal" data-bs-target="#exampleModal2">{{"createAccount" | translate}}</a>
           <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
             <div class="modal-dialog">
               <div class="window">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel2">New Account</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">{{"newAccount" | translate}}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     <div class="mb-3 row">
-                      <label class="col-sm-2 col-form-label">DNI</label>
+                      <label class="col-sm-2 col-form-label">{{"DNI" | translate}}</label>
                       <div class="col-sm-10">
                         <input [(ngModel)]="dni" name="dni" placeholder="12345678A" type="text" class="form-control" regexInput="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$">
                       </div>
                     </div>
                     <div class="mb-3 row">
-                      <label class="col-sm-2 col-form-label">Password</label>
+                      <label class="col-sm-2 col-form-label">{{"password" | translate}}</label>
                       <div class="col-sm-10">
                         <input [(ngModel)]="password" name="password" placeholder="******" type="password" class="form-control" regexInput="^([a-z0-9A-Z]*[<>-´ç`+*^Ç¨_:;,.¡¿?'!|ºª@#·$%&¬/()=[]{}€]?)*$">
                       </div>
                     </div>
                     <div class="mb-3 row">
-                      <label class="col-sm-2 col-form-label">Account</label>
+                      <label class="col-sm-2 col-form-label">{{"account" | translate}}</label>
                       <div class="col-sm-10">
                         <input [(ngModel)]="account" name="accountº" placeholder="ES12 3456 7890 9876 5432 1234" type="text" class="form-control" regexInput="^ES\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}$">
                       </div>
                     </div>
                     <div class="mb-3 row">
-                      <label class="col-sm-2 col-form-label">Email</label>
+                      <label class="col-sm-2 col-form-label">{{"email" | translate}}</label>
                       <div class="col-sm-10">
                         <input [(ngModel)]="email" name="email" placeholder="doggy@gmail.com" type="email" class="form-control" regexInput="^[A-Z]*[a-z0-9A-Z]*[@]{1}[a-z]*[.]{1}[a-z]*$">
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                    <button (click)="createAccount()" type="button" class="btn">Send</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">{{"cancel" | translate}}</button>
+                    <button (click)="createAccount()" type="button" class="btn">{{"send" | translate}}</button>
                   </div>
                 </div>
               </div>
@@ -89,8 +89,8 @@
           </div>
         </div>
         <div class="mb-3">
-          <button (click)="auth()" type="submit" class="btn" routerLink="/main">Submit</button>
-          <button (click)="cancel()" type="submit" class="btn" routerLink="/main">Cancel</button>
+          <button (click)="auth()" type="submit" class="btn" routerLink="/main">{{"send" | translate}}</button>
+          <button (click)="cancel()" type="submit" class="btn" routerLink="/main">{{"cancel" | translate}}</button>
         </div>
       </div>
     </form>
