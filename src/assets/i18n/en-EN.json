@@ -17,5 +17,16 @@
     "cancelText": "Are you sure you want to cancel the transaction?",
     "confirm": "Yes",
     "cancel": "Cancel",
-    "noAmount": "There is no amount introduce, or is not between the possibles values"
+    "noAmount": "There is no amount introduce, or is not between the possibles values",
+    "DNI": "DNI",
+    "password": "Password",
+    "attention": "Attention",
+    "wrongCredencial": "DNI or Password are wrong. Please rewrite the fields",
+    "forgotPassword": "Forgot the password?",
+    "writeEmail": "Write an email account",
+    "send": "Send",
+    "createAccount": "Create a new account",
+    "account": "Account",
+    "email": "Email",
+    "newAccount": "New Account"
 }

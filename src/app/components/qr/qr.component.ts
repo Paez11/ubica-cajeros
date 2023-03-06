@@ -3,9 +3,9 @@ import { MatCard } from '@angular/material/card';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { IClient } from 'src/app/model/IClient';
 import { TransactionService } from 'src/app/services/transaction.service';
-import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-qr',
@@ -13,7 +13,7 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./qr.component.scss']
 })
 export class QrComponent implements OnInit {
-  _ready:boolean = true;
+  _ready:boolean = false;
   base64QR:string;
   base64Image:SafeResourceUrl;
   transaction:DTOTransaction;
@@ -24,64 +24,49 @@ export class QrComponent implements OnInit {
     password: "1234",
   };
 
-  timeLeft: number = 60000;
-  
-  //QR
-  qrUrl = './assets/icons/codigo-qr.png';
-  showQR = false;
+  timeLeft: number = 600000;
+  timer:any;
+  private transactionSubscription: Subscription;
 
   constructor(private transactionS:TransactionService, 
-    private modal: ModalTransactionComponent, 
-    private domSanitizer: DomSanitizer,
     private router:Router) { 
     transactionS.getTransaction().subscribe(data =>{
       this.transaction=data;
     });
-    console.log(this.transaction);
   }
 
   ngOnInit(): void {
-    //this.getQR(this.transaction.type,this.transaction.cashier,this.transaction.amount);
-    this.getQR(true,1,5);
+    this.getQR(this.transaction.type,this.transaction.cashier,this.transaction.amount);
+    //this.getQR(true,1,5);
   }
 
   getQR(type:boolean,id:number,amount:number){
-    this._ready=false;
     this.transactionS.createTransaction(this.client.id,id,type,amount).subscribe(transaction =>{
       this.transaction=transaction;
-      console.log(this.transaction)
-      this.base64QR = this.generateQRCodeImageFromBase64(transaction.securityCode);
-      console.log("QR -->", this.base64QR)
-      this.base64Image = this.domSanitizer.bypassSecurityTrustResourceUrl(this.base64QR);
-      console.log("IMG -->",this.base64Image);
+      console.log(transaction)
+      console.log(transaction.securityCode.length)
+      this.base64QR =transaction.securityCode;
       this._ready=true;
     })
-    
-    this.showQR=true;
-    console.log("QR ABIERTO")
+
     const timeout = setTimeout(() =>{
       this.router.navigate(['/main']);
-    },60000);
+    },this.timeLeft);
     setInterval(() => {
       this.timeLeft = this.timeLeft - 1000; // reduce the time left by 1 second
+      this.timer = this.transform(this.timeLeft);
     }, 1000)
   }
 
-  closeQR(){
-    
+  transform(value: number): string {
+    const minutes = `0${new Date(value).getMinutes()}`.slice(-2);
+    const seconds = `0${new Date(value).getSeconds()}`.slice(-2);
+    return `${minutes}:${seconds}`;
   }
 
-  generateQRCodeImageFromBase64(filePath:string){
-    const canvas = document.createElement('canvas');
-    canvas.width = 300;
-    canvas.height = 300;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000000';
-    ctx.font = 'bold 30px sans-serif';
-    ctx.fillText(filePath, 20, 100);
-    return canvas.toDataURL();
+  ngOnDestroy(){
+    if(this.transactionSubscription){
+      this.transactionSubscription.unsubscribe();
+    }
   }
-
 }
