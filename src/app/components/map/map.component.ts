@@ -20,7 +20,7 @@ export class MapComponent implements OnInit{
   
   client: IClient ={
     id: 1,
-    account: "bancaMarch",
+    account: "",
     dni: "",
     password: ""
   };
@@ -45,7 +45,6 @@ export class MapComponent implements OnInit{
   myPos:L.Marker;
   actualRadius: L.Circle;
   markers:L.Marker = [];
-  searchMarkers:L.Marker = [];
   markerObjects = [];
   popup = L.popup();
   searchMarker: L.Marker;
@@ -97,10 +96,14 @@ export class MapComponent implements OnInit{
         this.setCashiers(this.radius);
       }
     });
+    /*
+    this.clientS.getUserObservable().subscribe(client =>{
+      this.client = client;
+    });
+    */
   }
 
   ngOnInit(): void {
-    this.clientS.user=this.client;
     if(this.map != undefined){
       this.map.off();
       this.map.remove();
@@ -268,8 +271,8 @@ export class MapComponent implements OnInit{
           })
         })
       }
-      this.addMarkers2(this.searchMarker);
-      console.log("hola -->",this.searchMarker)
+      this.addMarkers2(this.markers);
+      console.log("hola? -->",this.markers)
     }catch(error){
       console.error(error);
     }

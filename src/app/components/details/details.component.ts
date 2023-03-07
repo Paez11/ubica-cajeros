@@ -61,11 +61,6 @@ export class DetailsComponent implements OnInit{
     this.modal.open(id);
     //this.transactionS.show();
   }
-  /*
-  ngAfterViewInit() {
-    this.setData();
-  }
-  */
 
   ngOnDestroy(){
     if(this.clientSubscription){
