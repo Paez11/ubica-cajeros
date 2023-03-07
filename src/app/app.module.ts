@@ -28,6 +28,8 @@ import { ClientService } from './services/client.service';
 import { MapService } from './services/map.service';
 import { QrComponent } from './components/qr/qr.component';
 import { Error404Component } from './components/error404/error404.component';
+import { QRCodeModule } from 'angularx-qrcode';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,9 +66,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatSliderModule,
     MatAutocompleteModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QRCodeModule
   ],
-  providers: [CashierService,ClientService,SearchbarComponent,MapService],
+  providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTransactionComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
