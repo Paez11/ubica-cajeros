@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
@@ -14,13 +15,16 @@ export class DetailsComponent implements OnInit{
   
   public cashiers:ICashier[] = [];
   @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
+
+  private clientSubscription: Subscription;
+  private cashierSubscription: Subscription;
   
   constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService) {
     
   }
 
   ngOnInit() {
-    this.clientS.getUserObservable().subscribe(() => {
+    this.clientSubscription = this.clientS.getUserObservable().subscribe(() => {
       this.setData();
     });
   }
@@ -44,7 +48,7 @@ export class DetailsComponent implements OnInit{
   initializeMyComponent(): void | PromiseLike<void> {
     try{
       this.cashiers=[];
-      this.cashierS.getCashiersByRadius(this.clientS.user.id,this.clientS.user.lat,this.clientS.user.lng,this.clientS.user.distance).subscribe(cashiers =>{
+      this.cashierSubscription = this.cashierS.getCashiersByRadius(this.clientS.user.id,this.clientS.user.lat,this.clientS.user.lng,this.clientS.user.distance).subscribe(cashiers =>{
         this.cashiers.push(...cashiers);
         //this.cashierS.addItem(this.cashiers);
       });
@@ -62,6 +66,15 @@ export class DetailsComponent implements OnInit{
     this.setData();
   }
   */
+
+  ngOnDestroy(){
+    if(this.clientSubscription){
+      this.clientSubscription.unsubscribe();
+    }
+    if(this.cashierSubscription){
+      this.cashierSubscription.unsubscribe();
+    }
+  }
 }
 
 

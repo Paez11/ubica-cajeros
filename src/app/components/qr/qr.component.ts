@@ -36,12 +36,13 @@ export class QrComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getQR(this.transaction.type,this.transaction.cashier,this.transaction.amount);
-    //this.getQR(true,1,5);
+    this.getQR(this.transaction.cashier,this.transaction.type,this.transaction.amount);
   }
 
-  getQR(type:boolean,id:number,amount:number){
-    this.transactionS.createTransaction(this.client.id,id,type,amount).subscribe(transaction =>{
+  getQR(id:number,type:boolean,amount:number){
+    console.log("ESTE ES EL TIPO -->", type)
+    this.transactionS.createTransaction(this.client.id,id,false,amount).subscribe(transaction =>{
+      console.log("-->", type)
       this.transaction=transaction;
       console.log(transaction)
       console.log(transaction.securityCode.length)
