@@ -6,6 +6,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-qr',
@@ -29,10 +30,15 @@ export class QrComponent implements OnInit {
   private transactionSubscription: Subscription;
 
   constructor(private transactionS:TransactionService, 
-    private router:Router) { 
+    private router:Router, private clientS:ClientService) { 
     transactionS.getTransaction().subscribe(data =>{
       this.transaction=data;
     });
+    /*
+    this.clientS.getUserObservable().subscribe(client =>{
+      this.client = client;
+    });
+    */
   }
 
   ngOnInit(): void {

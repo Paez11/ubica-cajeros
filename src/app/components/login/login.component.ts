@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
 
@@ -8,6 +10,11 @@ import { ClientService } from 'src/app/services/client.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  @ViewChild('modal') modal:ElementRef;
+  _modal;
+  show:boolean;
+  exist:boolean;
 
   arr: any[] = []
 
@@ -31,37 +38,24 @@ export class LoginComponent implements OnInit {
     account: ''
   }
 
-  constructor(private clientS: ClientService) { }
+  private clientSubscription:Subscription;
+
+  constructor(private clientS: ClientService,private router:Router) { }
 
   ngOnInit(): void {
-    /*this.clientS.getAll().subscribe(client=>{
-      console.log(client)
-      this.arr.push(...client)
-      console.log(this.arr)
-    })*/
 
   }
 
   public auth() {
-    let result: boolean = false
-    console.log(this.client)
-    this.clientS.getByDni(this.dniLogin).subscribe(client => {
+    this.clientSubscription = this.clientS.getByDni(this.dniLogin).subscribe(client => {
       this.client = client
-      console.log(client)
     })
 
     if (this.client.dni == this.dniLogin && this.client.password == this.passwordLogin) {
-
-      console.log("Is in database")
-
-      //close component and still in map
+      this.clientS.setUser(this.client);
+      this.router.navigate(['/main']);
     } else {
-      console.log("Doesnt exist")
-      //open modal register
-    }
-
-    if(this.client.dni != this.dniLogin || this.client.password != this.passwordLogin){
-      
+      this.open();
     }
   }
 
@@ -73,34 +67,41 @@ export class LoginComponent implements OnInit {
       email: this.email,
     }
     
-      if (this.clientS.getByDni(this.client.dni).subscribe(client=>{this.client=client})) {
-        
-        console.log("Client exists")
-      }else{
-        this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
-          this.client = client
-          console.log(client)
-        })
-        console.log("Client doesnt exists")
+    this.clientS.getByDni(this.client.dni).subscribe(client=>{
+      if(client.dni==this.client.dni){
+        this.exist=true;
       }
-    
-    
-    /*this.clientS.delete(74).subscribe(client=>{
-      this.client = client
-      console.log(client)
-    })*/
+    })
+
+    if (this.exist) {
+      console.log("Client exists")
+    }else{
+      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
+        this.client = client
+        this.clientS.setUser(this.client);
+      })
+    }
+  }
+
+  close(){
+    this._modal.hide();
+    this.show=false;
+  }
+  open(){
+    this._modal.show();
+    this.show=true;
   }
 
   public sendMail() {
-    console.log("Sended")
+    //Send email
   }
 
   public submit() {
-    console.log("Logged")
+    
   }
 
   public cancel() {
-    console.log("Canceled")
+    
   }
 
   showErrorToast() {
@@ -108,5 +109,11 @@ export class LoginComponent implements OnInit {
     //const toast = new Toast(toastElement)
     //toast.show()
 
+  }
+
+  ngOnDestroy(){
+    if(this.clientSubscription){
+      this.clientSubscription.unsubscribe();
+    }
   }
 }
