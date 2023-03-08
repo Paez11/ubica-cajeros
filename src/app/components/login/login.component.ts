@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('modal') modal:ElementRef;
   _modal;
   show:boolean;
+  exist:boolean;
 
   arr: any[] = []
 
@@ -66,7 +67,13 @@ export class LoginComponent implements OnInit {
       email: this.email,
     }
     
-    if (this.clientS.getByDni(this.client.dni).subscribe(client=>{this.client=client})) {
+    this.clientS.getByDni(this.client.dni).subscribe(client=>{
+      if(client.dni==this.client.dni){
+        this.exist=true;
+      }
+    })
+
+    if (this.exist) {
       console.log("Client exists")
     }else{
       this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {

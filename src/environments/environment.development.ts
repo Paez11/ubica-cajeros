@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     api:{
-        url:'http://vps-3fdb8b00.vps.ovh.net',  //hay que poner url del server y quitar el proxy >>ng serve --proxy-config proxy.conf.json --ssl
+        url:'http://localhost:4200',  //hay que poner url del server y quitar el proxy >>ng serve --proxy-config proxy.conf.json --ssl
         endpoint:{
             cashiersbyradius:'/api/cashiers/distance',
             cashiersbycp:'/api/cashiers/cp',
