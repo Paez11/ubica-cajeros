@@ -16,8 +16,9 @@ pipeline {
 
         stage ('BancaMarchFRONT: Deploying in nginx') {
             steps {
-                sh 'cd dist && cp -vr . /var/www/vps-3fdb8b00.vps.ovh.net'
-                sh 'cp -R * /var/www/vps-3fdb8b00.vps.ovh.net/html/'
+                sh 'cd dist && mv  ./* /var/www/vps-3fdb8b00.vps.ovh.net/html/'
+                sh ''
+                //sh 'cp -R * /var/www/vps-3fdb8b00.vps.ovh.net/html/'
                 //move the files to the /var/www/vps-3fdb8b00.vps.ovh.net/html directory
             }
         }
