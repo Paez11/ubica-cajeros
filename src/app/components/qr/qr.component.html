@@ -1,4 +1,4 @@
-<div class="loading" *ngIf="!_ready"> 
+<div class="loading" *ngIf="!this._ready"> 
     <div class="spinner-border text-success" role="status">
         <span class="visually-hidden"></span>
     </div> 
@@ -6,9 +6,9 @@
 
 <div class="container-fluid myQR">
     <div class="header">
-        <img src="./../assets/img/logoAtmira.png" alt="logo" class="logo">
+        <img src="./../assets/img/" alt="logo" class="logo">
         <div class="time">
-            {{"time" | translate}}
+            {{ timer }}
         </div>
         <div class="text">
             {{"scanQR" | translate}}
@@ -16,7 +16,7 @@
     </div>
     <hr class="divisor">
     <div class="qrContainer">
-        <img [src]="base64Image" alt="QR" class="QR" width="300" height="300">
+        <qrcode *ngIf="this._ready" [qrdata]="base64QR" [width]="256" [errorCorrectionLevel]="'H'"></qrcode>
     </div>
     <hr class="divisor">
     <div class="botton">

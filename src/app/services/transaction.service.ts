@@ -19,7 +19,7 @@ export class TransactionService {
   }
 
   createTransaction(client, cashier, type, amount):Observable<any> {
-    if(!client || !cashier || !type || !amount || amount<0) {
+    if(!client || !cashier || type==undefined || !amount || amount<0) {
       throw new Error("Data error.");
     }
 
@@ -27,7 +27,7 @@ export class TransactionService {
       client:client,
       cashier:cashier,
       type:type,
-      amount:amount,
+      amount:amount
     }
 
     const endpoint = environment.api.url+environment.api.endpoint.transactions;

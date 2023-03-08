@@ -17,5 +17,16 @@
     "cancelText": "¿Estás seguro que quieres cancelar la transacción?",
     "confirm": "Si",
     "cancel": "Cancelar",
-    "noAmount": "No hay una cantidad introducida, o no esta dentro de la cantidad permitida"
+    "noAmount": "No hay una cantidad introducida, o no esta dentro de la cantidad permitida",
+    "DNI": "DNI",
+    "password": "Contraseña",
+    "attention": "Atención",
+    "wrongCredencial": "DNI o contraseña incorrectos. Por favor revise los datos",
+    "forgotPassword": "¿Olvidastes la contraseña?",
+    "writeEmail": "Escribe una cuenta de email",
+    "send": "Enviar",
+    "createAccount": "Crear una nueva cuenta",
+    "account": "Cuenta",
+    "email": "Correo electronico",
+    "newAccount": "Nueva cuenta"
 }

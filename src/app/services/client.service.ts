@@ -27,10 +27,6 @@ export class ClientService {
     return this.userSubject.asObservable();
   }
 
-  getClient(): IClient {
-    return this.user;
-  }
-
   getAll(): Observable<IClient[]> {
     return this.http.get<IClient[]>(this.url + environment.api.endpoint.clientAll);
   }

@@ -9,13 +9,13 @@ import { ContainerComponent } from './components/container/container.component';
 const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'main', component:ContainerComponent},
-  {path:'qr', component:QrComponent},
+  {path:'QR', component:QrComponent},
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'**', component:Error404Component}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

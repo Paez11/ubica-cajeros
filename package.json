@@ -26,6 +26,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/jest": "^29.4.0",
+    "angularx-qrcode": "^13.0.15",
     "bootstrap": "^5.2.3",
     "jest": "^28.1.3",
     "jest-preset-angular": "^12.2.6",
