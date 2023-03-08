@@ -53,10 +53,7 @@ export class ModalTransactionComponent implements AfterViewInit {
     this.isValid = true;
   }
   open(id){
-    console.log(this)
     this.cashierId=id;
-    console.log("ID CAJERO MODAL -->",this.cashierId);
-    console.log(this._modal);
     this._modal.show();
     this.show=true;
   }

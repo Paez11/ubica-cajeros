@@ -12,8 +12,6 @@ export class ContainerComponent implements OnInit,AfterViewInit{
   
   }
   ngAfterViewInit(): void {
-    console.log("COMPONENTE");
-    console.log(this.modal);
     this.modalS.modal=this.modal;
   }
   ngOnInit(): void {

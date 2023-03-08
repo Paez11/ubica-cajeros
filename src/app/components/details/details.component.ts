@@ -60,7 +60,6 @@ export class DetailsComponent implements OnInit{
 
   openModal(id: number) {
     this.modalS.modal.open(id);
-    //this.transactionS.show();
   }
 
   ngOnDestroy(){

@@ -98,7 +98,6 @@ export class MapComponent implements OnInit{
     
     this.clientS.getUserObservable().subscribe(client =>{
       this.client = client;
-      console.log(this.client)
     });
     
   }

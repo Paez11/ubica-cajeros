@@ -43,9 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   public auth() {
-    console.log(this.dniLogin)
     this.clientSubscription = this.clientS.getByDni(this.dniLogin).subscribe(client => {
-      console.log("ENTRA -->",client)
       let auxClient = {
         id:client.id,
         dni:client.dni,
@@ -53,11 +51,8 @@ export class LoginComponent implements OnInit {
         email:client.email,
         password:client.password
       }
-      console.log("MIRA -->",auxClient)
       this.client=auxClient;
-      console.log(this.passwordLogin=this.hash(this.passwordLogin))
       if (this.client.dni == this.dniLogin && this.client.password == (this.passwordLogin=this.hash(this.passwordLogin))) {
-        console.log("LOGEA")
         this.clientS.setUser(this.client);
         this.router.navigate(['/main']);
       }
