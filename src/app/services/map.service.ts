@@ -31,8 +31,7 @@ export class MapService {
         if (data.length > 0) {
           const lat = data[0].lat;
           const lng = data[0].lon;
-          console.log("polygon data -->", data)
-          console.log(lat,lng)
+          console.log("Hay calles -->", data)
           this.setLocation(lat, lng);
           const polygonGeoJSON = data[0]?.geojson;
           console.log("este es el poligono -->", polygonGeoJSON)
@@ -54,7 +53,6 @@ export class MapService {
   }
 
   public setPolygon(polygonData: any) {
-    console.log("HAY POLIGONO-->", polygonData)
     this.polygonSubject.next(polygonData);
   }
 
