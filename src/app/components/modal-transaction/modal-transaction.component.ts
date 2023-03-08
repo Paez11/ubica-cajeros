@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
+import { ClientService } from 'src/app/services/client.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 
 declare var bootstrap:any;
@@ -12,8 +13,8 @@ declare var bootstrap:any;
   templateUrl: './modal-transaction.component.html',
   styleUrls: ['./modal-transaction.component.scss']
 })
-export class ModalTransactionComponent implements OnInit {
-  @ViewChild('modal') modal:ElementRef;
+export class ModalTransactionComponent implements AfterViewInit {
+  @Input() id = 'modal';
   _modal;
 
   show: boolean = false;
@@ -33,12 +34,15 @@ export class ModalTransactionComponent implements OnInit {
   qrUrl = './assets/icons/codigo-qr.png';
   showQR = false;
 
-  constructor(public transactionS:TransactionService, private cashierS:CashierService, private router: Router) { 
-  
+  constructor(public transactionS:TransactionService, private cashierS:CashierService, 
+    private router: Router, private clientS:ClientService) { 
+    this.clientS.getUserObservable().subscribe(client =>{
+      this.client = client;
+    });
   }
 
-  ngOnInit(): void {
-    this._modal = new bootstrap.Modal(document.getElementById("modal"),{
+  ngAfterViewInit(): void {
+    this._modal = new bootstrap.Modal(document.getElementById(this.id),{
        
     });
   }
@@ -60,7 +64,7 @@ export class ModalTransactionComponent implements OnInit {
     } else{
       this.isValid = true;
       this.transaction = {
-        client:1,       //Recuerda cambiarlo melon
+        client:this.client.id,
         amount:this.amount,
         cashier:this.cashierId,
         type:type

@@ -36,6 +36,9 @@ export class ClientService {
   }
 
   getByDni(dni: string): Observable<IClient> {
+    if(!dni){
+      throw new Error("Data error.")
+    }
     return this.http.get<IClient>(this.url + environment.api.endpoint.clientbydni + '/' + dni);
   }
 

@@ -20,6 +20,7 @@ export class TransactionService {
 
   createTransaction(client, cashier, type, amount):Observable<any> {
     if(!client || !cashier || type==undefined || !amount || amount<0) {
+      console.log(client,cashier,type,amount)
       throw new Error("Data error.");
     }
 

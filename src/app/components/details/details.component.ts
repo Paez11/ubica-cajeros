@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
+import { ModalTService } from 'src/app/services/modal-t.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 
@@ -14,12 +15,12 @@ import { ModalTransactionComponent } from '../modal-transaction/modal-transactio
 export class DetailsComponent implements OnInit{
   
   public cashiers:ICashier[] = [];
-  @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
 
   private clientSubscription: Subscription;
   private cashierSubscription: Subscription;
   
-  constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService) {
+  constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService,
+    private modalS:ModalTService) {
     
   }
 
@@ -58,8 +59,7 @@ export class DetailsComponent implements OnInit{
   }
 
   openModal(id: number) {
-    this.modal.open(id);
-    //this.transactionS.show();
+    this.modalS.modal.open(id);
   }
 
   ngOnDestroy(){

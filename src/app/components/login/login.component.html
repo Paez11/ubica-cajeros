@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label">{{"password" | translate}}</label>
-          <input [(ngModel)]="passwordLogin" name="passwordLogin" type="password" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
+          <input [(ngModel)]="passwordLogin" name="passwordLogin" type="text" class="form-control" regexInput="[A-Z]*[a-z]*[0-9]*$">
         </div>
         <div class="mb-3">
           <a class="openModal" data-bs-toggle="modal" data-bs-target="#exampleModal">{{"forgotPassword" | translate}}</a>
@@ -59,7 +59,7 @@
 </div>
 
 <!--Register modal-->
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
   <div class="modal-dialog">
     <div class="window">
       <div class="modal-content">

@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { SHA256 } from 'crypto-js';
+import { Subscription, tap } from 'rxjs';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('modal') modal:ElementRef;
+  @ViewChild('registerModal') modal:ElementRef;
   _modal;
   show:boolean;
   exist:boolean;
@@ -30,13 +32,7 @@ export class LoginComponent implements OnInit {
 
   toast:string
 
-  client: IClient = {
-    id: 0,
-    dni: '',
-    password: '',
-    email: '',
-    account: ''
-  }
+  client: IClient;
 
   private clientSubscription:Subscription;
 
@@ -48,15 +44,19 @@ export class LoginComponent implements OnInit {
 
   public auth() {
     this.clientSubscription = this.clientS.getByDni(this.dniLogin).subscribe(client => {
-      this.client = client
-    })
-
-    if (this.client.dni == this.dniLogin && this.client.password == this.passwordLogin) {
-      this.clientS.setUser(this.client);
-      this.router.navigate(['/main']);
-    } else {
-      this.open();
-    }
+      let auxClient = {
+        id:client.id,
+        dni:client.dni,
+        account:client.account,
+        email:client.email,
+        password:client.password
+      }
+      this.client=auxClient;
+      if (this.client.dni == this.dniLogin && this.client.password == (this.passwordLogin=this.hash(this.passwordLogin))) {
+        this.clientS.setUser(this.client);
+        this.router.navigate(['/main']);
+      }
+    });
   }
 
   public createAccount() {
@@ -68,15 +68,17 @@ export class LoginComponent implements OnInit {
     }
     
     this.clientS.getByDni(this.client.dni).subscribe(client=>{
-      if(client.dni==this.client.dni){
+      if(client.dni){
         this.exist=true;
+      }else{
+
       }
     })
 
     if (this.exist) {
       console.log("Client exists")
     }else{
-      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
+      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.hash(this.client.password), this.client.email).subscribe(client => {
         this.client = client
         this.clientS.setUser(this.client);
       })
@@ -110,6 +112,11 @@ export class LoginComponent implements OnInit {
     //toast.show()
 
   }
+
+  hash(string) {
+    return SHA256(string).toString();
+  }
+  
 
   ngOnDestroy(){
     if(this.clientSubscription){
