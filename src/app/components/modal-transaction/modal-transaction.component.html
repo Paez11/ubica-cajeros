@@ -1,9 +1,9 @@
-<div class="modal modal-centered fade myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" id="modal">
+<div class="modal modal-centered fade myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [id]="id">
     <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">{{"operation" | translate}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+                <button type="button" class="btn-close" [attr.data-bs-dismiss]="id" aria-label="Close" (click)="close()"></button>
             </div>
             <div class="modal-body body">
                 <img src=""  alt="Image not found" onerror="this.onerror=null;this.src='./assets/icons/image-not-found.png'" width="200px" height="200px" style="margin: auto;">

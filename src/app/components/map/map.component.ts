@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -9,6 +9,7 @@ import { ModalTransactionComponent } from '../modal-transaction/modal-transactio
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
+import { ModalTService } from 'src/app/services/modal-t.service';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -70,9 +71,6 @@ export class MapComponent implements OnInit{
 
   //modal
   isModalOpen:boolean = false;
-
-  @ViewChild(ModalTransactionComponent) modal:ModalTransactionComponent;
-
   //Subscriptions
   private polygonSubscription: Subscription;
   private slideSubscription: Subscription;
@@ -87,7 +85,8 @@ export class MapComponent implements OnInit{
     private cashierService:CashierService,
     private clientS:ClientService,
     private mapService:MapService,
-    private searchBar:SearchbarComponent){
+    private searchBar:SearchbarComponent,
+    public modalS:ModalTService){
 
     this.slideSubscription = this.slideService.circleRadius.subscribe(e =>{
       this.radius=e.radius;
@@ -96,12 +95,14 @@ export class MapComponent implements OnInit{
         this.setCashiers(this.radius);
       }
     });
-    /*
+    
     this.clientS.getUserObservable().subscribe(client =>{
       this.client = client;
+      console.log(this.client)
     });
-    */
+    
   }
+
 
   ngOnInit(): void {
     if(this.map != undefined){
@@ -117,7 +118,7 @@ export class MapComponent implements OnInit{
         event:"located",
         pos:e.latlng
       });
-      
+      /*
       this.client = {
         id:1,
         account:"mock",
@@ -127,6 +128,9 @@ export class MapComponent implements OnInit{
         lng:e.latlng.lng,
         distance:this.radius
       }
+      */
+      this.client.lat = e.latlng.lat,
+      this.client.lng = e.latlng.lng,
       this.setCashiers(this.radius);
       this.setClient();
       
@@ -152,6 +156,9 @@ export class MapComponent implements OnInit{
         this.setLocationBySearch(location.lat, location.lng);
       }
     });
+
+ 
+
   }
 
   loadMap(){
@@ -398,7 +405,7 @@ export class MapComponent implements OnInit{
   }
 
   markOnClick(id:number){
-    this.modal.open(id);
+    this.modalS.modal.open(id);
     //this.isModalOpen=true;
   }
 

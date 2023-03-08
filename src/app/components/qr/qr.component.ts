@@ -18,12 +18,7 @@ export class QrComponent implements OnInit {
   base64QR:string;
   base64Image:SafeResourceUrl;
   transaction:DTOTransaction;
-  client:IClient ={
-    id:1,
-    account: "EN43544T654",
-    dni: "12345678L",
-    password: "1234",
-  };
+  client:IClient;
 
   timeLeft: number = 600000;
   timer:any;
@@ -34,11 +29,11 @@ export class QrComponent implements OnInit {
     transactionS.getTransaction().subscribe(data =>{
       this.transaction=data;
     });
-    /*
+    
     this.clientS.getUserObservable().subscribe(client =>{
       this.client = client;
     });
-    */
+    
   }
 
   ngOnInit(): void {
@@ -46,12 +41,8 @@ export class QrComponent implements OnInit {
   }
 
   getQR(id:number,type:boolean,amount:number){
-    console.log("ESTE ES EL TIPO -->", type)
-    this.transactionS.createTransaction(this.client.id,id,false,amount).subscribe(transaction =>{
-      console.log("-->", type)
+    this.transactionS.createTransaction(this.client.id,id,type,amount).subscribe(transaction =>{
       this.transaction=transaction;
-      console.log(transaction)
-      console.log(transaction.securityCode.length)
       this.base64QR =transaction.securityCode;
       this._ready=true;
     })

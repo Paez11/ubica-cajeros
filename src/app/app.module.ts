@@ -29,6 +29,7 @@ import { MapService } from './services/map.service';
 import { QrComponent } from './components/qr/qr.component';
 import { Error404Component } from './components/error404/error404.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ModalTService } from './services/modal-t.service';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -69,7 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     QRCodeModule
   ],
-  providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTransactionComponent],
+  providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
