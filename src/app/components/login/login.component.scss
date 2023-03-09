@@ -4,11 +4,8 @@
     display: block;
 }
 
-.form{
-    margin-top: 10%;
-}
-
 .window{
+    margin-top: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,4 +25,12 @@
 .openModal:hover{
     color: blue;
     cursor: pointer;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
 }

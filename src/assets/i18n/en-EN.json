@@ -28,5 +28,9 @@
     "createAccount": "Create a new account",
     "account": "Account",
     "email": "Email",
-    "newAccount": "New Account"
+    "newAccount": "New Account",
+    "noEmail": "You haven`t introuduce any email",
+    "login": "Login",
+    "end": "End",
+    "successCreate": "Account succesfully create"
 }
