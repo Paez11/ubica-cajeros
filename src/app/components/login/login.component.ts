@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   isValid: boolean = true;
 
   public form:FormGroup;
+  public formRegister:FormGroup;
 
   arr: any[] = []
 
@@ -47,22 +48,34 @@ export class LoginComponent implements OnInit {
       dniLogin: ['',[Validators.required,Validators.minLength(8)]],
       passwordLogin:['',[Validators.required,Validators.minLength(4)]]
     })
+
+    this.formRegister = this.fb.group({
+      dni: ['',[Validators.required,Validators.minLength(8)]],
+      password:['',[Validators.required,Validators.minLength(4)]],
+      account:[''],
+      email:['']
+    })
+
+    const toastTrigger = document.getElementById('ToastBtnWrong')
+    const toastLive= document.getElementById('WrongToast')
   }
 
   ngOnInit(): void {
-    this._eModal = new bootstrap.Modal(document.getElementById("emailModal"),{  });
+    this._eModal = new bootstrap.Modal(document.getElementById("emailModal"),{});
     this._rModal = new bootstrap.Modal(document.getElementById("registerModal"),{});
   }
 
-  public auth() {
+  auth() {
     this.clientSubscription = this.clientS.getByDni(this.form.value.dniLogin).subscribe(client => {
-      if(this.form.value.dniLogin != client.dni || client.password != (this.form.value.passwordLogin=this.hash(this.passwordLogin))){
+      if(this.form.value.dniLogin != client.dni || this.hash(this.form.value.passwordLogin) != client.password){
         const toastTrigger = document.getElementById('ToastBtnWrong')
-        const toastLive = document.getElementById('WrongToast')
-        toastTrigger.addEventListener('click', () => {
-          const toast = new bootstrap.Toast(toastLive)
-          toast.show()
-        })
+        const toastLive= document.getElementById('WrongToast')
+        if (toastTrigger) {
+          toastTrigger.addEventListener('click', () => {
+            const toast = new bootstrap.Toast(toastLive)
+            toast.show()
+          })
+        }
       }else{
         let auxClient = {
           id:client.id,
@@ -73,57 +86,34 @@ export class LoginComponent implements OnInit {
         }
         this.client=auxClient;
         this.clientS.setUser(this.client);
-        localStorage.setItem('currentUser', JSON.stringify({user:this.client}));
         this.router.navigate(['/main']);
       }
-      /*
-      let auxClient = {
-        id:client.id,
-        dni:client.dni,
-        account:client.account,
-        email:client.email,
-        password:client.password
-      }
-      this.client=auxClient;
-      if (this.client.dni == this.form.value.dniLogin && this.client.password == (this.form.value.passwordLogin=this.hash(this.passwordLogin))) {
-        this.clientS.setUser(this.client);
-        this.router.navigate(['/main']);
-      }else{
-        const toastTrigger = document.getElementById('ToastBtnWrong')
-        const toastLive = document.getElementById('WrongToast')
-        toastTrigger.addEventListener('click', () => {
-          const toast = new bootstrap.Toast(toastLive)
-          toast.show()
-        })
-      }
-      */
     });
   }
 
-  public createAccount() {
+  createAccount() {
     this.client = {
-      dni: this.dni,
-      password: this.password,
-      account: this.account,
-      email: this.email,
+      dni: this.formRegister.value.dni,
+      password: this.formRegister.value.password,
+      account: this.formRegister.value.account,
+      email: this.formRegister.value.email,
     }
-    
     this.clientS.getByDni(this.client.dni).subscribe(client=>{
       if(client.dni){
         this.exist=true;
-      }else{
-
       }
-    })
+    });
 
     if (this.exist) {
+      //toast
       console.log("Client exists")
     }else{
-      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.hash(this.client.password), this.client.email).subscribe(client => {
-        this.client = client
+      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
+        this.client = client;
         this.clientS.setUser(this.client);
         this.close(this._rModal);
-      })
+      });
+      //toast
     }
   }
 
