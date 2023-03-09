@@ -20,6 +20,9 @@ export class LoginComponent implements OnInit {
   @ViewChild('rModal') rModal:ElementRef;
   _rModal;
   show:boolean;
+
+  _toast:any;
+  _sToast:any;
   exist:boolean;
   
   isValid: boolean = true;
@@ -55,38 +58,32 @@ export class LoginComponent implements OnInit {
       account:[''],
       email:['']
     })
-
-    const toastTrigger = document.getElementById('ToastBtnWrong')
-    const toastLive= document.getElementById('WrongToast')
   }
 
   ngOnInit(): void {
     this._eModal = new bootstrap.Modal(document.getElementById("emailModal"),{});
     this._rModal = new bootstrap.Modal(document.getElementById("registerModal"),{});
+    this._toast = new bootstrap.Toast(document.getElementById('WrongToast'),{});
+    this._sToast = new bootstrap.Toast(document.getElementById('successToast'),{});
   }
 
   auth() {
     this.clientSubscription = this.clientS.getByDni(this.form.value.dniLogin).subscribe(client => {
-      if(this.form.value.dniLogin != client.dni || this.hash(this.form.value.passwordLogin) != client.password){
-        const toastTrigger = document.getElementById('ToastBtnWrong')
-        const toastLive= document.getElementById('WrongToast')
-        if (toastTrigger) {
-          toastTrigger.addEventListener('click', () => {
-            const toast = new bootstrap.Toast(toastLive)
-            toast.show()
-          })
+      try{
+        if(this.form.value.dniLogin == client.dni && this.hash(this.form.value.passwordLogin) == client.password){
+          let auxClient = {
+            id:client.id,
+            dni:client.dni,
+            account:client.account,
+            email:client.email,
+            password:client.password
+          }
+          this.client=auxClient;
+          this.clientS.setUser(this.client);
+          this.router.navigate(['/main']);
         }
-      }else{
-        let auxClient = {
-          id:client.id,
-          dni:client.dni,
-          account:client.account,
-          email:client.email,
-          password:client.password
-        }
-        this.client=auxClient;
-        this.clientS.setUser(this.client);
-        this.router.navigate(['/main']);
+      }catch(error){
+        this._toast.show();
       }
     });
   }
@@ -99,21 +96,30 @@ export class LoginComponent implements OnInit {
       email: this.formRegister.value.email,
     }
     this.clientS.getByDni(this.client.dni).subscribe(client=>{
-      if(client.dni){
-        this.exist=true;
+      try{
+        if(client.dni){
+          this.exist=true;
+        }
+      }catch(error){
+        console.info("client not found");
       }
     });
 
     if (this.exist) {
       //toast
-      console.log("Client exists")
+      this._toast.show();
     }else{
       this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
-        this.client = client;
-        this.clientS.setUser(this.client);
-        this.close(this._rModal);
+        try{
+          this.client = client;
+          this.clientS.setUser(this.client);
+          this.close(this._rModal);
+        }catch(error){
+          console.error("conexion error")
+        }
       });
       //toast
+      this._sToast.show();
     }
   }
 
