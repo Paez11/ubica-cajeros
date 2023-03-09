@@ -240,7 +240,7 @@ export class MapComponent implements OnInit{
       this.cashierSubscription = this.cashierService.getCashiersByRadius(this.client,this.client.lat,this.client.lng,distance).subscribe(cashier=>{
         cashier.forEach(mark =>{
           if((mark.lattitude && mark.longitude) != undefined){
-            this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
+            this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude, available:mark.available})
             this.cashierService.addItem(this.markers);
           }
         })
@@ -292,10 +292,10 @@ export class MapComponent implements OnInit{
     this.clientS.user.distance=this.radius;
   }
 
-  addMarkers(markers: Array<{id:number,lat:number,lng:number}>){
+  addMarkers(markers: Array<{id:number,lat:number,lng:number, available:boolean}>){
     let m: any;
     markers.forEach(marker => {
-      if(this.isMarkeInsideRadius(marker,this.actualRadius)){
+      if(this.isMarkeInsideRadius(marker,this.actualRadius) && marker.available){
         m = L.marker([marker.lat, marker.lng],{
           icon: this.cashierIcon
         }).addTo(this.map).on('click', () => this.markOnClick(marker.id));
