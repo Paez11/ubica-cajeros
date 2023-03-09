@@ -28,5 +28,9 @@
     "createAccount": "Crear una nueva cuenta",
     "account": "Cuenta",
     "email": "Correo electronico",
-    "newAccount": "Nueva cuenta"
+    "newAccount": "Nueva cuenta",
+    "noEmail": "No ha introducido ningún email",
+    "login": "Verificar",
+    "end": "Terminar",
+    "successCreate": "Cuenta creada correctamente"
 }
