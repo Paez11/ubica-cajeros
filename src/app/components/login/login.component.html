@@ -2,6 +2,7 @@
   <div class="container">
     <img class="img" src="../../../assets/img/logo-grande-verde.png" alt="logo" width="300">
   </div>
+  <hr class="divisor">
   <form [formGroup]="form" (ngSubmit)="auth()">
     <div class="window">
       <div class="mb-3">
@@ -23,7 +24,7 @@
         <a class="openModal" data-bs-toggle="modal" data-bs-target="#registerModal">{{"createAccount" | translate}}</a>
       </div>
       <div class="mb-3">
-        <button type="submit" class="btn" id="ToastBtnWrong">{{"login" | translate}}</button>
+        <button type="submit" class="btn">{{"login" | translate}}</button>
         <button type="reset" class="btn">{{"cancel" | translate}}</button>
       </div>
     </div>
@@ -71,50 +72,52 @@
 </div>
 
 <!--Register modal-->
-<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" #rModal>
-  <div class="modal-dialog">
-    <div class="window">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel2">{{"newAccount" | translate}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">{{"DNI" | translate}}</label>
-            <div class="col-sm-10">
-              <input [(ngModel)]="dni" name="dni" placeholder="12345678A" type="text" class="form-control" regexInput="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$">
-            </div>
+<form [formGroup]="formRegister" (ngSubmit)="createAccount()">
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" #rModal>
+    <div class="modal-dialog">
+      <div class="window">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel2">{{"newAccount" | translate}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">{{"password" | translate}}</label>
-            <div class="col-sm-10">
-              <div class="input-group mb-3">
-                <input id="createPasswordField" [(ngModel)]="password" name="password" placeholder="******" type="password" class="form-control" regexInput="^([a-z0-9A-Z]*[<>-´ç`+*^Ç¨_:;,.¡¿?'!|ºª@#·$%&¬/()=[]{}€]?)*$">
-                <div class="input-group-text">
-                  <input class="form-check-input mt-0" type="checkbox" (click)="showPassword('createPasswordField')" class="toggle-password">
+          <div class="modal-body">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">{{"DNI" | translate}}</label>
+              <div class="col-sm-10">
+                <input #dni formControlName="dni" name="dni" placeholder="12345678A" type="text" class="form-control" regexInput="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">{{"password" | translate}}</label>
+              <div class="col-sm-10">
+                <div class="input-group mb-3">
+                  <input id="createPasswordField" #password formControlName="password" name="password" placeholder="******" type="password" class="form-control" regexInput="^([a-z0-9A-Z]*[<>-´ç`+*^Ç¨_:;,.¡¿?'!|ºª@#·$%&¬/()=[]{}€]?)*$">
+                  <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" (click)="showPassword('createPasswordField')" class="toggle-password">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">{{"account" | translate}}</label>
-            <div class="col-sm-10">
-              <input [(ngModel)]="account" name="account" placeholder="ES12 3456 7890 9876 5432 1234" type="text" class="form-control" regexInput="^ES\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}$">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">{{"account" | translate}}</label>
+              <div class="col-sm-10">
+                <input #account formControlName="account" name="account" placeholder="ES12 3456 7890 9876 5432 1234" type="text" class="form-control" regexInput="^ES\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}$">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">{{"email" | translate}}</label>
+              <div class="col-sm-10">
+                <input #email formControlName="email" name="email" placeholder="doggy@gmail.com" type="email" class="form-control" regexInput="^[A-Z]*[a-z0-9A-Z]*[@]{1}[a-z]*[.]{1}[a-z]*$">
+              </div>
             </div>
           </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">{{"email" | translate}}</label>
-            <div class="col-sm-10">
-              <input [(ngModel)]="email" name="email" placeholder="doggy@gmail.com" type="email" class="form-control" regexInput="^[A-Z]*[a-z0-9A-Z]*[@]{1}[a-z]*[.]{1}[a-z]*$">
-            </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn" data-bs-dismiss="modal">{{"cancel" | translate}}</button>
+            <button type="submit" class="btn">{{"send" | translate}}</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal">{{"cancel" | translate}}</button>
-          <button (click)="createAccount()" type="button" class="btn">{{"send" | translate}}</button>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>
