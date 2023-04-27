@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     api:{
-        url:'http://vps-3fdb8b00.vps.ovh.net',
+        url:'http://localhost:8080',
         endpoint:{
             cashiersbyradius:'/api/cashiers/distance',
             cashiersbycp:'/api/cashiers/cp',
@@ -11,7 +11,7 @@ export const environment = {
             incidences:'/api/incidences',
             cashiersAll:'/api/cashiers',
             clientAll:'/api/client',
-            clientbydni:'/api/client',
+            clientbydni:'/api/client/dni',
             clientbyid:'/api/client',
             newclient:'/api/client'
         }

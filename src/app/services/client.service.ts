@@ -5,10 +5,9 @@ import { environment } from 'src/environments/environment.development';
 import { IClient } from '../model/IClient';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
-
   private url: string = environment.api.url;
 
   public user: IClient;
@@ -28,37 +27,42 @@ export class ClientService {
   }
 
   getAll(): Observable<IClient[]> {
-    return this.http.get<IClient[]>(this.url + environment.api.endpoint.clientAll);
+    return this.http.get<IClient[]>(
+      this.url + environment.api.endpoint.clientAll
+    );
   }
 
   get(id: number): Observable<IClient> {
-    return this.http.get<IClient>(this.url + environment.api.endpoint.clientbyid + '/' + id);
+    return this.http.get<IClient>(
+      this.url + environment.api.endpoint.clientbyid + '/' + id
+    );
   }
 
   getByDni(dni: string): Observable<IClient> {
-    if(!dni){
-      throw new Error("Data error.")
+    if (!dni) {
+      throw new Error('Data error.');
     }
-    return this.http.get<IClient>(this.url + environment.api.endpoint.clientbydni + '/' + dni);
+    return this.http.get<IClient>(
+      this.url + environment.api.endpoint.clientbydni + '/' + dni
+    );
   }
 
   create(account, dni, password, email): Observable<any> {
     if (!account || !dni || !password || !email) {
-      throw new Error("Data error.")
+      throw new Error('Data error.');
     }
-
 
     let data: IClient = {
       account: account,
       dni: dni,
       password: password,
-      email: email
-    }
+      email: email,
+    };
 
-    const endpoint = this.url + environment.api.endpoint.newclient
+    const endpoint = this.url + environment.api.endpoint.newclient;
     return this.http.post(endpoint, data, {
-      headers: { 'Content-Type': 'application/json' }
-    })
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   update(client: IClient): Observable<IClient> {
@@ -66,6 +70,8 @@ export class ClientService {
   }
 
   delete(id: number): Observable<IClient> {
-    return this.http.delete<IClient>(this.url + environment.api.endpoint.clientbyid + '/' + id);
+    return this.http.delete<IClient>(
+      this.url + environment.api.endpoint.clientbyid + '/' + id
+    );
   }
 }

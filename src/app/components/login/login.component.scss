@@ -1,51 +1,60 @@
-.img{
-    padding-top: 10%;
-    margin: 0 auto;
-    display: block;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.window{
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.window {
+  margin-top: 30px;
+  align-content: center;
+  justify-content: center;
 }
 
-.mb-3{
-    text-align: center;
+.btn {
+  width: 100%;
+  background-color: #005540;
+  color: white;
 }
 
-.btn{
-    margin: 5px;
-    background-color: rgb(181, 233, 215);
-    color: black;
-    border-color: rgb(108, 143, 131);
+.btn2 {
+  width: 40%;
+  background-color: #005540;
+  color: white;
 }
 
-.openModal:hover{
-    color: blue;
-    cursor: pointer;
+.modal-footer {
+  justify-content: center;
+}
+
+.openModal:hover {
+  color: blue;
+  cursor: pointer;
 }
 
 .field-icon {
-    float: right;
-    margin-left: -25px;
-    margin-top: -25px;
-    position: relative;
-    z-index: 2;
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
 }
 
-.divisor{
-    background: #005442;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 1px;
-    border-radius: 70%;
-    opacity: 0.9;
+.parentToast {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.parentToast{
+@media only screen and (max-width: 430px) {
+  .form {
+    height: 100%;
+  }
+
+  .window {
+    height: 94%;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
