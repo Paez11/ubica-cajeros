@@ -30,6 +30,7 @@ import { QrComponent } from './components/qr/qr.component';
 import { Error404Component } from './components/error404/error404.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ModalTService } from './services/modal-t.service';
+import {ToastrModule} from 'ngx-toastr';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -68,7 +69,10 @@ export function createTranslateLoader(http: HttpClient) {
     MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
-    QRCodeModule
+    QRCodeModule,
+    ToastrModule.forRoot({
+      positionClass:'toastr-center'
+    })
   ],
   providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTService],
   bootstrap: [AppComponent]
