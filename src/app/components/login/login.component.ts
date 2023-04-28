@@ -2,90 +2,116 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SHA256 } from 'crypto-js';
-import { Subscription, tap } from 'rxjs';
+import { IndividualConfig, ToastrConfig, ToastrService } from 'ngx-toastr';
+import { Subscription, map, tap, timeout } from 'rxjs';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
 
-declare var bootstrap:any;
+declare var bootstrap: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  @ViewChild('eModal') eModal:ElementRef;
-  _eModal;
-
-  @ViewChild('rModal') rModal:ElementRef;
+  @ViewChild('rModal') rModal: ElementRef;
   _rModal;
-  show:boolean;
+  show: boolean;
+  showPassWord: boolean = false;
 
-  _toast:any;
-  _sToast:any;
-  exist:boolean;
-  
+  _toast: any;
+  _sToast: any;
+  exist: boolean;
+
   isValid: boolean = true;
 
-  public form:FormGroup;
-  public formRegister:FormGroup;
+  public form: FormGroup;
+  public formRegister: FormGroup;
 
-  arr: any[] = []
+  arr: any[] = [];
 
-  dniLogin: string
-  passwordLogin: string
-  emailLogin: string
+  dniLogin: string;
+  passwordLogin: string;
 
-  name: string
-  dni: string
-  password: string
-  account: string
-  email: string
+  name: string;
+  dni: string;
+  password: string;
+  account: string;
+  email: string;
 
   client: IClient;
 
-  private clientSubscription:Subscription;
+  private clientSubscription: Subscription;
 
-  constructor(private clientS: ClientService,private router:Router,private fb:FormBuilder) { 
+  constructor(
+    private clientS: ClientService,
+    private router: Router,
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) {
     this.form = this.fb.group({
-      dniLogin: ['',[Validators.required,Validators.minLength(8)]],
-      passwordLogin:['',[Validators.required,Validators.minLength(4)]]
-    })
+      dniLogin: [
+        '',
+        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+      ],
+      passwordLogin: ['', [Validators.required, Validators.minLength(4)]],
+    });
 
     this.formRegister = this.fb.group({
-      dni: ['',[Validators.required,Validators.minLength(8)]],
-      password:['',[Validators.required,Validators.minLength(4)]],
-      account:[''],
-      email:['']
-    })
+      name: ['', [Validators.required]],
+      dni: [
+        '',
+        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+      ],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      account: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+    });
   }
 
   ngOnInit(): void {
-    this._eModal = new bootstrap.Modal(document.getElementById("emailModal"),{});
-    this._rModal = new bootstrap.Modal(document.getElementById("registerModal"),{});
-    this._toast = new bootstrap.Toast(document.getElementById('WrongToast'),{});
-    this._sToast = new bootstrap.Toast(document.getElementById('successToast'),{});
+    this._rModal = new bootstrap.Modal(
+      document.getElementById('registerModal'),
+      {}
+    );
   }
 
   auth() {
-    this.clientSubscription = this.clientS.getByDni(this.form.value.dniLogin).subscribe(client => {
-      try{
-        if(this.form.value.dniLogin == client.dni && this.hash(this.form.value.passwordLogin) == client.password){
-          let auxClient = {
-            id:client.id,
-            dni:client.dni,
-            account:client.account,
-            email:client.email,
-            password:client.password
+    this.clientSubscription = this.clientS
+      .getByDni(this.form.value.dniLogin)
+      .subscribe((client) => {
+        try {
+          if (
+            this.form.value.dniLogin == client.dni &&
+            this.hash(this.form.value.passwordLogin) == client.password
+          ) {
+            let auxClient = {
+              id: client.id,
+              dni: client.dni,
+              account: client.account,
+              email: client.email,
+              password: client.password,
+            };
+            this.client = auxClient;
+            this.clientS.setUser(this.client);
+            this.toastr.success(
+              'El usuario ha sido verificado correctamente.',
+              'Usuario verificado'
+            );
+            //this.toastr.info('Redireccionando al mapa','Redireccionando')
+            setTimeout(() => {
+              this.router.navigate(['/main']);
+            }, 5000);
           }
-          this.client=auxClient;
-          this.clientS.setUser(this.client);
-          this.router.navigate(['/main']);
+        } catch (error) {
+          this.toastr.error(
+            'El usuario introducido no existe',
+            'Error al verificar el usuario'
+          );
+          this.form.reset();
+          //toast
         }
-      }catch(error){
-        this._toast.show();
-      }
-    });
+      });
   }
 
   createAccount() {
@@ -94,77 +120,77 @@ export class LoginComponent implements OnInit {
       password: this.formRegister.value.password,
       account: this.formRegister.value.account,
       email: this.formRegister.value.email,
-    }
-    this.clientS.getByDni(this.client.dni).subscribe(client=>{
-      try{
-        if(client.dni){
-          this.exist=true;
+    };
+    this.clientS.getByDni(this.client.dni).subscribe((client) => {
+      try {
+        if (client.dni) {
+          this.exist = true;
         }
-      }catch(error){
-        console.info("client not found");
+      } catch (error) {
+        console.info('client not found');
       }
     });
 
     if (this.exist) {
       //toast
-      this._toast.show();
-    }else{
-      this.clientSubscription = this.clientS.create(this.client.account, this.client.dni, this.client.password, this.client.email).subscribe(client => {
-        try{
-          this.client = client;
-          this.clientS.setUser(this.client);
-          this.close(this._rModal);
-        }catch(error){
-          console.error("conexion error")
-        }
-      });
+    } else {
+      this.clientSubscription = this.clientS
+        .create(
+          this.client.account,
+          this.client.dni,
+          this.client.password,
+          this.client.email
+        )
+        .subscribe((client) => {
+          try {
+            this.client = client;
+            this.clientS.setUser(this.client);
+            this.close(this._rModal);
+          } catch (error) {
+            console.error('conexion error');
+          }
+        });
       //toast
-      this._sToast.show();
     }
   }
 
-  close(modal:any){
+  close(modal: any) {
     modal.hide();
-    this.show=false;
+    this.show = false;
     this.isValid = true;
   }
-  open(modal:any){
+  open(modal: any) {
     modal.show();
-    this.show=true;
-  }
-
-  sendMail(emailLogin) {
-    //Send email
-    if(!emailLogin){
-      this.isValid = false;
-    }else{
-      this.close(this._eModal);
-    }
+    this.show = true;
   }
 
   hash(string) {
     return SHA256(string).toString();
   }
 
-  showPassword(id:string): void {
+  showPassword(id: string): void {
     const passwordField = document.getElementById(id) as HTMLInputElement;
     if (passwordField.type === 'password') {
+      this.showPassWord = true;
       passwordField.type = 'text';
     } else {
+      this.showPassWord = false;
       passwordField.type = 'password';
     }
   }
 
-  autoLogin():IClient{
-    let userData = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
-    if(!userData){
+  autoLogin(): IClient {
+    let userData = localStorage.getItem('currentUser')
+      ? JSON.parse(localStorage.getItem('currentUser')!)
+      : null;
+    if (!userData) {
       this.client = userData;
     }
-    return  this.client;
+    return this.client;
   }
 
-  ngOnDestroy(){
-    if(this.clientSubscription){
+  ngOnDestroy() {
+    if (this.clientSubscription) {
       this.clientSubscription.unsubscribe();
     }
   }
