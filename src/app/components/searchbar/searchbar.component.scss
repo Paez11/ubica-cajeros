@@ -1,8 +1,9 @@
 .searchbar{
-    border-width: 2px;
-    border-radius: 10px 10px 10px 10px;
-    border-color: rgb(190, 190, 190) 1px 1px 3px;
-    background-color: rgb(255 255 255 / 59%);
+    border-radius: 10px;
+    border: 2px solid #005442;
+    position: relative;
+    top: 70px;
+    left: 10px;
 }
 
 .searchButton{

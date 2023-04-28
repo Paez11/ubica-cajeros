@@ -1,0 +1,25 @@
+a {
+    color: #005540;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+a:hover {
+    border-bottom: 2px solid #005540;
+}
+
+.navbar-toggler {
+    border: transparent;
+}
+
+nav {
+    border-bottom: 2px solid #005540;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
+.offcanvas-title, .btn-close {
+    color: #005540;
+}
