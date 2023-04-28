@@ -16,10 +16,11 @@ nav {
     border-bottom: 2px solid #005540;
 }
 
-img:hover {
-    cursor: pointer;
-}
-
 .offcanvas-title, .btn-close {
     color: #005540;
+}
+
+.navbar {
+    --bs-navbar-toggler-focus-width: 0;
+    
 }

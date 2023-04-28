@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { TransactionService } from 'src/app/services/transaction.service';
-import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 
 @Component({
   selector: 'app-details',
@@ -13,6 +12,7 @@ import { ModalTransactionComponent } from '../modal-transaction/modal-transactio
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit{
+  @Input() cashiersList: ICashier[];
   
   public cashiers:ICashier[] = [];
 
