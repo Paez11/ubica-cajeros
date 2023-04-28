@@ -10,11 +10,14 @@
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Cajeros</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-yellow" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
+
+                <app-details [cashiersList]="cashierList"></app-details>
+
                 <!--<app-searchbar class="overlaySearchBar"></app-searchbar>
-                <app-details></app-details>
+                
                 <app-modal-transaction #tdetail></app-modal-transaction>-->
             </div>
         </div>
@@ -24,7 +27,6 @@
         <a class="navbar-brand">Transferencias</a>
         <a class="navbar-brand">Depósitos</a>
         <img class="navbar-brand" 
-                src="../../../assets/img/logo-verde.png" alt="Banca March" 
-                width="25" height="35">
+                src="../../../assets/img/logo-verde.png" alt="Banca March" height="35">
     </div>
 </nav>
