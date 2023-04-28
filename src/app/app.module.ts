@@ -30,6 +30,7 @@ import { QrComponent } from './components/qr/qr.component';
 import { Error404Component } from './components/error404/error404.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ModalTService } from './services/modal-t.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -47,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
     LoginComponent,
     ModalTransactionComponent,
     QrComponent,
-    Error404Component
+    Error404Component,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
