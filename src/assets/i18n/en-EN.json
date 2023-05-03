@@ -32,5 +32,18 @@
     "noEmail": "You haven`t introduce any email",
     "login": "Login",
     "end": "End",
-    "successCreate": "Account succesfully create"
+    "successCreate": "Account succesfully create",
+    "verificate": "User verified",
+    "userVerified":"User was verified successfully",
+    "errorVerificate":"Verification error",
+    "enterUser":"Enter user, please",
+    "enterPassword":"Enter password, please",
+    "enterData":"Enter user and password on the fileds, please",
+    "validUser":"User isn't valid, insert it again",
+    "validPassword":"Password isn't valid, insert it again or restablish it",
+    "validData":"User or password isn't valid, insert it again",
+    "userCreated":"User has been created successfully",
+    "userNotCreated":"User hasn't been created because exists",
+    "create":"User created",
+    "notCreate":"User not created"
 }

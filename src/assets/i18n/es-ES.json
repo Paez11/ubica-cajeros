@@ -32,5 +32,18 @@
     "noEmail": "No ha introducido ningún email",
     "login": "Verificar",
     "end": "Terminar",
-    "successCreate": "Cuenta creada correctamente"
+    "successCreate": "Cuenta creada correctamente",
+    "verificate": "Usuario verificado.",
+    "userVerified":"El usuario ha sido verificado correctamente",
+    "errorVerificate":"Error de verificación.",
+    "enterUser":"Por favor, introduzca usuario.",
+    "enterPassword":"Por favor, introduzca contraseña.",
+    "enterData":"Por favor, introduzca los datos en sus respectivos campos.",
+    "validUser":"El usuario no es válido, insértelo de nuevo",
+    "validPassword":"La contraseña no es válida, insértela de nuevo o restablécela la misma",
+    "validData":"Usuario o contraseña no válidos, insértelos de nuevo",
+    "userCreated":"El usuario ha sido creado con éxito",
+    "userNotCreated":"El usuario introducido no ha sido creado porque yaexiste",
+    "create":"Usuario creado",
+    "notCreate":"Usuario no creado"
 }
