@@ -1,7 +1,8 @@
 .background {
   height: 100%;
   width: 100%;
-  background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center center;
+  background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
+    center;
 }
 
 .container {
@@ -50,6 +51,27 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+}
+
+.redInput {
+  border-color: red;
+}
+
+.btn-tras {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
+
+#load {
+  display: flex;
+  flex-direction: row;
+}
+
+.spinner-grow {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 5px;
 }
 
 @media only screen and (max-width: 430px) {
