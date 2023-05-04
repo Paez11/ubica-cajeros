@@ -1,3 +1,16 @@
+@media only screen and (max-width:575px) {
+    .navbar-brand {
+        //display: none;
+        font-size: smaller;
+    }
+}
+
+@media only screen and (max-width:776px) {
+    .navbar-brand {
+        font-size: medium;
+    }     
+}
+
 a {
     color: #005540;
     font-weight: 600;
@@ -22,5 +35,4 @@ nav {
 
 .navbar {
     --bs-navbar-toggler-focus-width: 0;
-    
 }
