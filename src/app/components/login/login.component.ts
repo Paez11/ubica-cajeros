@@ -56,20 +56,60 @@ export class LoginComponent implements OnInit {
     this.form = this.fb.group({
       dniLogin: [
         '',
-        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+        [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.maxLength(9),
+          Validators.pattern('^[0-9]{8}[A-Z]{1}$'),
+        ],
       ],
-      passwordLogin: ['', [Validators.required, Validators.minLength(4)]],
+      passwordLogin: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.pattern('^([a-z0-9A-Z]*[-_.,ºª*+-Ç])*$'),
+        ],
+      ],
     });
 
     this.formRegister = this.fb.group({
       name: ['', [Validators.required]],
       dni: [
         '',
-        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+        [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.maxLength(9),
+          Validators.pattern('^[0-9]{8}[A-Z]{1}$'),
+        ],
       ],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      account: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.pattern('^([a-z0-9A-Z]*[-_.,ºª*+-Ç]*)*$'),
+        ],
+      ],
+      account: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^ES[0-9]{2}s[0-9]{4}s[0-9]{4}s[0-9]{4}s[0-9]{4}s[0-9]{4}$'
+          ),
+        ],
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.1[a-z]{1,}$'
+          ),
+        ],
+      ],
     });
   }
 
@@ -85,47 +125,49 @@ export class LoginComponent implements OnInit {
       this.clientSubscription = this.clientS
         .getByDni(this.form.value.dniLogin)
         .subscribe((client) => {
-          if (
-            this.form.value.dniLogin == client.dni &&
-            this.hash(this.form.value.passwordLogin) == client.password
-          ) {
-            this.showSpinner = true;
-            let auxClient = {
-              id: client.id,
-              dni: client.dni,
-              account: client.account,
-              email: client.email,
-              password: client.password,
-            };
-            this.client = auxClient;
-            this.clientS.setUser(this.client);
-            this.toastr.success(
-              this.translate.instant('userVerified'),
-              this.translate.instant('verificate')
-            );
-            //this.toastr.info('Redireccionando al mapa','Redireccionando')
-            setTimeout(() => {
-              this.showSpinner = false;
-              this.router.navigate(['/main']);
-            }, 5000);
-            this.form.reset();
-            this.showPassWord = false;
-          } else if (this.form.value.dniLogin !== this.dniLogin) {
+          try {
+            if (
+              this.form.value.dniLogin == client.dni &&
+              this.hash(this.form.value.passwordLogin) == client.password
+            ) {
+              this.showSpinner = true;
+              let auxClient = {
+                id: client.id,
+                dni: client.dni,
+                account: client.account,
+                email: client.email,
+                password: client.password,
+              };
+              this.client = auxClient;
+              this.clientS.setUser(this.client);
+              this.toastr.success(
+                this.translate.instant('userVerified'),
+                this.translate.instant('verificate'),
+                { timeOut: 1500 }
+              );
+              setTimeout(() => {
+                this.showSpinner = false;
+                this.router.navigate(['/main']);
+              }, 2000);
+              this.form.reset();
+              this.showPassWord = false;
+            } else if (this.form.value.passwordLogin !== this.passwordLogin) {
+              this.toastr.error(
+                this.translate.instant('validPassword'),
+                this.translate.instant('errorVerificate')
+              );
+            } else if (
+              this.form.value.dniLogin !== this.dniLogin &&
+              this.form.value.passwordLogin !== this.passwordLogin
+            ) {
+              this.toastr.error(
+                this.translate.instant('validData'),
+                this.translate.instant('errorVerificate')
+              );
+            }
+          } catch (Error) {
             this.toastr.error(
               this.translate.instant('validUser'),
-              this.translate.instant('errorVerificate')
-            );
-          } else if (this.form.value.passwordLogin !== this.passwordLogin) {
-            this.toastr.error(
-              this.translate.instant('validPassword'),
-              this.translate.instant('errorVerificate')
-            );
-          } else if (
-            this.form.value.dniLogin !== this.dniLogin &&
-            this.form.value.passwordLogin !== this.passwordLogin
-          ) {
-            this.toastr.error(
-              this.translate.instant('validData'),
               this.translate.instant('errorVerificate')
             );
           }
