@@ -1,4 +1,4 @@
-<div class="empty" *ngIf="!cashiersList.length">No hay resultados</div>
+<div class="empty" *ngIf="!cashiersList.length">{{ "noResults" | translate }}</div>
 
 <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiersList">
   <ng-template [ngIf]="cashier.photo != null" [ngIfElse]="notImage">
