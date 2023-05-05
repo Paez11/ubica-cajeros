@@ -1,10 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, retry } from 'rxjs';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
 
@@ -17,11 +18,8 @@ declare var bootstrap: any;
 export class LoginComponent implements OnInit {
   @ViewChild('rModal') rModal: ElementRef;
   _rModal;
-  show: boolean;
+  showModal: boolean;
   showPassWord: boolean = false;
-
-  _toast: any;
-  _sToast: any;
   exist: boolean;
 
   isValid: boolean = true;
@@ -30,8 +28,6 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   public formRegister: FormGroup;
-
-  arr: any[] = [];
 
   dniLogin: string;
   passwordLogin: string;
@@ -68,7 +64,7 @@ export class LoginComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.pattern('^([a-z0-9A-Z]*[-_.,ºª*+-Ç])*$'),
+          Validators.pattern('^([a-z0-9A-Z]*[-_.,ºª*+-Ç]*)*$'),
         ],
       ],
     });
@@ -96,8 +92,10 @@ export class LoginComponent implements OnInit {
         '',
         [
           Validators.required,
+          Validators.minLength(29),
+          Validators.maxLength(29),
           Validators.pattern(
-            '^ES[0-9]{2}s[0-9]{4}s[0-9]{4}s[0-9]{4}s[0-9]{4}s[0-9]{4}$'
+            '^ES[0-9]{2} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$'
           ),
         ],
       ],
@@ -106,7 +104,7 @@ export class LoginComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(
-            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.1[a-z]{1,}$'
+            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.[a-z]{1,}$'
           ),
         ],
       ],
@@ -122,57 +120,68 @@ export class LoginComponent implements OnInit {
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
+      this.clientS.getAll().pipe().subscribe(console.log);
       this.clientSubscription = this.clientS
         .getByDni(this.form.value.dniLogin)
+        .pipe
+        //retry(10)
+        ()
         .subscribe((client) => {
-          try {
-            if (
-              this.form.value.dniLogin == client.dni &&
-              this.hash(this.form.value.passwordLogin) == client.password
-            ) {
-              this.showSpinner = true;
-              let auxClient = {
-                id: client.id,
-                dni: client.dni,
-                account: client.account,
-                email: client.email,
-                password: client.password,
-              };
-              this.client = auxClient;
-              this.clientS.setUser(this.client);
-              this.toastr.success(
-                this.translate.instant('userVerified'),
-                this.translate.instant('verificate'),
-                { timeOut: 1500 }
-              );
-              setTimeout(() => {
-                this.showSpinner = false;
-                this.router.navigate(['/main']);
-              }, 2000);
-              this.form.reset();
-              this.showPassWord = false;
-            } else if (this.form.value.passwordLogin !== this.passwordLogin) {
+          /* try { */
+          if (
+            this.form.value.dniLogin == client.dni &&
+            this.hash(this.form.value.passwordLogin) == client.password
+          ) {
+            this.showSpinner = true;
+            let auxClient = {
+              id: client.id,
+              dni: client.dni,
+              account: client.account,
+              email: client.email,
+              password: client.password,
+            };
+            this.client = auxClient;
+            this.clientS.setUser(this.client);
+            this.toastr.success(
+              this.translate.instant('userVerified'),
+              this.translate.instant('verificate'),
+              { timeOut: 1500 }
+            );
+            setTimeout(() => {
+              this.showSpinner = false;
+              this.router.navigate(['/main']);
+            }, 2000);
+            this.form.reset();
+            this.showPassWord = false;
+          } /* else if (this.form.value.passwordLogin !== this.passwordLogin) {
+                this.toastr.error(
+                  this.translate.instant('validPassword'),
+                  this.translate.instant('errorVerificate')
+                );
+              } else if (
+                this.form.value.dniLogin !== this.dniLogin &&
+                this.form.value.passwordLogin !== this.passwordLogin
+              ) {
+                this.toastr.error(
+                  this.translate.instant('validData'),
+                  this.translate.instant('errorVerificate')
+                );
+              } */
+          /* } catch (Error) {
               this.toastr.error(
-                this.translate.instant('validPassword'),
-                this.translate.instant('errorVerificate')
-              );
-            } else if (
-              this.form.value.dniLogin !== this.dniLogin &&
-              this.form.value.passwordLogin !== this.passwordLogin
-            ) {
-              this.toastr.error(
-                this.translate.instant('validData'),
+                this.translate.instant('validUser'),
                 this.translate.instant('errorVerificate')
               );
             }
-          } catch (Error) {
+          }, */
+          (error: HttpErrorResponse) => {
             this.toastr.error(
-              this.translate.instant('validUser'),
-              this.translate.instant('errorVerificate')
+              this.translate.instant('errorServer'),
+              this.translate.instant('error')
             );
-          }
+          };
         });
-    } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
+      /* } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
       this.toastr.error(
         this.translate.instant('enterData'),
         this.translate.instant('errorVerificate')
@@ -186,68 +195,82 @@ export class LoginComponent implements OnInit {
       this.toastr.error(
         this.translate.instant('enterPassword'),
         this.translate.instant('errorVerificate')
-      );
+      ); */
     }
-    //toast*/
   }
 
   createAccount() {
-    this.client = {
-      dni: this.formRegister.value.dni,
-      password: this.formRegister.value.password,
-      account: this.formRegister.value.account,
-      email: this.formRegister.value.email,
-    };
-    this.clientS.getByDni(this.client.dni).subscribe((client) => {
+    if (
+      this.formRegister.value.dni &&
+      this.formRegister.value.password &&
+      this.formRegister.value.account &&
+      this.formRegister.value.email
+    ) {
       try {
-        if (client.dni) {
-          this.exist = true;
-        }
-      } catch (error) {
-        console.info('client not found');
-      }
-    });
-
-    if (this.exist) {
-      this.formRegister.reset();
-      this.close(this._rModal);
-      this.toastr.success(
-        this.translate.instant('userNotCreated'),
-        this.translate.instant('notCreate')
-      );
-    } else {
-      this.formRegister.reset();
-      this.clientSubscription = this.clientS
-        .create(
-          this.client.account,
-          this.client.dni,
-          this.client.password,
-          this.client.email
-        )
-        .subscribe((client) => {
+        this.client = {
+          dni: this.formRegister.value.dni,
+          password: this.formRegister.value.password,
+          account: this.formRegister.value.account,
+          email: this.formRegister.value.email,
+        };
+        this.clientS.getByDni(this.client.dni).subscribe((client) => {
           try {
-            this.client = client;
-            this.clientS.setUser(this.client);
-            this.close(this._rModal);
-            this.toastr.success(
-              this.translate.instant('userCreated'),
-              this.translate.instant('create')
-            );
+            if (client.dni) {
+              this.exist = true;
+            }
           } catch (error) {
-            console.error('conexion error');
+            this.toastr.info(
+              this.translate.instant('userNotExists'),
+              this.translate.instant('notExist')
+            );
           }
         });
+
+        if (this.exist) {
+          this.formRegister.reset();
+          this.close(this._rModal);
+          this.toastr.error(
+            this.translate.instant('userNotCreated'),
+            this.translate.instant('notCreate')
+          );
+        } else {
+          this.formRegister.reset();
+          this.clientSubscription = this.clientS
+            .create(
+              this.client.account,
+              this.client.dni,
+              this.client.password,
+              this.client.email
+            )
+            .subscribe((client) => {
+              this.client = client;
+              this.clientS.setUser(this.client);
+              this.close(this._rModal);
+              this.toastr.success(
+                this.translate.instant('userCreated'),
+                this.translate.instant('create')
+              );
+            });
+        }
+      } catch (Error) {
+        this.toastr.error('Error');
+      }
+    } else {
+      this.toastr.error(
+        this.translate.instant('enterData'),
+        this.translate.instant('notCreate')
+      );
     }
   }
 
   close(modal: any) {
     modal.hide();
-    this.show = false;
+    this.showModal = false;
     this.isValid = true;
   }
   open(modal: any) {
     modal.show();
-    this.show = true;
+    this.showModal = true;
   }
 
   hash(string) {

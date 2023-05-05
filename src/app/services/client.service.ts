@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { IClient } from '../model/IClient';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { throwError as observableThrowError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +16,11 @@ export class ClientService {
   public user: IClient;
   private userSubject: BehaviorSubject<IClient>;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private translate: TranslateService,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {
     this.userSubject = new BehaviorSubject<IClient>(this.user);
   }
 
@@ -27,9 +34,19 @@ export class ClientService {
   }
 
   getAll(): Observable<IClient[]> {
-    return this.http.get<IClient[]>(
-      this.url + environment.api.endpoint.clientAll
-    );
+    try {
+      return this.http.get<IClient[]>(
+        this.url + environment.api.endpoint.clientAll
+      );
+    } catch (error) {
+      return (
+        error +
+        this.toastr.error(
+          this.translate.instant('errorServer'),
+          this.translate.instant('error')
+        )
+      );
+    }
   }
 
   get(id: number): Observable<IClient> {

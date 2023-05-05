@@ -32,7 +32,6 @@
                 formControlName="passwordLogin"
                 type="password"
                 class="form-control"
-                regexInput="[A-Z]*[a-z]*[0-9]*$"
                 required
               />
               <div
@@ -83,66 +82,6 @@
             </button>
           </div>
         </div>
-        <div *ngIf="true" id="load">
-          
-                <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="50"
-              fill="currentColor"
-              class="bi bi-phone-vibrate"
-              viewBox="0 0 15 15"
-            >
-              <path
-                d="M10 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4zM6 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"
-              />
-              <path
-                d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM1.599 4.058a.5.5 0 0 1 .208.676A6.967 6.967 0 0 0 1 8c0 1.18.292 2.292.807 3.266a.5.5 0 0 1-.884.468A7.968 7.968 0 0 1 0 8c0-1.347.334-2.619.923-3.734a.5.5 0 0 1 .676-.208zm12.802 0a.5.5 0 0 1 .676.208A7.967 7.967 0 0 1 16 8a7.967 7.967 0 0 1-.923 3.734.5.5 0 0 1-.884-.468A6.967 6.967 0 0 0 15 8c0-1.18-.292-2.292-.807-3.266a.5.5 0 0 1 .208-.676zM3.057 5.534a.5.5 0 0 1 .284.648A4.986 4.986 0 0 0 3 8c0 .642.12 1.255.34 1.818a.5.5 0 1 1-.93.364A5.986 5.986 0 0 1 2 8c0-.769.145-1.505.41-2.182a.5.5 0 0 1 .647-.284zm9.886 0a.5.5 0 0 1 .648.284C13.855 6.495 14 7.231 14 8c0 .769-.145 1.505-.41 2.182a.5.5 0 0 1-.93-.364C12.88 9.255 13 8.642 13 8c0-.642-.12-1.255-.34-1.818a.5.5 0 0 1 .283-.648z"
-              />
-            </svg>
-            <button class="btn btn-tras" disabled>
-              <span
-                class="spinner-grow spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span
-                class="spinner-grow spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span
-                class="spinner-grow spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span
-                class="spinner-grow spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span
-                class="spinner-grow spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            </button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="50"
-              fill="currentColor"
-              class="bi bi-bank"
-              viewBox="0 0 15 15"
-            >
-              <path
-                d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"
-              />
-            </svg>
-             
-            
-          
-        </div>
 
         <div>
           <div class="mb-3">
@@ -184,31 +123,55 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">{{
-                "DNI" | translate
-              }}</label>
-              <div class="col-sm-10">
-                <input
-                  [class.redInput]="
-                    this.formRegister.get('dni')?.invalid &&
-                    this.formRegister.get('dni')?.touched
-                  "
-                  #dni
-                  formControlName="dni"
-                  name="dni"
-                  placeholder="12345678A"
-                  type="text"
-                  class="form-control"
-                  maxlength="9"
-                  minlength="9"
-                />
+            <div class="col">
+              <div class="mb-3 row">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-person-vcard"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5ZM9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8Zm1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Z"
+                  />
+                  <path
+                    d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z"
+                  />
+                </svg>
+                <div class="col-sm-10">
+                  <input
+                    [class.redInput]="
+                      this.formRegister.get('dni')?.invalid &&
+                      this.formRegister.get('dni')?.touched
+                    "
+                    #dni
+                    formControlName="dni"
+                    name="dni"
+                    placeholder="{{ 'dni' | translate }}"
+                    type="text"
+                    class="form-control"
+                    maxlength="9"
+                    minlength="9"
+                  />
+                </div>
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">{{
-                "password" | translate
-              }}</label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-key"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"
+                />
+                <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+              </svg>
               <div class="col-sm-10">
                 <div class="input-group mb-3">
                   <input
@@ -220,7 +183,7 @@
                     #password
                     formControlName="password"
                     name="password"
-                    placeholder="House_123"
+                    placeholder="{{ 'password' | translate }}"
                     type="password"
                     class="form-control"
                   />
@@ -268,9 +231,28 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">{{
-                "account" | translate
-              }}</label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-cash-coin"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
+                />
+                <path
+                  d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"
+                />
+                <path
+                  d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"
+                />
+                <path
+                  d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"
+                />
+              </svg>
               <div class="col-sm-10">
                 <input
                   [class.redInput]="
@@ -280,17 +262,25 @@
                   #account
                   formControlName="account"
                   name="account"
-                  placeholder="ES12 3456 7890 9876 5432 1234"
+                  placeholder="{{ 'account' | translate }}"
                   type="text"
                   class="form-control"
-                  regexInput="^ES\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}$"
                 />
               </div>
             </div>
             <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">{{
-                "email" | translate
-              }}</label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-envelope"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+                />
+              </svg>
               <div class="col-sm-10">
                 <input
                   [class.redInput]="
@@ -300,7 +290,7 @@
                   #email
                   formControlName="email"
                   name="email"
-                  placeholder="Jason24@gmail.com"
+                  placeholder="{{ 'email' | translate }}"
                   type="email"
                   class="form-control"
                 />
@@ -320,3 +310,62 @@
     </div>
   </div>
 </form>
+
+<div *ngIf="showSpinner" class="loadScreen">
+  <div class="load">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="50"
+      fill="currentColor"
+      class="bi bi-phone-vibrate"
+      viewBox="0 0 16 15"
+    >
+      <path
+        d="M10 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4zM6 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"
+      />
+      <path
+        d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM1.599 4.058a.5.5 0 0 1 .208.676A6.967 6.967 0 0 0 1 8c0 1.18.292 2.292.807 3.266a.5.5 0 0 1-.884.468A7.968 7.968 0 0 1 0 8c0-1.347.334-2.619.923-3.734a.5.5 0 0 1 .676-.208zm12.802 0a.5.5 0 0 1 .676.208A7.967 7.967 0 0 1 16 8a7.967 7.967 0 0 1-.923 3.734.5.5 0 0 1-.884-.468A6.967 6.967 0 0 0 15 8c0-1.18-.292-2.292-.807-3.266a.5.5 0 0 1 .208-.676zM3.057 5.534a.5.5 0 0 1 .284.648A4.986 4.986 0 0 0 3 8c0 .642.12 1.255.34 1.818a.5.5 0 1 1-.93.364A5.986 5.986 0 0 1 2 8c0-.769.145-1.505.41-2.182a.5.5 0 0 1 .647-.284zm9.886 0a.5.5 0 0 1 .648.284C13.855 6.495 14 7.231 14 8c0 .769-.145 1.505-.41 2.182a.5.5 0 0 1-.93-.364C12.88 9.255 13 8.642 13 8c0-.642-.12-1.255-.34-1.818a.5.5 0 0 1 .283-.648z"
+      />
+    </svg>
+    <button class="btn btn-tras" disabled>
+      <span
+        class="spinner-grow spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="spinner-grow spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="spinner-grow spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="spinner-grow spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="spinner-grow spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="50"
+      fill="currentColor"
+      class="bi bi-bank"
+      viewBox="0 0 16 15"
+    >
+      <path
+        d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"
+      />
+    </svg>
+  </div>
+</div>
