@@ -50,5 +50,13 @@
     "create":"User created",
     "notCreate":"User not created",
     "notExist":"User not exists",
-    "userNotExists":"The user doesn't exists"
+    "userNotExists":"The user doesn't exists",
+    "globalPosition":"Global position",
+    "accounts":"Accounts",
+    "receipts":"Receipts",
+    "cards":"Cards",
+    "transfers":"Transfers",
+    "deposits":"Deposits",
+    "atm":"ATM",
+    "noResults":"No results"
 }

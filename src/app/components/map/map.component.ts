@@ -1,20 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from '../../services/cashier.service';
 import { SlideService } from '../../services/slide.service';
 import { ClientService } from '../../services/client.service';
-import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
@@ -38,19 +28,22 @@ export class MapComponent implements OnInit {
 
   cashiers: ICashier[] = [];
   @Output() cashiersList: EventEmitter<ICashier[]> = new EventEmitter();
-  mockCashiers: L.Marker = [
-    { lat: 37.687149, lng: -4.733906 },
-    { lat: 37.690776, lng: -4.736738 },
-    { lat: 37.69032, lng: -4.736127 },
-    { lat: 37.912357, lng: -4.800441 },
-    { lat: 37.912835, lng: -4.800317 },
-    { lat: 37.912585, lng: -4.799883 },
-    { lat: 37.911933, lng: -4.800172 },
-    { lat: 37.9114, lng: -4.800328 },
-    { lat: 37.66643, lng: -4.724818 },
-    { lat: 37.666714, lng: -4.723296 },
-    { lat: 37.667389, lng: -4.724084 },
+  
+  /*
+  mockCashiers:L.Marker = [
+    {lat:37.687149, lng:-4.733906},
+    {lat:37.690776, lng:-4.736738},
+    {lat:37.69032, lng:-4.736127},
+    {lat:37.912357, lng:-4.800441},
+    {lat:37.912835, lng:-4.800317},
+    {lat:37.912585, lng:-4.799883},
+    {lat:37.911933, lng:-4.800172},
+    {lat:37.9114, lng:-4.800328},
+    {lat:37.66643, lng:-4.724818},
+    {lat:37.666714, lng:-4.723296},
+    {lat:37.667389, lng:-4.724084}
   ];
+  */
 
   //Marcas para el mapa
   map!: L.Map;

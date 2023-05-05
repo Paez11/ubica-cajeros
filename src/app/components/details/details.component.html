@@ -1,12 +1,12 @@
-<div class="empty" *ngIf="!cashiersList?.length">No hay resultados</div>
+<div class="empty" *ngIf="!cashiersList.length">{{ "noResults" | translate }}</div>
 
 <div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiersList">
   <ng-template [ngIf]="cashier.photo != null" [ngIfElse]="notImage">
     <img src="" class="card-img-top" alt="imagen de cajero" />
   </ng-template>
   <ng-template #notImage>
-    <div class="image" style="margin-top: 10px; text-align: center;">
-      <img src="./assets/icons/image-not-found.png" style="width: 160px; height: 150px;" class="card-img-top" alt="Image not found" />
+    <div class="image">
+      <img src="./assets/icons/image-not-found.png" class="card-img-top" alt="Image not found" />
     </div>
   </ng-template>
 

@@ -9,24 +9,24 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Cajeros</h5>
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ "atm" | translate }}</h5>
                 <button type="button" class="btn-close btn-close-yellow" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-
                 <app-details [cashiersList]="cashierList"></app-details>
 
-                <!--<app-searchbar class="overlaySearchBar"></app-searchbar>
+                <!--<app-searchbar class="overlaySearchBar"></app-searchbar>-->
                 
-                <app-modal-transaction #tdetail></app-modal-transaction>-->
             </div>
         </div>
-        <a class="navbar-brand">Posición global</a>
-        <a class="navbar-brand">Cuentas/Recibos</a>
-        <a class="navbar-brand">Tarjetas</a>
-        <a class="navbar-brand">Transferencias</a>
-        <a class="navbar-brand">Depósitos</a>
-        <img class="navbar-brand" 
-                src="../../../assets/img/logo-verde.png" alt="Banca March" height="35">
+        <a class="navbar-brand">{{ "globalPosition" | translate }}</a>
+        <a class="navbar-brand">{{ "accounts" | translate }}/{{ "receipts" | translate }}</a>
+        <a class="navbar-brand">{{ "cards" | translate }}</a>
+        <a class="navbar-brand">{{ "transfers" | translate }}</a>
+        <a class="navbar-brand">{{ "deposits" | translate }}</a>
+        <img class="navbar-brand"
+                src="../../../assets/img/logo-verde.png" alt="Logo" height="35">
+        <img class="fullLogo"
+                src="../../../assets/img/logo-grande-verde.png" alt="IES Banco" height="35">
     </div>
 </nav>
