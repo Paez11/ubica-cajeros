@@ -45,5 +45,13 @@
     "userCreated":"User has been created successfully",
     "userNotCreated":"User hasn't been created because exists",
     "create":"User created",
-    "notCreate":"User not created"
+    "notCreate":"User not created",
+    "globalPosition":"Global position",
+    "accounts":"Accounts",
+    "receipts":"Receipts",
+    "cards":"Cards",
+    "transfers":"Transfers",
+    "deposits":"Deposits",
+    "atm":"ATM",
+    "noResults":"No results"
 }

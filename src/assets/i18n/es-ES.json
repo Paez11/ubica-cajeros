@@ -40,14 +40,18 @@
     "enterPassword":"Por favor, introduzca contraseña.",
     "enterData":"Por favor, introduzca los datos en sus respectivos campos.",
     "validUser":"El usuario no es válido, insértelo de nuevo",
-
     "validPassword":"La contraseña no es válida, insértela de nuevo o restablézca la misma",
-
-    "validPassword":"La contraseña no es válida, insértela de nuevo o restablece la misma",
-
     "validData":"Usuario o contraseña no válidos, insértelos de nuevo",
     "userCreated":"El usuario ha sido creado con éxito",
     "userNotCreated":"El usuario introducido no ha sido creado porque ya existe",
     "create":"Usuario creado",
-    "notCreate":"Usuario no creado"
+    "notCreate":"Usuario no creado",
+    "globalPosition":"Posición global",
+    "accounts":"Cuentas",
+    "receipts":"Recibos",
+    "cards":"Tarjetas",
+    "transfers":"Transferencias",
+    "deposits":"Depósitos",
+    "atm":"Cajeros",
+    "noResults":"No hay resultados"
 }
