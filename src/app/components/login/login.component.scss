@@ -1,8 +1,10 @@
 .background {
+  position: absolute;
   height: 100%;
   width: 100%;
   background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
     center;
+    z-index: 1;
 }
 
 .container {
@@ -34,8 +36,41 @@
   justify-content: center;
 }
 
+.loadScreen{
+  background-color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 80%;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.load {
+  color: #005540;
+  display: flex;
+  flex-direction: row;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.bi{
+  cursor: pointer;
+}
+
+.modal-content{
+  width: 150%;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
 .openModal:hover {
-  color: blue;
+  color: #005540;
   cursor: pointer;
 }
 
@@ -59,22 +94,19 @@
 
 .btn-tras {
   background-color: white;
-  color: black;
-  border-color: white;
-}
-
-#load {
-  display: flex;
-  flex-direction: row;
 }
 
 .spinner-grow {
   width: 1rem;
   height: 1rem;
   margin-right: 5px;
+  color: #005540;
 }
 
 @media only screen and (max-width: 430px) {
+  .background{
+    background: none;
+  }
   .form {
     height: 100%;
   }
@@ -84,5 +116,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .modal-content{
+    width: 100%;
   }
 }

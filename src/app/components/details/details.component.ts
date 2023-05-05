@@ -49,7 +49,7 @@ export class DetailsComponent implements OnInit{
   initializeMyComponent(): void | PromiseLike<void> {
     try{
       this.cashiers=[];
-      this.cashierSubscription = this.cashierS.getCashiersByRadius(this.clientS.user.id,this.clientS.user.lat,this.clientS.user.lng,this.clientS.user.distance).subscribe(cashiers =>{
+      this.cashierSubscription = this.cashierS.getCashiersByRadius(this.clientS.user?.id,this.clientS.user?.lat,this.clientS.user?.lng,this.clientS.user?.distance).subscribe(cashiers =>{
         this.cashiers.push(...cashiers);
         //this.cashierS.addItem(this.cashiers);
       });

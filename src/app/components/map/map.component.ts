@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -15,38 +24,39 @@ L.Icon.Default.imagePath = 'assets/';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit{
-  
-  client: IClient ={
+export class MapComponent implements OnInit {
+  client: IClient = {
     id: 1,
-    account: "",
-    dni: "",
-    password: ""
+    account: '',
+    dni: '',
+    password: '',
+    lat: 0,
+    lng: 0,
   };
 
   cashiers: ICashier[] = [];
   @Output() cashiersList: EventEmitter<ICashier[]> = new EventEmitter();
-  mockCashiers:L.Marker = [
-    {lat:37.687149, lng:-4.733906},
-    {lat:37.690776, lng:-4.736738},
-    {lat:37.69032, lng:-4.736127},
-    {lat:37.912357, lng:-4.800441},
-    {lat:37.912835, lng:-4.800317},
-    {lat:37.912585, lng:-4.799883},
-    {lat:37.911933, lng:-4.800172},
-    {lat:37.9114, lng:-4.800328},
-    {lat:37.66643, lng:-4.724818},
-    {lat:37.666714, lng:-4.723296},
-    {lat:37.667389, lng:-4.724084}
+  mockCashiers: L.Marker = [
+    { lat: 37.687149, lng: -4.733906 },
+    { lat: 37.690776, lng: -4.736738 },
+    { lat: 37.69032, lng: -4.736127 },
+    { lat: 37.912357, lng: -4.800441 },
+    { lat: 37.912835, lng: -4.800317 },
+    { lat: 37.912585, lng: -4.799883 },
+    { lat: 37.911933, lng: -4.800172 },
+    { lat: 37.9114, lng: -4.800328 },
+    { lat: 37.66643, lng: -4.724818 },
+    { lat: 37.666714, lng: -4.723296 },
+    { lat: 37.667389, lng: -4.724084 },
   ];
 
   //Marcas para el mapa
   map!: L.Map;
-  myPos:L.Marker;
+  myPos: L.Marker;
   actualRadius: L.Circle;
-  markers:L.Marker = [];
+  markers: L.Marker = [];
   markerObjects = [];
   popup = L.popup();
   searchMarker: L.Marker;
@@ -55,23 +65,23 @@ export class MapComponent implements OnInit{
 
   //carga y localizacion
   @Output() ready: EventEmitter<any> = new EventEmitter();
-  _ready:boolean=false;
+  _ready: boolean = false;
 
   //radio de deteccion de cajeros
-  radius:number = 100;
+  radius: number = 100;
 
   //icons
   userIcon = L.icon({
     iconUrl: './assets/icons/user.png',
-    iconSize:     [45, 45], // size of the icon
+    iconSize: [45, 45], // size of the icon
   });
   cashierIcon = L.icon({
     iconUrl: './assets/icons/atm-machine.png',
-    iconSize:     [35, 35], // size of the icon
-  })
+    iconSize: [35, 35], // size of the icon
+  });
 
   //modal
-  isModalOpen:boolean = false;
+  isModalOpen: boolean = false;
   //Subscriptions
   private polygonSubscription: Subscription;
   private slideSubscription: Subscription;
@@ -82,43 +92,44 @@ export class MapComponent implements OnInit{
   street: string;
 
   constructor(
-    private slideService:SlideService, 
-    private cashierService:CashierService,
-    private clientS:ClientService,
-    private mapService:MapService,
-    private searchBar:SearchbarComponent,
-    public modalS:ModalTService){
-
-    this.slideSubscription = this.slideService.circleRadius.subscribe(e =>{
-      this.radius=e.radius;
+    private slideService: SlideService,
+    private cashierService: CashierService,
+    private clientS: ClientService,
+    private mapService: MapService,
+    private searchBar: SearchbarComponent,
+    public modalS: ModalTService
+  ) {
+    this.slideSubscription = this.slideService.circleRadius.subscribe((e) => {
+      this.radius = e.radius;
       this.updateRadius(this.radius);
-      if(e.request){
+      if (e.request) {
         this.setCashiers(this.radius);
       }
     });
-    
-    this.clientS.getUserObservable().subscribe(client =>{
-      this.client = client;
+
+    this.clientS.getUserObservable().subscribe((client) => {
+      if (client) {
+        this.client = client;
+      }
     });
-    
   }
 
-
   ngOnInit(): void {
-    if(this.map != undefined){
+    if (this.map != undefined) {
       this.map.off();
       this.map.remove();
     }
     this.loadMap();
-    this.map.locate({setView: false, enableHighAccuracy:true})
-    .once("locationfound" , async (e:L.LocationEvent)=>{
-      this.currentLocation(e);
-      this._ready=true;
-      this.ready.emit({
-        event:"located",
-        pos:e.latlng
-      });
-      /*
+    this.map
+      .locate({ setView: false, enableHighAccuracy: true })
+      .once('locationfound', async (e: L.LocationEvent) => {
+        this.currentLocation(e);
+        this._ready = true;
+        this.ready.emit({
+          event: 'located',
+          pos: e.latlng,
+        });
+        /*
       this.client = {
         id:1,
         account:"mock",
@@ -129,80 +140,86 @@ export class MapComponent implements OnInit{
         distance:this.radius
       }
       */
-      this.client.lat = e.latlng.lat,
-      this.client.lng = e.latlng.lng,
-      this.setCashiers(this.radius);
-      this.setClient();
-      
-    }).once('locationerror',(e)=>{
-      this.onLocationError(e);
-    });
+        (this.client.lat = e?.latlng?.lat),
+          (this.client.lng = e?.latlng?.lng),
+          this.setCashiers(this.radius);
+        this.setClient();
+      })
+      .once('locationerror', (e) => {
+        this.onLocationError(e);
+      });
 
-    this.map.on('click',(e)=>{
+    this.map.on('click', (e) => {
       //this.onMapClick(e);
-        //this.markOnClose();
-        this.addPos(e);
-        this.ready.emit({
-          event:"relocated",
-          pos:e.latlng
-        });
+      //this.markOnClose();
+      this.addPos(e);
+      this.ready.emit({
+        event: 'relocated',
+        pos: e.latlng,
+      });
     });
 
-    this.streetSubscription = this.mapService.getstreetObservable().subscribe(street =>{
-      this.street = street;
-    });
-    this.searchSubscription = this.mapService.getLocationObservable().subscribe(location => {
-      if(this.searchBar.street==null){
-        this.setLocationBySearch(location.lat, location.lng);
-      }
-    });
-
- 
-
+    this.streetSubscription = this.mapService
+      .getstreetObservable()
+      .subscribe((street) => {
+        this.street = street;
+      });
+    this.searchSubscription = this.mapService
+      .getLocationObservable()
+      .subscribe((location) => {
+        if (this.searchBar.street == null) {
+          this.setLocationBySearch(location.lat, location.lng);
+        }
+      });
   }
 
-  loadMap(){
+  loadMap() {
     this.map = L.map('map', {
-      zoomControl: false
+      zoomControl: false,
     }).fitWorld();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    L.control.zoom({
-      position: 'bottomleft'
-    }).addTo(this.map);
+    L.control
+      .zoom({
+        position: 'bottomleft',
+      })
+      .addTo(this.map);
   }
 
-  currentLocation(e:L.LocationEvent|L.LeafletMouseEvent){
+  currentLocation(e: L.LocationEvent | L.LeafletMouseEvent) {
     this.removePos();
-    this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
+    this.actualRadius = L.circle([e.latlng.lat, e.latlng.lng], {
       color: '#005442',
       fillOpacity: 0.2,
       radius: this.radius,
     }).addTo(this.map);
-    this.myPos= L.marker(e.latlng,{
-      icon: this.userIcon
-    }).addTo(this.map)
-     .bindPopup('<p>${"clientLocation" | translate}</p>');
-     this.map.setView(e.latlng,18);
+    this.myPos = L.marker(e.latlng, {
+      icon: this.userIcon,
+    })
+      .addTo(this.map)
+      .bindPopup('<p>${"clientLocation" | translate}</p>');
+    this.map.setView(e.latlng, 18);
   }
 
-  setCurrentLocation(){
+  setCurrentLocation() {
     this.removePos();
     this.removeSearchMark();
-    navigator.geolocation.getCurrentPosition(e =>{
-      this.map.setView([e.coords.latitude,e.coords.longitude]);
-      this.actualRadius = L.circle([e.coords.latitude,e.coords.longitude],{
+    navigator.geolocation.getCurrentPosition((e) => {
+      this.map.setView([e.coords.latitude, e.coords.longitude]);
+      this.actualRadius = L.circle([e.coords.latitude, e.coords.longitude], {
         color: '#005442',
         fillOpacity: 0.2,
         radius: this.radius,
       }).addTo(this.map);
-      this.myPos= L.marker([e.coords.latitude,e.coords.longitude],{
-        icon: this.userIcon
-      }).addTo(this.map)
-       .bindPopup('<p>${"clientLocation" | translate}</p>');
+      this.myPos = L.marker([e.coords.latitude, e.coords.longitude], {
+        icon: this.userIcon,
+      })
+        .addTo(this.map)
+        .bindPopup('<p>${"clientLocation" | translate}</p>');
     });
 
     //Cannot read properties of null (reading 'layerPointToLatLng')
@@ -212,7 +229,7 @@ export class MapComponent implements OnInit{
     */
   }
 
-  setLocationBySearch(lat: number, lng: number){
+  setLocationBySearch(lat: number, lng: number) {
     this.removeSearchMark();
     const newLatLng = new L.LatLng(lat, lng);
     this.map.setView(newLatLng, 13);
@@ -235,91 +252,122 @@ export class MapComponent implements OnInit{
     }
   }
 
-  setCashiers(distance:number){
-    try{   
-      this.markers=[];
-      this.cashierSubscription = this.cashierService.getCashiersByRadius(this.client,this.client.lat,this.client.lng,distance).subscribe(cashier=>{
-        this.cashiers = [];
-        this.cashiers.push(...cashier);
-        this.cashiersList.emit(this.cashiers);
-        cashier.forEach(mark =>{
-          if((mark.lattitude && mark.longitude) != undefined){
-            this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude, available:mark.available})
-            this.cashierService.addItem(this.markers);
-          }
-        })
-        this.addMarkers(this.markers);
-      })
-    }catch(error){
+  setCashiers(distance: number) {
+    try {
+      this.markers = [];
+      this.cashierSubscription = this.cashierService
+        .getCashiersByRadius(
+          this.client,
+          this.client.lat,
+          this.client.lng,
+          distance
+        )
+        .subscribe((cashier) => {
+          this.cashiers = [];
+          this.cashiers.push(...cashier);
+          this.cashiersList.emit(this.cashiers);
+          cashier.forEach((mark) => {
+            if ((mark.lattitude && mark.longitude) != undefined) {
+              this.markers.push({
+                id: mark.id,
+                lat: mark.lattitude,
+                lng: mark.longitude,
+                available: mark.available,
+              });
+              this.cashierService.addItem(this.markers);
+            }
+          });
+          this.addMarkers(this.markers);
+        });
+    } catch (error) {
       console.error(error);
     }
-   
   }
 
-  setCashiersBySearch(street:string){
+  setCashiersBySearch(street: string) {
     const regex = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-    try{ 
-      this.markers=[];
-      if(regex.test(street)){
-        this.cashierSubscription = this.cashierService.getCashiersByCP(street).subscribe(cashier=>{
-          cashier.forEach(mark =>{
-            if((mark.lattitude && mark.longitude) != undefined){
-              console.log(mark)
-              this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
-              this.cashierService.addItem(this.markers);
-            }
-          })
-        })
-      }else{
-        this.cashierSubscription = this.cashierService.getCashiersByAddress(street).subscribe(cashier=>{
-          cashier.forEach(mark =>{
-            if((mark.lattitude && mark.longitude) != undefined){
-              console.log(mark)
-              this.markers.push({id: mark.id, lat: mark.lattitude, lng:mark.longitude})
-              this.cashierService.addItem(this.markers);
-            }
-          })
-        })
+    try {
+      this.markers = [];
+      if (regex.test(street)) {
+        this.cashierSubscription = this.cashierService
+          .getCashiersByCP(street)
+          .subscribe((cashier) => {
+            cashier.forEach((mark) => {
+              if ((mark.lattitude && mark.longitude) != undefined) {
+                console.log(mark);
+                this.markers.push({
+                  id: mark.id,
+                  lat: mark.lattitude,
+                  lng: mark.longitude,
+                });
+                this.cashierService.addItem(this.markers);
+              }
+            });
+          });
+      } else {
+        this.cashierSubscription = this.cashierService
+          .getCashiersByAddress(street)
+          .subscribe((cashier) => {
+            cashier.forEach((mark) => {
+              if ((mark.lattitude && mark.longitude) != undefined) {
+                console.log(mark);
+                this.markers.push({
+                  id: mark.id,
+                  lat: mark.lattitude,
+                  lng: mark.longitude,
+                });
+                this.cashierService.addItem(this.markers);
+              }
+            });
+          });
       }
       this.addMarkers2(this.markers);
-      console.log("hola? -->",this.markers)
-    }catch(error){
+      console.log('hola? -->', this.markers);
+    } catch (error) {
       console.error(error);
     }
-   
   }
 
-  setClient(){
-    this.clientS.user.id=this.client.id;
-    this.clientS.user.lat=this.client.lat;
-    this.clientS.user.lng=this.client.lng;
-    this.clientS.user.distance=this.radius;
+  setClient() {
+    this.clientS.user.id = this.client.id;
+    this.clientS.user.lat = this.client.lat;
+    this.clientS.user.lng = this.client.lng;
+    this.clientS.user.distance = this.radius;
   }
 
-  addMarkers(markers: Array<{id:number,lat:number,lng:number, available:boolean}>){
+  addMarkers(
+    markers: Array<{ id: number; lat: number; lng: number; available: boolean }>
+  ) {
     let m: any;
-    markers.forEach(marker => {
-      if(this.isMarkeInsideRadius(marker,this.actualRadius) && marker.available){
-        m = L.marker([marker.lat, marker.lng],{
-          icon: this.cashierIcon
-        }).addTo(this.map).on('click', () => this.markOnClick(marker.id));
+    markers.forEach((marker) => {
+      if (
+        this.isMarkeInsideRadius(marker, this.actualRadius) &&
+        marker.available
+      ) {
+        m = L.marker([marker.lat, marker.lng], {
+          icon: this.cashierIcon,
+        })
+          .addTo(this.map)
+          .on('click', () => this.markOnClick(marker.id));
         this.markerObjects.push(m);
       }
     });
   }
 
-  addMarkers2(markers: Array<{id:number,lat:number,lng:number}>){
+  addMarkers2(markers: Array<{ id: number; lat: number; lng: number }>) {
     let m: any;
-    markers.forEach(marker => {
-      m = L.marker([marker.lat, marker.lng],{
-        icon: this.cashierIcon
-      }).addTo(this.map).on('click', () => this.markOnClick(marker.id));
+    markers.forEach((marker) => {
+      m = L.marker([marker.lat, marker.lng], {
+        icon: this.cashierIcon,
+      })
+        .addTo(this.map)
+        .on('click', () => this.markOnClick(marker.id));
       //this.markerObjects.push(m);
     });
   }
 
-  removeAllMarkers(){
-    this.markerObjects.forEach(marker =>{
+  removeAllMarkers() {
+    this.markerObjects.forEach((marker) => {
       this.map.removeLayer(marker);
     });
     this.markerObjects = [];
@@ -327,57 +375,56 @@ export class MapComponent implements OnInit{
 
   drawPolygon(polygonGeoJSON: any) {
     if (!this.polygon) {
-      this.polygon = new L.Polygon(polygonGeoJSON,{
+      this.polygon = new L.Polygon(polygonGeoJSON, {
         fillColor: 'green',
         color: '#005442',
         weight: 2,
-        opacity: 0.2
+        opacity: 0.2,
       }).addTo(this.map);
-    }else{
+    } else {
       this.map.removeLayer(this.polygon);
-      this.polygon = new L.Polygon(polygonGeoJSON,{
+      this.polygon = new L.Polygon(polygonGeoJSON, {
         fillColor: 'green',
         color: '#005442',
         weight: 2,
-        opacity: 0.2
+        opacity: 0.2,
       }).addTo(this.map);
     }
   }
-  
 
-  addPos(e){
+  addPos(e) {
     this.removePos();
     this.removeSearchMark();
-    this.myPos= L.marker(e.latlng,{
+    this.myPos = L.marker(e.latlng, {
       icon: this.userIcon,
       draggable: true,
       autoPan: true,
     }).addTo(this.map);
 
-    this.actualRadius = L.circle([e.latlng.lat,e.latlng.lng],{
+    this.actualRadius = L.circle([e.latlng.lat, e.latlng.lng], {
       color: '#005442',
       fillOpacity: 0.2,
       radius: this.radius,
     }).addTo(this.map);
 
-    this.client.lat=e.latlng.lat;
-    this.client.lng=e.latlng.lng;
+    this.client.lat = e.latlng.lat;
+    this.client.lng = e.latlng.lng;
     this.map.setView(e.latlng);
     this.updateRadius(this.radius);
     this.map.fitBounds(this.actualRadius.getBounds());
     this.setCashiers(this.radius);
     this.setClient();
   }
-  
-  removePos(){
-    if(this.myPos){
+
+  removePos() {
+    if (this.myPos) {
       this.myPos.removeFrom(this.map);
       this.actualRadius.remove();
     }
   }
 
-  removeSearchMark(){
-    if(this.searchMarker){
+  removeSearchMark() {
+    if (this.searchMarker) {
       this.searchMarker.removeFrom(this.map);
       //this.polygon.removeFrom(this.map);
     }
@@ -385,16 +432,16 @@ export class MapComponent implements OnInit{
 
   onMapClick(e) {
     this.popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(this.map);
+      .setLatLng(e.latlng)
+      .setContent('You clicked the map at ' + e.latlng.toString())
+      .openOn(this.map);
   }
 
-  onLocationError(e:any) {
+  onLocationError(e: any) {
     alert(e.message);
   }
 
-  updateRadius(radius:number){
+  updateRadius(radius: number) {
     this.removeAllMarkers();
     this.removeSearchMark();
     this.actualRadius.setRadius(radius);
@@ -402,17 +449,17 @@ export class MapComponent implements OnInit{
     this.setClient();
   }
 
-  isMarkeInsideRadius(marker: {lat: number, lng: number}, circle: L.Circle) {
+  isMarkeInsideRadius(marker: { lat: number; lng: number }, circle: L.Circle) {
     let insideMark = L.latLng(marker.lat, marker.lng);
     return circle.getBounds().contains(insideMark);
   }
 
-  markOnClick(id:number){
+  markOnClick(id: number) {
     this.modalS.modal.open(id);
     //this.isModalOpen=true;
   }
 
-  markOnClose(){
+  markOnClose() {
     document.getElementById('myModal').style.display = 'none';
     //this.isModalOpen=false;
   }
@@ -421,16 +468,16 @@ export class MapComponent implements OnInit{
     if (this.polygonSubscription) {
       this.polygonSubscription.unsubscribe();
     }
-    if(this.searchSubscription){
+    if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
-    if(this.streetSubscription){
+    if (this.streetSubscription) {
       this.streetSubscription.unsubscribe();
     }
-    if(this.cashierSubscription){
+    if (this.cashierSubscription) {
       this.cashierSubscription.unsubscribe();
     }
-    if(this.slideSubscription){
+    if (this.slideSubscription) {
       this.slideSubscription.unsubscribe();
     }
   }
