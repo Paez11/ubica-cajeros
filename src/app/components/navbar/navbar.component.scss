@@ -16,15 +16,6 @@
     .navbar-brand {
         font-size: smaller;
     }
-    /*
-    img {        
-        height: 25px;
-    }
-
-    svg {
-        height: 23px;
-    }
-    */
 }
 
 @media only screen and (max-width:576px) {
@@ -34,12 +25,15 @@
 }
 
 @media only screen and (max-width:484px) {
-    a {
+    a, img.navbar-brand {
         display: none;
     }
 
-    img {
-        cursor: pointer;
+    .fullLogo {
+        display: inline !important;
+        position: absolute;
+        left:35%;
+        height: 50%;
     }
 }
 
@@ -67,4 +61,8 @@ nav {
 
 .navbar {
     --bs-navbar-toggler-focus-width: 0;
+}
+
+.fullLogo {
+    display: none;
 }
