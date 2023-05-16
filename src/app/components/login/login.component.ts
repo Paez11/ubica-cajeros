@@ -23,6 +23,10 @@ export class LoginComponent implements OnInit {
   exist: boolean;
 
   isValid: boolean = true;
+  isValidUser: boolean = true;
+  isValidPassword: boolean = true;
+
+  noValid: string = '';
 
   showSpinner: boolean = false;
 
@@ -120,40 +124,55 @@ export class LoginComponent implements OnInit {
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
-      this.clientS.getAll().pipe().subscribe(console.log);
       this.clientSubscription = this.clientS
         .getByDni(this.form.value.dniLogin)
         .pipe
         //retry(10)
         ()
-        .subscribe((client) => {
-          /* try { */
-          if (
-            this.form.value.dniLogin == client.dni &&
-            this.hash(this.form.value.passwordLogin) == client.password
-          ) {
-            this.showSpinner = true;
-            let auxClient = {
-              id: client.id,
-              dni: client.dni,
-              account: client.account,
-              email: client.email,
-              password: client.password,
-            };
-            this.client = auxClient;
-            this.clientS.setUser(this.client);
-            this.toastr.success(
-              this.translate.instant('userVerified'),
-              this.translate.instant('verificate'),
-              { timeOut: 1500 }
-            );
-            setTimeout(() => {
-              this.showSpinner = false;
-              this.router.navigate(['/main']);
-            }, 2000);
-            this.form.reset();
-            this.showPassWord = false;
-          } /* else if (this.form.value.passwordLogin !== this.passwordLogin) {
+        .subscribe(
+          (client) => {
+            /* try { */
+            if (
+              this.form.value.dniLogin == client.dni &&
+              this.hash(this.form.value.passwordLogin) == client.password
+            ) {
+              this.isValidPassword = true
+              this.isValidUser = true
+              this.showSpinner = true;
+              let auxClient = {
+                id: client.id,
+                dni: client.dni,
+                account: client.account,
+                email: client.email,
+                password: client.password,
+              };
+              this.client = auxClient;
+              this.clientS.setUser(this.client);
+              this.toastr.success(
+                this.translate.instant('userVerified'),
+                this.translate.instant('verificate'),
+                { timeOut: 1500 }
+              );
+              setTimeout(() => {
+                this.showSpinner = false;
+                this.router.navigate(['/main']);
+              }, 2000);
+              this.form.reset();
+              this.showPassWord = false;
+            } else if (
+              this.form.value.dniLogin != client.dni ||
+              this.form.value.passwordLogin != client.password
+            ) {
+              if (this.form.value.dniLogin != client.dni) {
+                this.isValidUser = false;
+                this.noValid = this.translate.instant('validUser');
+              } else if (this.form.value.passwordLogin != client.password) {
+                this.isValidPassword = false;
+                this.noValid = this.translate.instant('validPassword');
+              }
+            }
+            //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos
+            /* else if (this.form.value.passwordLogin !== this.passwordLogin) {
                 this.toastr.error(
                   this.translate.instant('validPassword'),
                   this.translate.instant('errorVerificate')
@@ -167,20 +186,21 @@ export class LoginComponent implements OnInit {
                   this.translate.instant('errorVerificate')
                 );
               } */
-          /* } catch (Error) {
+            /* } catch (Error) {
               this.toastr.error(
                 this.translate.instant('validUser'),
                 this.translate.instant('errorVerificate')
               );
             }
           }, */
+          },
           (error: HttpErrorResponse) => {
             this.toastr.error(
               this.translate.instant('errorServer'),
               this.translate.instant('error')
             );
-          };
-        });
+          }
+        ); //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos
       /* } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
       this.toastr.error(
         this.translate.instant('enterData'),
