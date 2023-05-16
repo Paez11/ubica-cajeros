@@ -14,10 +14,13 @@
   height: 100%;
 }
 
+.form{width: 60%;}
+
 .window {
   margin-top: 30px;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .btn {
@@ -56,17 +59,16 @@
   padding-left: 10px;
 }
 
-.bi{
+.bi-eye{
+  cursor: pointer;
+}
+
+.bi-eye-slash{
   cursor: pointer;
 }
 
 .modal-content{
   width: 150%;
-}
-
-.row{
-  display: flex;
-  flex-direction: row;
 }
 
 .openModal:hover {
@@ -107,6 +109,7 @@
   .background{
     background: none;
   }
+  
   .form {
     height: 100%;
   }
@@ -119,6 +122,7 @@
   }
 
   .modal-content{
-    width: 100%;
+    margin-left: 25%;
+    width: 120%;
   }
 }
