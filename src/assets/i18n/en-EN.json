@@ -1,6 +1,7 @@
 {
     "lang" : "Language",
-    "offices": "list of close offices",
+    "loading":"Loading",
+    "offices": "List of close offices",
     "clientLocation": "Your current location",
     "search": "Search",
     "find": "Searching for location",
@@ -12,7 +13,7 @@
     "cashierNotAvailable": "Not available",
     "transactions": "Transactions",
     "close": "Close",
-    "time": "time",
+    "time": "Time",
     "scanQR": "Please scan the QR in the ATM machine before the time runs out",
     "cancelText": "Are you sure you want to cancel the transaction?",
     "confirm": "Yes",
