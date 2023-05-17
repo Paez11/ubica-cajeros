@@ -25,7 +25,7 @@
 }
 
 @media only screen and (max-width:484px) {
-    a, img.navbar-brand {
+    span, img.navbar-brand {
         display: none;
     }
 
@@ -37,13 +37,13 @@
     }
 }
 
-a {
+span {
     color: #005540;
     font-weight: 600;
     cursor: pointer;
 }
 
-a:hover {
+span:hover {
     border-bottom: 2px solid #005540;
 }
 
@@ -65,4 +65,10 @@ nav {
 
 .fullLogo {
     display: none;
+}
+
+.active-link {
+    border-bottom: 2px solid #005540;
+    background-color: rgba($color: #f5f3f3, $alpha: 0.5);
+    padding: 5px;
 }
