@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './float-button.component.html',
   styleUrls: ['./float-button.component.scss']
 })
-export class FloatButtonComponent implements OnInit {
+export class FloatButtonComponent {
 
   constructor() {}
-  
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 }

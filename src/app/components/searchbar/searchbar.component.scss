@@ -4,6 +4,7 @@
     position: relative;
     top: 70px;
     left: 10px;
+    background-color: rgb(245, 250, 255);
 }
 
 .searchButton{
@@ -12,11 +13,16 @@
 }
 .searchInput{
     border-width: 0 1px 0 0;
-    border-color: rgba(100, 100, 100, 0.238);
+    border-color: #005442;
     border-radius: 0%;
-    background-color: transparent;
+    background-color: rgb(245, 250, 255);
     padding: 1px 5px;
     margin: 5px 0 5px 0;
+}
+
+.searchInput::placeholder {
+    padding-left: 5px;
+    color: #005442;    
 }
 
 .searchInput:focus{
@@ -28,7 +34,7 @@
 }
 
 .searchIcon{
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 .details{
