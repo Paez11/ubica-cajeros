@@ -8,7 +8,7 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { DetailsComponent } from './components/details/details.component';
 import { ContainerComponent } from './components/container/container.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,7 +37,10 @@ import {ToastrModule} from 'ngx-toastr';
 import { RegisterComponent } from './components/register/register.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
+import { ToastrModule } from 'ngx-toastr';
+import { FloatButtonComponent } from './components/float-button/float-button.component';
 
+import { MatMenuModule } from '@angular/material/menu';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -58,6 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
     NavbarComponent,
     RegisterComponent,
     SpinnerComponent
+    FloatButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,8 @@ export function createTranslateLoader(http: HttpClient) {
     QRCodeModule,
     ToastrModule.forRoot({
       positionClass:'toastr-center'
-    })
+    }),
+    MatMenuModule
   ],
   providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTService],
   bootstrap: [AppComponent]
