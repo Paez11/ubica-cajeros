@@ -19,11 +19,12 @@
                 
             </div>
         </div>
-        <a class="navbar-brand">{{ "globalPosition" | translate }}</a>
-        <a class="navbar-brand">{{ "accounts" | translate }}/{{ "receipts" | translate }}</a>
-        <a class="navbar-brand">{{ "cards" | translate }}</a>
-        <a class="navbar-brand">{{ "transfers" | translate }}</a>
-        <a class="navbar-brand">{{ "deposits" | translate }}</a>
+        <span class="navbar-brand" routerLink="/main" 
+                routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">{{ "globalPosition" | translate }}</span>
+        <span class="navbar-brand" routerLinkActive="active-link">{{ "accounts" | translate }}/{{ "receipts" | translate }}</span>
+        <span class="navbar-brand" routerLinkActive="active-link">{{ "cards" | translate }}</span>
+        <span class="navbar-brand" routerLinkActive="active-link">{{ "transfers" | translate }}</span>
+        <span class="navbar-brand" routerLinkActive="active-link">{{ "deposits" | translate }}</span>
         <img class="navbar-brand"
                 src="../../../assets/img/logo-verde.png" alt="Logo" height="35">
         <img class="fullLogo"

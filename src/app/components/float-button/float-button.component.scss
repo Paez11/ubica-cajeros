@@ -36,6 +36,13 @@
 
 	span:hover {
 		border-bottom: 2px solid #005540;
-		
+	}
+
+	.active-link {
+		background-color: rgba($color: #f0f0f0, $alpha: 0.5);
+	}
+
+	.active-link span {
+		border-bottom: 2px solid #005540;	
 	}
 }
