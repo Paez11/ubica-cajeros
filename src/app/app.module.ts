@@ -33,6 +33,10 @@ import { ModalTService } from './services/modal-t.service';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+import {ToastrModule} from 'ngx-toastr';
+import { RegisterComponent } from './components/register/register.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+
 import { ToastrModule } from 'ngx-toastr';
 import { FloatButtonComponent } from './components/float-button/float-button.component';
 
@@ -55,6 +59,8 @@ export function createTranslateLoader(http: HttpClient) {
     QrComponent,
     Error404Component,
     NavbarComponent,
+    RegisterComponent,
+    SpinnerComponent
     FloatButtonComponent
   ],
   imports: [

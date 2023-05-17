@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, catchError, retry } from 'rxjs';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
+import { Subscription } from 'rxjs';
 
 declare var bootstrap: any;
 @Component({
@@ -16,13 +16,8 @@ declare var bootstrap: any;
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('rModal') rModal: ElementRef;
-  _rModal;
-  showModal: boolean;
   showPassWord: boolean = false;
-  exist: boolean;
 
-  isValid: boolean = true;
   isValidUser: boolean = true;
   isValidPassword: boolean = true;
 
@@ -31,19 +26,11 @@ export class LoginComponent implements OnInit {
   showSpinner: boolean = false;
 
   public form: FormGroup;
-  public formRegister: FormGroup;
 
   dniLogin: string;
   passwordLogin: string;
 
-  name: string;
-  dni: string;
-  password: string;
-  account: string;
-  email: string;
-
   client: IClient;
-
   private clientSubscription: Subscription;
 
   constructor(
@@ -72,72 +59,23 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
-
-    this.formRegister = this.fb.group({
-      name: ['', [Validators.required]],
-      dni: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(9),
-          Validators.maxLength(9),
-          Validators.pattern('^[0-9]{8}[A-Z]{1}$'),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.pattern('^([a-z0-9A-Z]*[-_.,ºª*+-Ç]*)*$'),
-        ],
-      ],
-      account: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(29),
-          Validators.maxLength(29),
-          Validators.pattern(
-            '^ES[0-9]{2} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$'
-          ),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.[a-z]{1,}$'
-          ),
-        ],
-      ],
-    });
   }
 
-  ngOnInit(): void {
-    this._rModal = new bootstrap.Modal(
-      document.getElementById('registerModal'),
-      {}
-    );
-  }
+  ngOnInit(): void {}
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
       this.clientSubscription = this.clientS
         .getByDni(this.form.value.dniLogin)
-        .pipe
-        //retry(10)
-        ()
+        .pipe()
         .subscribe(
           (client) => {
-            /* try { */
             if (
               this.form.value.dniLogin == client.dni &&
               this.hash(this.form.value.passwordLogin) == client.password
             ) {
-              this.isValidPassword = true
-              this.isValidUser = true
+              this.isValidPassword = true;
+              this.isValidUser = true;
               this.showSpinner = true;
               let auxClient = {
                 id: client.id,
@@ -186,13 +124,6 @@ export class LoginComponent implements OnInit {
                   this.translate.instant('errorVerificate')
                 );
               } */
-            /* } catch (Error) {
-              this.toastr.error(
-                this.translate.instant('validUser'),
-                this.translate.instant('errorVerificate')
-              );
-            }
-          }, */
           },
           (error: HttpErrorResponse) => {
             this.toastr.error(
@@ -219,80 +150,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  createAccount() {
-    if (
-      this.formRegister.value.dni &&
-      this.formRegister.value.password &&
-      this.formRegister.value.account &&
-      this.formRegister.value.email
-    ) {
-      try {
-        this.client = {
-          dni: this.formRegister.value.dni,
-          password: this.formRegister.value.password,
-          account: this.formRegister.value.account,
-          email: this.formRegister.value.email,
-        };
-        this.clientS.getByDni(this.client.dni).subscribe((client) => {
-          try {
-            if (client.dni) {
-              this.exist = true;
-            }
-          } catch (error) {
-            this.toastr.info(
-              this.translate.instant('userNotExists'),
-              this.translate.instant('notExist')
-            );
-          }
-        });
-
-        if (this.exist) {
-          this.formRegister.reset();
-          this.close(this._rModal);
-          this.toastr.error(
-            this.translate.instant('userNotCreated'),
-            this.translate.instant('notCreate')
-          );
-        } else {
-          this.formRegister.reset();
-          this.clientSubscription = this.clientS
-            .create(
-              this.client.account,
-              this.client.dni,
-              this.client.password,
-              this.client.email
-            )
-            .subscribe((client) => {
-              this.client = client;
-              this.clientS.setUser(this.client);
-              this.close(this._rModal);
-              this.toastr.success(
-                this.translate.instant('userCreated'),
-                this.translate.instant('create')
-              );
-            });
-        }
-      } catch (Error) {
-        this.toastr.error('Error');
-      }
-    } else {
-      this.toastr.error(
-        this.translate.instant('enterData'),
-        this.translate.instant('notCreate')
-      );
-    }
-  }
-
-  close(modal: any) {
-    modal.hide();
-    this.showModal = false;
-    this.isValid = true;
-  }
-  open(modal: any) {
-    modal.show();
-    this.showModal = true;
-  }
-
   hash(string) {
     return SHA256(string).toString();
   }
@@ -316,11 +173,5 @@ export class LoginComponent implements OnInit {
       this.client = userData;
     }
     return this.client;
-  }
-
-  ngOnDestroy() {
-    if (this.clientSubscription) {
-      this.clientSubscription.unsubscribe();
-    }
   }
 }

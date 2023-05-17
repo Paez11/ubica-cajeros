@@ -1,0 +1,49 @@
+.btn-tras {
+    background-color: white;
+  }
+  
+  .spinner-grow {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 5px;
+    color: #005540;
+  }
+
+  .loadScreen {
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 80%;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+  
+  .load {
+    color: #005540;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  span{
+    margin: 10px;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .blink {
+    animation: blink 2s infinite;
+  }
