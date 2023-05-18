@@ -2,23 +2,6 @@
     display: grid;
 }
 
-.overlaySearchBar {
-    position: absolute;
-    top: 21px;
-    left: 30px;
-    z-index: 1001;
-    background-color: transparent;
-}
-
-.overlayDetails {
-    z-index: 1000;
-    align-self: center;
-    position: relative;
-}
-.overlayDetails:active{
-    border-radius: 60%;
-    background: #035e4a;
-}
 .overlaySlider {
     position: absolute;
     z-index: 1000;
@@ -26,12 +9,6 @@
     justify-self: start;
     margin-left: 10px;
     margin-bottom: 10px;
-}
-
-.details{
-    display: flex;
-    justify-content: flex-end;
-    height: 100vh;
 }
 
 app-map {
