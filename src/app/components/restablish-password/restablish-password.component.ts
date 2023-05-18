@@ -24,9 +24,9 @@ export class RestablishPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private translate: TranslateService,
-    private clientService: ClientService
+    private _toastr: ToastrService,
+    private _translate: TranslateService,
+    private _clientService: ClientService
   ) {
     this.form = formBuilder.group({
       dni: [
@@ -61,26 +61,26 @@ export class RestablishPasswordComponent implements OnInit {
 
   setNewPassword() {
     if (!this.form.value.dni || !this.form.value.email) {
-      this.toastr.error(
-        this.translate.instant('enterData'),
-        this.translate.instant('error')
+      this._toastr.error(
+        this._translate.instant('enterData'),
+        this._translate.instant('error')
       );
     } else if (this.form.valid) {
       /* this.showInput = true; */
-      this.clientService.getByDni(this.form.value.dni).subscribe(
+      this._clientService.getByDni(this.form.value.dni).subscribe(
         (data) => {
           if (data === null || data === undefined) {
-            this.toastr.error(
-              this.translate.instant('notExist'),
-              this.translate.instant('error')
+            this._toastr.error(
+              this._translate.instant('notExist'),
+              this._translate.instant('error')
             );
           } else {
             if (this.form.value.email != data.email) {
-              this.toastr.error(
-                this.translate.instant(
+              this._toastr.error(
+                this._translate.instant(
                   '"los datos no son los que se esperaban"'
                 ),
-                this.translate.instant('error')
+                this._translate.instant('error')
               );
             } else {
               /* this.clientService. */
@@ -88,9 +88,9 @@ export class RestablishPasswordComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          this.toastr.error(
-            this.translate.instant('errorServer'),
-            this.translate.instant('error')
+          this._toastr.error(
+            this._translate.instant('errorServer'),
+            this._translate.instant('error')
           );
         }
       );

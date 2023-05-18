@@ -23,7 +23,7 @@ export class SearchbarComponent {
   
   @Output() street:string;
 
-  constructor(private cashierService:CashierService, private http: HttpClient, private mapService:MapService){
+  constructor(private _cashierService:CashierService, private http: HttpClient, private _mapService:MapService){
     // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
     this.filteredStreets = this.streetControl.valueChanges.pipe(
       startWith(''),
@@ -39,8 +39,8 @@ export class SearchbarComponent {
   }
 
   onSubmit(){
-    this.mapService.setStreet(this.street);
-    this.mapService.searchByPostalCode(this.street);
+    this._mapService.setStreet(this.street);
+    this._mapService.searchByPostalCode(this.street);
   }
 
   private _filter(value: string): string[] {

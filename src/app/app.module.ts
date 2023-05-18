@@ -8,12 +8,12 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { DetailsComponent } from './components/details/details.component';
 import { ContainerComponent } from './components/container/container.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatCardModule} from '@angular/material/card';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
+import { MatSliderModule } from '@angular/material/slider';
 import { RadioSliderComponent } from './components/radio-slider/radio-slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -33,13 +33,14 @@ import { ModalTService } from './services/modal-t.service';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 
-import {ToastrModule} from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { RegisterComponent } from './components/register/register.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { FloatButtonComponent } from './components/float-button/float-button.component';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -62,7 +63,7 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterComponent,
     SpinnerComponent,
     FloatButtonComponent,
-    RestablishPasswordComponent
+    RestablishPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,9 +74,9 @@ export function createTranslateLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-    }
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
     }),
     BrowserAnimationsModule,
     MatCardModule,
@@ -85,11 +86,18 @@ export function createTranslateLoader(http: HttpClient) {
     ReactiveFormsModule,
     QRCodeModule,
     ToastrModule.forRoot({
-      positionClass:'toastr-center'
+      positionClass: 'toastr-center',
     }),
-    MatMenuModule
+    MatMenuModule,
+    MatSlideToggleModule,
   ],
-  providers: [CashierService,ClientService,SearchbarComponent,MapService,ModalTService],
-  bootstrap: [AppComponent]
+  providers: [
+    CashierService,
+    ClientService,
+    SearchbarComponent,
+    MapService,
+    ModalTService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

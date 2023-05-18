@@ -14,9 +14,9 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
   {path:'restablishPassword', component:RestablishPasswordComponent},
-  {path:'main', canActivate: [LoginGuard], component:ContainerComponent},
+  {path:'main', /* canActivate: [LoginGuard], */ component:ContainerComponent},
   {path:'QR', canActivate: [LoginGuard, MapGuard], component:QrComponent},
-  {path:'', redirectTo:'login', pathMatch:'full'},
+  {path:'', redirectTo:'main', pathMatch:'full'},
   {path:'**', component:Error404Component}
 ];
 

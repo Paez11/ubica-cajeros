@@ -7,7 +7,7 @@ import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
-import { Subscription } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 
 declare var bootstrap: any;
 @Component({
@@ -30,15 +30,19 @@ export class LoginComponent implements OnInit {
   dniLogin: string;
   passwordLogin: string;
 
-  client: IClient;
-  private clientSubscription: Subscription;
+  client: IClient = {
+    account: '',
+    dni: '',
+    password: '',
+  };
+  private clientSubscription$: Subscription;
 
   constructor(
-    private clientS: ClientService,
+    private _clientS: ClientService,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: ToastrService,
-    private translate: TranslateService
+    private _toastr: ToastrService,
+    private _translate: TranslateService
   ) {
     this.form = this.fb.group({
       dniLogin: [
@@ -65,9 +69,9 @@ export class LoginComponent implements OnInit {
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
-      this.clientSubscription = this.clientS
+      this.clientSubscription$ = this._clientS
         .getByDni(this.form.value.dniLogin)
-        .pipe()
+        .pipe(/*asd*/)
         .subscribe(
           (client) => {
             if (
@@ -85,10 +89,10 @@ export class LoginComponent implements OnInit {
                 password: client.password,
               };
               this.client = auxClient;
-              this.clientS.setUser(this.client);
-              this.toastr.success(
-                this.translate.instant('userVerified'),
-                this.translate.instant('verificate'),
+              this._clientS.setUser(this.client);
+              this._toastr.success(
+                this._translate.instant('userVerified'),
+                this._translate.instant('verificate'),
                 { timeOut: 1500 }
               );
               setTimeout(() => {
@@ -103,10 +107,10 @@ export class LoginComponent implements OnInit {
             ) {
               if (this.form.value.dniLogin != client.dni) {
                 this.isValidUser = false;
-                this.noValid = this.translate.instant('validUser');
+                this.noValid = this._translate.instant('validUser');
               } else if (this.form.value.passwordLogin != client.password) {
                 this.isValidPassword = false;
-                this.noValid = this.translate.instant('validPassword');
+                this.noValid = this._translate.instant('validPassword');
               }
             }
             //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos
@@ -126,9 +130,9 @@ export class LoginComponent implements OnInit {
               } */
           },
           (error: HttpErrorResponse) => {
-            this.toastr.error(
-              this.translate.instant('errorServer'),
-              this.translate.instant('error')
+            this._toastr.error(
+              this._translate.instant('errorServer'),
+              this._translate.instant('error')
             );
           }
         ); //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos

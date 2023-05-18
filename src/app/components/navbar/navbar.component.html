@@ -1,30 +1,92 @@
 <nav class="navbar bg-body-tertiary fixed-top">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#005540" class="bi bi-list" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-              </svg>
-        </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ "atm" | translate }}</h5>
-                <button type="button" class="btn-close btn-close-yellow" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <app-details [cashiersList]="cashierList"></app-details>
-            </div>
-        </div>
-        <span class="navbar-brand" routerLink="/main" 
-                routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">{{ "globalPosition" | translate }}</span>
-        <span class="navbar-brand" routerLinkActive="active-link">{{ "accounts" | translate }}/{{ "receipts" | translate }}</span>
-        <span class="navbar-brand" routerLinkActive="active-link">{{ "cards" | translate }}</span>
-        <span class="navbar-brand" routerLinkActive="active-link">{{ "transfers" | translate }}</span>
-        <span class="navbar-brand" routerLinkActive="active-link">{{ "deposits" | translate }}</span>
-        <img class="navbar-brand"
-                src="../../../assets/img/logo-verde.png" alt="Logo" height="35">
-        <img class="fullLogo"
-                src="../../../assets/img/logo-grande-verde.png" alt="IES Banco" height="35">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-label="Toggle navigation"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="35"
+        height="35"
+        fill="#005540"
+        class="bi bi-list"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+        />
+      </svg>
+    </button>
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+          {{ "atm" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-yellow"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <app-details [cashiersList]="cashierList"></app-details>
+      </div>
     </div>
+    <span
+      class="navbar-brand"
+      routerLink="/main"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >{{ "globalPosition" | translate }}</span
+    >
+    <span class="navbar-brand" routerLinkActive="active-link"
+      >{{ "accounts" | translate }}/{{ "receipts" | translate }}</span
+    >
+    <span class="navbar-brand" routerLinkActive="active-link">{{
+      "cards" | translate
+    }}</span>
+    <span class="navbar-brand" routerLinkActive="active-link">{{
+      "transfers" | translate
+    }}</span>
+    <span class="navbar-brand" routerLinkActive="active-link">{{
+      "deposits" | translate
+    }}</span>
+    <div class="navbar-brand" [matMenuTriggerFor]="menu">
+      <img
+        class="img"
+        src="../../../assets/img/logo-verde.png"
+        alt="Logo"
+        height="30"
+      />
+      <mat-menu #menu="matMenu" style="margin-top: 62px">
+        <button
+          mat-menu-item
+          routerLink="/login"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Logout
+        </button>
+        <mat-slide-toggle (click)="setLang('es')"><img src="../../../assets/img/icon-spain.png"></mat-slide-toggle>
+        <mat-slide-toggle (click)="setLang('en')"><img src="../../../assets/img/icon-england.png"></mat-slide-toggle>
+      </mat-menu>
+    </div>
+    <img
+      class="fullLogo"
+      src="../../../assets/img/logo-grande-verde.png"
+      alt="IES Banco"
+      height="35"
+    />
+  </div>
 </nav>
