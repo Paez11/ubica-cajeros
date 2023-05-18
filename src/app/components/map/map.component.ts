@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
 
   cashiers: ICashier[] = [];
   @Output() cashiersList: EventEmitter<ICashier[]> = new EventEmitter();
-  
+
   /*
   mockCashiers:L.Marker = [
     {lat:37.687149, lng:-4.733906},
@@ -85,14 +85,14 @@ export class MapComponent implements OnInit {
   street: string;
 
   constructor(
-    private slideService: SlideService,
-    private cashierService: CashierService,
-    private clientS: ClientService,
-    private mapService: MapService,
+    private _slideService: SlideService,
+    private _cashierService: CashierService,
+    private _clientS: ClientService,
+    private _mapService: MapService,
     private searchBar: SearchbarComponent,
-    public modalS: ModalTService
+    public _modalS: ModalTService
   ) {
-    this.slideSubscription = this.slideService.circleRadius.subscribe((e) => {
+    this.slideSubscription = this._slideService.circleRadius.subscribe((e) => {
       this.radius = e.radius;
       this.updateRadius(this.radius);
       if (e.request) {
@@ -100,7 +100,7 @@ export class MapComponent implements OnInit {
       }
     });
 
-    this.clientS.getUserObservable().subscribe((client) => {
+    this._clientS.getUserObservable().subscribe((client) => {
       if (client) {
         this.client = {
           id:184,
@@ -158,12 +158,12 @@ export class MapComponent implements OnInit {
       });
     });
 
-    this.streetSubscription = this.mapService
+    this.streetSubscription = this._mapService
       .getstreetObservable()
       .subscribe((street) => {
         this.street = street;
       });
-    this.searchSubscription = this.mapService
+    this.searchSubscription = this._mapService
       .getLocationObservable()
       .subscribe((location) => {
         if (this.searchBar.street == null) {
@@ -254,7 +254,7 @@ export class MapComponent implements OnInit {
   setCashiers(distance: number) {
     try {
       this.markers = [];
-      this.cashierSubscription = this.cashierService
+      this.cashierSubscription = this._cashierService
         .getCashiersByRadius(
           this.client,
           this.client.lat,
@@ -273,7 +273,7 @@ export class MapComponent implements OnInit {
                 lng: mark.longitude,
                 available: mark.available,
               });
-              this.cashierService.addItem(this.markers);
+              this._cashierService.addItem(this.markers);
             }
           });
           this.addMarkers(this.markers);
@@ -288,7 +288,7 @@ export class MapComponent implements OnInit {
     try {
       this.markers = [];
       if (regex.test(street)) {
-        this.cashierSubscription = this.cashierService
+        this.cashierSubscription = this._cashierService
           .getCashiersByCP(street)
           .subscribe((cashier) => {
             cashier.forEach((mark) => {
@@ -299,12 +299,12 @@ export class MapComponent implements OnInit {
                   lat: mark.lattitude,
                   lng: mark.longitude,
                 });
-                this.cashierService.addItem(this.markers);
+                this._cashierService.addItem(this.markers);
               }
             });
           });
       } else {
-        this.cashierSubscription = this.cashierService
+        this.cashierSubscription = this._cashierService
           .getCashiersByAddress(street)
           .subscribe((cashier) => {
             cashier.forEach((mark) => {
@@ -315,7 +315,7 @@ export class MapComponent implements OnInit {
                   lat: mark.lattitude,
                   lng: mark.longitude,
                 });
-                this.cashierService.addItem(this.markers);
+                this._cashierService.addItem(this.markers);
               }
             });
           });
@@ -328,10 +328,10 @@ export class MapComponent implements OnInit {
   }
 
   setClient() {
-    this.clientS.user.id = this.client.id;
-    this.clientS.user.lat = this.client.lat;
-    this.clientS.user.lng = this.client.lng;
-    this.clientS.user.distance = this.radius;
+    this._clientS.user.id = this.client.id;
+    this._clientS.user.lat = this.client.lat;
+    this._clientS.user.lng = this.client.lng;
+    this._clientS.user.distance = this.radius;
   }
 
   addMarkers(
@@ -454,7 +454,7 @@ export class MapComponent implements OnInit {
   }
 
   markOnClick(id: number) {
-    this.modalS.modal.open(id);
+    this._modalS.modal.open(id);
     //this.isModalOpen=true;
   }
 

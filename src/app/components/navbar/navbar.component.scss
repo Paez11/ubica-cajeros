@@ -25,7 +25,7 @@
 }
 
 @media only screen and (max-width:484px) {
-    span, img.navbar-brand {
+    span, img {
         display: none;
     }
 
@@ -71,4 +71,8 @@ nav {
     border-bottom: 2px solid #005540;
     background-color: rgba($color: #f5f3f3, $alpha: 0.5);
     padding: 5px;
+}
+
+.mat-menu{
+    margin-top: 20px;
 }
