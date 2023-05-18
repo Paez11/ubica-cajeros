@@ -40,6 +40,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { FloatButtonComponent } from './components/float-button/float-button.component';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,7 +61,8 @@ export function createTranslateLoader(http: HttpClient) {
     NavbarComponent,
     RegisterComponent,
     SpinnerComponent,
-    FloatButtonComponent
+    FloatButtonComponent,
+    RestablishPasswordComponent
   ],
   imports: [
     BrowserModule,

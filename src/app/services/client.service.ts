@@ -64,6 +64,10 @@ export class ClientService {
     );
   }
 
+  /* getNewPassword():Observable<IClient>{
+
+  } */
+
   create(account, dni, password, email): Observable<any> {
     if (!account || !dni || !password || !email) {
       throw new Error('Data error.');
