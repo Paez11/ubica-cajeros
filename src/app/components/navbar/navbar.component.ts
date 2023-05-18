@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICashier } from 'src/app/model/ICashier';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +9,13 @@ import { ICashier } from 'src/app/model/ICashier';
 })
 export class NavbarComponent implements OnInit {
 @Input() cashierList: ICashier[];
-  constructor() { }
+
+  constructor(private _langService: LanguageService) { }
 
   ngOnInit(): void {
   }
 
+  setLang(lang: string) {
+    this._langService.set(lang);
+  }
 }
