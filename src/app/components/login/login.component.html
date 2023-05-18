@@ -87,11 +87,16 @@
             <button type="submit" class="btn">
               {{ "login" | translate }}
             </button>
+            <p routerLink="/restablishPassword" style="cursor: pointer">
+              {{ "forgotPassword" | translate }}
+            </p>
           </div>
         </div>
         <div>
           <div class="mb-3">
-            <p routerLink="/register" style="cursor: pointer;">{{ "createAccount" | translate }}</p>
+            <p routerLink="/register" style="cursor: pointer">
+              {{ "createAccount" | translate }}
+            </p>
           </div>
         </div>
       </div>

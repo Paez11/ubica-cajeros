@@ -13,11 +13,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  name: string;
   dni: string;
   password: string;
   account: string;
   email: string;
+
+  showDniInfo: boolean = false;
+  showPasswordInfo: boolean = false;
+  showAccountInfo: boolean = false;
+  showMailInfo: boolean = false;
 
   showPassWord: boolean = false;
 
@@ -35,7 +39,6 @@ export class RegisterComponent implements OnInit {
     private translate: TranslateService
   ) {
     this.formRegister = this.fb.group({
-      name: ['', [Validators.required]],
       dni: [
         '',
         [
@@ -69,7 +72,7 @@ export class RegisterComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(
-            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.[a-z]{1,}$'
+            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}[.]{1}[a-z]{1,}$'
           ),
         ],
       ],
@@ -148,6 +151,24 @@ export class RegisterComponent implements OnInit {
     } else {
       this.showPassWord = false;
       passwordField.type = 'password';
+    }
+  }
+
+  showInfo(id: string): void {
+    const infoField = document.getElementById(id) as HTMLInputElement;
+    switch (id) {
+      case 'dni':
+        this.showDniInfo = !this.showDniInfo;
+        break;
+      case 'password':
+        this.showPasswordInfo = !this.showPasswordInfo;
+        break;
+      case 'account':
+        this.showAccountInfo = !this.showAccountInfo;
+        break;
+      case 'mail':
+        this.showMailInfo = !this.showMailInfo;
+        break;
     }
   }
 
