@@ -15,8 +15,7 @@ export class AppComponent {
     this._langService.set(language);
     this._langService.add(['es','en']);
     if(language) {
-      this._langService.setDefault('es');
-      this._langService.set(language);
+      this._langService.setDefault(language);
     }
     else {
       this._langService.setDefault('es');
