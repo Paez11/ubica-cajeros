@@ -9,35 +9,39 @@ import { TransactionService } from 'src/app/services/transaction.service';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit{
+export class DetailsComponent implements OnInit {
   @Input() cashiersList: ICashier[];
-  
-  public cashiers:ICashier[] = [];
+
+  public cashiers: ICashier[] = [];
 
   private clientSubscription: Subscription;
   private cashierSubscription: Subscription;
-  
-  constructor(private cashierS:CashierService, private transactionS:TransactionService, private clientS:ClientService,
-    private modalS:ModalTService) {
-    
-  }
+
+  constructor(
+    private _cashierS: CashierService,
+    private _transactionS: TransactionService,
+    private _clientS: ClientService,
+    private modalS: ModalTService
+  ) {}
 
   ngOnInit() {
-    this.clientSubscription = this.clientS.getUserObservable().subscribe(() => {
-      this.setData();
-    });
+    this.clientSubscription = this._clientS
+      .getUserObservable()
+      .subscribe(() => {
+        this.setData();
+      });
   }
 
   async setData(): Promise<void> {
     let mapComponent = document.querySelector('map');
-    if(!mapComponent){
+    if (!mapComponent) {
       // MyComponent hasn't finished loading yet, wait for it to appear
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return this.initializeMyComponent(); // Recursively call this function until the component is found
     } else {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         // MyComponent has finished loading, initialize it
         const componentInstance = mapComponent['map'];
         componentInstance.ngOnInit();
@@ -47,13 +51,20 @@ export class DetailsComponent implements OnInit{
   }
 
   initializeMyComponent(): void | PromiseLike<void> {
-    try{
-      this.cashiers=[];
-      this.cashierSubscription = this.cashierS.getCashiersByRadius(this.clientS.user?.id,this.clientS.user?.lat,this.clientS.user?.lng,this.clientS.user?.distance).subscribe(cashiers =>{
-        this.cashiers.push(...cashiers);
-        //this.cashierS.addItem(this.cashiers);
-      });
-    }catch(error){
+    try {
+      this.cashiers = [];
+      this.cashierSubscription = this._cashierS
+        .getCashiersByRadius(
+          this._clientS.user?.id,
+          this._clientS.user?.lat,
+          this._clientS.user?.lng,
+          this._clientS.user?.distance
+        )
+        .subscribe((cashiers) => {
+          this.cashiers.push(...cashiers);
+          //this.cashierS.addItem(this.cashiers);
+        });
+    } catch (error) {
       console.error(error);
     }
   }
@@ -62,14 +73,12 @@ export class DetailsComponent implements OnInit{
     this.modalS.modal.open(id);
   }
 
-  ngOnDestroy(){
-    if(this.clientSubscription){
+  ngOnDestroy() {
+    if (this.clientSubscription) {
       this.clientSubscription.unsubscribe();
     }
-    if(this.cashierSubscription){
+    if (this.cashierSubscription) {
       this.cashierSubscription.unsubscribe();
     }
   }
 }
-
-

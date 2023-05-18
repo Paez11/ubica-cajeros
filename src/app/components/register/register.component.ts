@@ -13,11 +13,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  name: string;
   dni: string;
   password: string;
   account: string;
   email: string;
+
+  showDniInfo: boolean = false;
+  showPasswordInfo: boolean = false;
+  showAccountInfo: boolean = false;
+  showMailInfo: boolean = false;
 
   showPassWord: boolean = false;
 
@@ -28,14 +32,13 @@ export class RegisterComponent implements OnInit {
   public formRegister: FormGroup;
 
   constructor(
-    private clientS: ClientService,
+    private _clientS: ClientService,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: ToastrService,
-    private translate: TranslateService
+    private _toastr: ToastrService,
+    private _translate: TranslateService
   ) {
     this.formRegister = this.fb.group({
-      name: ['', [Validators.required]],
       dni: [
         '',
         [
@@ -69,7 +72,7 @@ export class RegisterComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(
-            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}.[a-z]{1,}$'
+            '^[a-z0-9A-Z]{0,}[A-Z]{1}[a-z0-9A-Z]{1,}[@]{1}[a-z]{1,}[.]{1}[a-z]{1,}$'
           ),
         ],
       ],
@@ -92,28 +95,28 @@ export class RegisterComponent implements OnInit {
           account: this.formRegister.value.account,
           email: this.formRegister.value.email,
         };
-        this.clientS.getByDni(this.client.dni).subscribe((client) => {
+        this._clientS.getByDni(this.client.dni).subscribe((client) => {
           try {
             if (client.dni) {
               this.exist = true;
             }
           } catch (error) {
-            this.toastr.info(
-              this.translate.instant('userNotExists'),
-              this.translate.instant('notExist')
+            this._toastr.info(
+              this._translate.instant('userNotExists'),
+              this._translate.instant('notExist')
             );
           }
         });
 
         if (this.exist) {
           this.formRegister.reset();
-          this.toastr.error(
-            this.translate.instant('userNotCreated'),
-            this.translate.instant('notCreate')
+          this._toastr.error(
+            this._translate.instant('userNotCreated'),
+            this._translate.instant('notCreate')
           );
         } else {
           this.formRegister.reset();
-          this.clientSubscription = this.clientS
+          this.clientSubscription = this._clientS
             .create(
               this.client.account,
               this.client.dni,
@@ -122,20 +125,20 @@ export class RegisterComponent implements OnInit {
             )
             .subscribe((client) => {
               this.client = client;
-              this.clientS.setUser(this.client);
-              this.toastr.success(
-                this.translate.instant('userCreated'),
-                this.translate.instant('create')
+              this._clientS.setUser(this.client);
+              this._toastr.success(
+                this._translate.instant('userCreated'),
+                this._translate.instant('create')
               );
             });
         }
       } catch (Error) {
-        this.toastr.error('Error');
+        this._toastr.error('Error');
       }
     } else {
-      this.toastr.error(
-        this.translate.instant('enterData'),
-        this.translate.instant('notCreate')
+      this._toastr.error(
+        this._translate.instant('enterData'),
+        this._translate.instant('notCreate')
       );
     }
   }
@@ -148,6 +151,24 @@ export class RegisterComponent implements OnInit {
     } else {
       this.showPassWord = false;
       passwordField.type = 'password';
+    }
+  }
+
+  showInfo(id: string): void {
+    const infoField = document.getElementById(id) as HTMLInputElement;
+    switch (id) {
+      case 'dni':
+        this.showDniInfo = !this.showDniInfo;
+        break;
+      case 'password':
+        this.showPasswordInfo = !this.showPasswordInfo;
+        break;
+      case 'account':
+        this.showAccountInfo = !this.showAccountInfo;
+        break;
+      case 'mail':
+        this.showMailInfo = !this.showMailInfo;
+        break;
     }
   }
 
