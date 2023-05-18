@@ -1,18 +1,14 @@
-<nav class="navbar fixed-top nav">
-  <div class="container-fluid">
-    <div class="searchbar">
-      <form (ngSubmit)="onSubmit()">
-        <input matInput class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}" 
-                [formControl]="streetControl" [(ngModel)]="street" name="searchInput">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
-            {{ street }}
-          </mat-option>
-        </mat-autocomplete>
-        <button class="btn searchButton" type="submit" (click)="search()">
-          <img src="./assets/icons/search.png" width="20px" height="20px" class="searchIcon">
-        </button>
-      </form>
-    </div>
-  </div>
-</nav>
+<div class="searchbar">
+  <form (ngSubmit)="onSubmit()">
+    <input matInput class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}"
+      [formControl]="streetControl" [(ngModel)]="street" name="searchInput">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+        {{ street }}
+      </mat-option>
+    </mat-autocomplete>
+    <button class="btn searchButton" type="submit" (click)="search()">
+      <img src="./assets/icons/search.png" width="20px" height="20px" class="searchIcon">
+    </button>
+  </form>
+</div>
