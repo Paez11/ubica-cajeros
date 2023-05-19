@@ -62,28 +62,13 @@
     <span class="navbar-brand" routerLinkActive="active-link">{{
       "deposits" | translate
     }}</span>
-    <div class="navbar-brand" [matMenuTriggerFor]="menu">
+    <div (click)="showCardMap()" class="navbar-brand">
       <img
         class="img"
         src="../../../assets/img/logo-verde.png"
         alt="Logo"
         height="30"
       />
-      <mat-menu #menu="matMenu" style="margin-top: 62px">
-        <button
-          mat-menu-item
-          routerLink="/login"
-          routerLinkActive="active-link"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          {{ 'logout' | translate }}
-        </button>
-        <img src="../../../assets/img/icon-spain.png" />
-        <mat-slide-toggle
-          (click)="setLang()"
-        ></mat-slide-toggle>
-        <img src="../../../assets/img/icon-england.png" />
-      </mat-menu>
     </div>
     <img
       class="fullLogo"
@@ -91,5 +76,32 @@
       alt="IES Banco"
       height="35"
     />
+  </div>
+  <div *ngIf="showCard" class="card">
+    <div class="card-body">
+      <div class="col">
+        <div class="row">
+          <button
+            class="btn"
+            routerLink="/login"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ "logout" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <div class="divLang">
+            <img class="imgLang" src="../../../assets/img/icon-spain.png" />
+          </div>
+          <div class="divLang">
+            <mat-slide-toggle (click)="setLang()"></mat-slide-toggle>
+          </div>
+          <div class="divLang">
+            <img class="imgLang" src="../../../assets/img/icon-england.png" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
