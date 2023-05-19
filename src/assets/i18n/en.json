@@ -34,6 +34,7 @@
   "newAccount": "New Account",
   "noEmail": "You haven`t introduce any email",
   "login": "Login",
+  "logout": "Logout",
   "end": "End",
   "error": "Error",
   "successCreate": "Account succesfully create",

@@ -5,17 +5,20 @@ import { LanguageService } from 'src/app/services/language.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-@Input() cashierList: ICashier[];
+  @Input() cashierList: ICashier[];
 
-  constructor(private _langService: LanguageService) { }
+  constructor(private _langService: LanguageService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  setLang(lang: string) {
-    this._langService.set(lang);
+  setLang() {
+    if (this._langService.getCurrentLanguage() != 'es') {
+      this._langService.set('es');
+    } else if (this._langService.getCurrentLanguage() != 'en') {
+      this._langService.set('en');
+    }
   }
 }

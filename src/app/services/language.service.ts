@@ -25,6 +25,15 @@ export class LanguageService {
     }
   }
 
+  public getCurrentLanguage():string|null {
+    try {
+      return this.translate.currentLang;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   public getAll(): string[]|null {
     try {
       return this.translate.getLangs();
