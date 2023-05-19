@@ -76,10 +76,13 @@
           routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          Logout
+          {{ 'logout' | translate }}
         </button>
-        <mat-slide-toggle (click)="setLang('es')"><img src="../../../assets/img/icon-spain.png"></mat-slide-toggle>
-        <mat-slide-toggle (click)="setLang('en')"><img src="../../../assets/img/icon-england.png"></mat-slide-toggle>
+        <img src="../../../assets/img/icon-spain.png" />
+        <mat-slide-toggle
+          (click)="setLang()"
+        ></mat-slide-toggle>
+        <img src="../../../assets/img/icon-england.png" />
       </mat-menu>
     </div>
     <img

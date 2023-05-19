@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Error404Component } from './components/error404/error404.component';
@@ -11,18 +10,17 @@ import { RegisterComponent } from './components/register/register.component';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
 
 const routes: Routes = [
-  {path:'login', component:LoginComponent},
-  {path:'register', component:RegisterComponent},
-  {path:'main', /* canActivate: [LoginGuard], */component:ContainerComponent},
-  {path:'restablishPassword', component:RestablishPasswordComponent},
-  {path:'main', /* canActivate: [LoginGuard], */ component:ContainerComponent},
-  {path:'QR', canActivate: [LoginGuard, MapGuard], component:QrComponent},
-  {path:'', redirectTo:'main', pathMatch:'full'},
-  {path:'**', component:Error404Component}
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'main', canActivate: [LoginGuard], component: ContainerComponent },
+  { path: 'restablishPassword', component: RestablishPasswordComponent },
+  { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', component: Error404Component },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash:true})],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
