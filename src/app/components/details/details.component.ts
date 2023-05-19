@@ -5,6 +5,7 @@ import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-details',
@@ -21,9 +22,9 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private _cashierS: CashierService,
-    private _transactionS: TransactionService,
     private _clientS: ClientService,
-    private modalS: ModalTService
+    private modalS: ModalTService,
+    public domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -80,5 +81,9 @@ export class DetailsComponent implements OnInit {
     if (this.cashierSubscription) {
       this.cashierSubscription.unsubscribe();
     }
+  }
+
+  decodeImg(photo: string): SafeResourceUrl {
+   return this.domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+photo);
   }
 }
