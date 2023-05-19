@@ -1,78 +1,102 @@
-@media only screen and (max-width:776px) {
-    .navbar-brand {
-        font-size: medium;
-    }     
-    
-    img {        
-        height: 30px;
-    }
+@media only screen and (max-width: 776px) {
+  .navbar-brand {
+    font-size: medium;
+  }
 
-    svg {
-        height: 28px;
-    }
+  img {
+    height: 30px;
+  }
+
+  svg {
+    height: 28px;
+  }
 }
 
-@media only screen and (max-width:657px) {
-    .navbar-brand {
-        font-size: smaller;
-    }
+@media only screen and (max-width: 657px) {
+  .navbar-brand {
+    font-size: smaller;
+  }
 }
 
-@media only screen and (max-width:576px) {
-    .navbar-brand {
-        font-size: x-small;
-    }
+@media only screen and (max-width: 576px) {
+  .navbar-brand {
+    font-size: x-small;
+  }
 }
 
-@media only screen and (max-width:484px) {
-    span, img {
-        display: none;
-    }
+@media only screen and (max-width: 484px) {
+  span,
+  img {
+    display: none;
+  }
 
-    .fullLogo {
-        display: inline !important;
-        position: absolute;
-        left:35%;
-        height: 50%;
-    }
+  .fullLogo {
+    display: inline !important;
+    position: absolute;
+    left: 35%;
+    height: 50%;
+  }
+}
+
+.img {
+  cursor: pointer;
+}
+
+.card {
+  position: absolute;
+  right: 0;
+  top: 103%;
+  border-color: #005540;
+}
+
+.btn:hover{
+    border-color: #005540;
+    color: #005540;
+}
+
+.row {
+  height: 50%;
+}
+
+.divLang {
+  display: flex;
+  align-items: center;
+  width: 33%;
 }
 
 span {
-    color: #005540;
-    font-weight: 600;
-    cursor: pointer;
+  color: #005540;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 span:hover {
-    border-bottom: 2px solid #005540;
+  border-bottom: 2px solid #005540;
 }
 
 .navbar-toggler {
-    border: transparent;
+  border: transparent;
 }
 
 nav {
-    border-bottom: 2px solid #005540;
+  border-bottom: 2px solid #005540;
 }
 
-.offcanvas-title, .btn-close {
-    color: #005540;
+.offcanvas-title,
+.btn-close {
+  color: #005540;
 }
 
 .navbar {
-    --bs-navbar-toggler-focus-width: 0;
+  --bs-navbar-toggler-focus-width: 0;
 }
 
 .fullLogo {
-    display: none;
+  display: none;
 }
 
 .active-link {
-    border-bottom: 2px solid #005540;
-    background-color: rgba($color: #f5f3f3, $alpha: 0.5);
-    padding: 5px;
-}
-
-.mat-menu{
-    margin-top: 20px;
+  border-bottom: 2px solid #005540;
+  background-color: rgba($color: #f5f3f3, $alpha: 0.5);
+  padding: 5px;
 }

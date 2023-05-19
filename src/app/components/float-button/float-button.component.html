@@ -1,26 +1,84 @@
-<div class="btn-flotante" [matMenuTriggerFor]="menu">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house"
-    viewBox="0 0 16 16">
+<div (click)="showCardMap()" class="btn-flotante">
+  <svg
+    *ngIf="!showCard"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    fill="currentColor"
+    class="bi bi-house"
+    viewBox="0 0 16 16"
+  >
     <path
-      d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+      d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"
+    />
   </svg>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/main" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-      <span>
-        {{ "globalPosition" | translate }}
-      </span>
-    </button>
-    <button mat-menu-item routerLinkActive="active-link">
-      <span>{{ "accounts" | translate }}/{{ "receipts" | translate }}</span>
-    </button>
-    <button mat-menu-item routerLinkActive="active-link">
-      <span>{{ "cards" | translate }}</span>
-    </button>
-    <button mat-menu-item routerLinkActive="active-link">
-      <span>{{ "transfers" | translate }}</span>
-    </button>
-    <button mat-menu-item routerLinkActive="active-link">
-      <span>{{ "deposits" | translate }}</span>
-    </button>
-  </mat-menu>
+  <div *ngIf="showCard" class="card">
+    <div class="card-body">
+      <div class="col">
+        <div class="row">
+          <button
+            class="btn"
+            routerLink="/main"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ "globalPosition" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button class="btn" routerLinkActive="active-link">
+            {{ "accounts" | translate }}/{{ "receipts" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button class="btn" routerLinkActive="active-link">
+            {{ "cards" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button class="btn" routerLinkActive="active-link">
+            {{ "transfers" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button class="btn" routerLinkActive="active-link">
+            {{ "deposits" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button
+            routerLink="/login"
+            class="btn"
+            routerLinkActive="active-link"
+          >
+            {{ "logout" | translate }}
+          </button>
+        </div>
+        <div class="row">
+          <button
+            (click)="showCardLangMap()"
+            class="btn"
+            routerLinkActive="active-link"
+          >
+            {{ "lang" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showCardLang" class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="divLang">
+          <img class="imgLang" src="../../../assets/img/icon-spain.png" />
+        </div>
+        <div class="divLang">
+          <mat-slide-toggle (click)="setLang()"></mat-slide-toggle>
+        </div>
+        <div class="divLang">
+          <img class="imgLang" src="../../../assets/img/icon-england.png" />
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
