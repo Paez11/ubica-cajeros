@@ -1,6 +1,11 @@
-<div (click)="showCardMap()" class="btn-flotante">
+<div
+  (click)="showCardMap()"
+  class="btn-flotante"
+  [ngStyle]="{ padding: showCard || showCardLang ? '0px 0px' : '20px 22px' }"
+>
   <svg
-    *ngIf="!showCard"
+    *ngIf="!showCard && !showCardLang"
+    id="biHouse"
     xmlns="http://www.w3.org/2000/svg"
     width="20"
     height="20"
