@@ -1,13 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { ICashier } from 'src/app/model/ICashier';
@@ -35,6 +27,7 @@ export class ModalTransactionComponent implements AfterViewInit {
   transaction: DTOTransaction;
   client: IClient;
   cashierId: number;
+  cashier: ICashier;
   @Output() type: boolean = false;
   //false extraer
   //true ingresar
@@ -52,6 +45,9 @@ export class ModalTransactionComponent implements AfterViewInit {
     this._clientS.getUserObservable().subscribe((client) => {
       this.client = client;
     });
+
+    this.cashier = null;
+    console.log(this.cashier)
   }
 
   ngAfterViewInit(): void {
@@ -63,8 +59,9 @@ export class ModalTransactionComponent implements AfterViewInit {
     this.show = false;
     this.isValid = true;
   }
-  open(id) {
-    this.cashierId = id;
+  open(cashier: ICashier) {
+    this.cashier = cashier;
+    this.cashierId = cashier.id;
     this._modal.show();
     this.show = true;
   }
@@ -87,4 +84,8 @@ export class ModalTransactionComponent implements AfterViewInit {
   }
 
   ngAfterInit() {}
+
+  decodeImg(photo: string): SafeResourceUrl {
+    return this._cashierS.getDecodeImg(photo);
+  }
 }
