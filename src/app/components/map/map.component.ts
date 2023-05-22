@@ -454,7 +454,7 @@ export class MapComponent implements OnInit {
   }
 
   markOnClick(id: number) {
-    this._modalS.modal.open(id);
+    this._modalS.modal.open(this.cashiers.find( val => val.id === id));
     //this.isModalOpen=true;
   }
 

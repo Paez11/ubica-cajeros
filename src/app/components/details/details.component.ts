@@ -4,8 +4,7 @@ import { ICashier } from 'src/app/model/ICashier';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ModalTService } from 'src/app/services/modal-t.service';
-import { TransactionService } from 'src/app/services/transaction.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-details',
@@ -23,8 +22,7 @@ export class DetailsComponent implements OnInit {
   constructor(
     private _cashierS: CashierService,
     private _clientS: ClientService,
-    private modalS: ModalTService,
-    public domSanitizer: DomSanitizer
+    private modalS: ModalTService
   ) {}
 
   ngOnInit() {
@@ -70,8 +68,8 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  openModal(id: number) {
-    this.modalS.modal.open(id);
+  openModal(cashier: ICashier) {
+    this.modalS.modal.open(cashier);
   }
 
   ngOnDestroy() {
@@ -84,6 +82,6 @@ export class DetailsComponent implements OnInit {
   }
 
   decodeImg(photo: string): SafeResourceUrl {
-   return this.domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+photo);
+    return this._cashierS.getDecodeImg(photo);
   }
 }

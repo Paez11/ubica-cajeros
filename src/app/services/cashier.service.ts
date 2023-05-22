@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DTO_CashierByRadius_Request } from '../model/DTO_CashierByRadius_Request';
 import { ICashier } from '../model/ICashier';
 import { environment } from '../../environments/environment.development';
-import { ClientService } from './client.service';
-import { IClient } from '../model/IClient';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +15,7 @@ export class CashierService {
   private cashiers:any[] = [];
   private cashiersSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this.cashiers);
   
-  constructor(private http:HttpClient) { 
-      
-  }
+  constructor(private http:HttpClient, private _domSanitizer: DomSanitizer) {}
 
   addItem(item: any):void{
     this.cashiers.push(item);
@@ -96,5 +93,9 @@ export class CashierService {
     };
     const endpoint =environment.api.url+environment.api.endpoint.cashiersbystreet;
     return this.http.get(endpoint+"/"+street);
+  }
+
+  getDecodeImg(photo: string): SafeResourceUrl {
+    return this._domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,'+photo);
   }
 }

@@ -24,7 +24,7 @@
       </h5>
     </ng-template>
     <button type="button" class="bg-primary text-white border border-0 transactionBtn" *ngIf="cashier.available"
-      (click)="openModal(cashier.id)" data-bs-target="#myModal">
+      (click)="openModal(cashier)" data-bs-target="#myModal">
       {{ "transactions" | translate }}
     </button>
   </div>
