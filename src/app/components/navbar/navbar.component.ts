@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   @Input() cashierList: ICashier[];
   showCard: boolean = false;
 
-  click$ = fromEvent<PointerEvent>(document, 'click');
+  clickOut$ = fromEvent<PointerEvent>(document, 'click');
 
   constructor(private _langService: LanguageService) {}
 
@@ -28,25 +28,13 @@ export class NavbarComponent implements OnInit {
 
   showCardMap() {
     this.showCard = !this.showCard;
-    /* this.click$
-      .pipe(
-        map((event) => {
-            if (
-              event.currentTarget['className'] !== 'divLang' ||
-              'imgLang' ||
-              'row' ||
-              'btn' ||
-              'col' ||
-              'card-body' ||
-              'card'
-            ) {
+    if (this.showCard) {
+      this.clickOut$.subscribe((event) => {
+        console.log(event);
+        if (event.target['className'] !== 'img') {
               this.showCard = false;
-            } else if (event.currentTarget['className'] === 'navbar-brand') {
-              this.showCard = true;
-            }
-          
-        })
-      )
-      .subscribe(); */
+        }
+      });
+    }
   }
 }

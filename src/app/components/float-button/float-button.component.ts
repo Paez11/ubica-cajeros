@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fromEvent } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { LanguageService } from 'src/app/services/language.service';
 export class FloatButtonComponent {
   showCard: boolean = false;
   showCardLang: boolean = false;
+
+  clickOut$ = fromEvent<PointerEvent>(document, 'click');
 
   constructor(private _langService: LanguageService) {}
 
@@ -22,6 +25,20 @@ export class FloatButtonComponent {
 
   showCardMap() {
     this.showCard = !this.showCard;
+    if (this.showCard) {
+      this.showCardLang = false;
+      this.clickOut$.subscribe((event) => {
+        console.log(event);
+        if (event.target['className'] !== 'btn-flotante') {
+          if (event.target['className'] !== 'btn') {
+            if (event.target['id'] !== 'biHouse') {
+              this.showCard = false;
+              this.showCardLang = false;
+            }
+          }
+        }
+      });
+    }
   }
 
   showCardLangMap() {
