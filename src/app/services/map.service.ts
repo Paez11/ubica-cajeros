@@ -21,9 +21,6 @@ export class MapService {
   }
 
   public searchByPostalCode(postalCode: string){
-
-    console.log(postalCode)
-
     if(postalCode===null){
       throw new Error("Error en datos codigo postal");
     }
