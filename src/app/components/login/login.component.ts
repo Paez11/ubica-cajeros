@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
       this.clientSubscription$ = this._clientS
         .getByDni(this.form.value.dniLogin)
-        .pipe(/*asd*/)
         .subscribe(
           (client) => {
             if (
@@ -113,21 +112,6 @@ export class LoginComponent implements OnInit {
                 this.noValid = this._translate.instant('validPassword');
               }
             }
-            //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos
-            /* else if (this.form.value.passwordLogin !== this.passwordLogin) {
-                this.toastr.error(
-                  this.translate.instant('validPassword'),
-                  this.translate.instant('errorVerificate')
-                );
-              } else if (
-                this.form.value.dniLogin !== this.dniLogin &&
-                this.form.value.passwordLogin !== this.passwordLogin
-              ) {
-                this.toastr.error(
-                  this.translate.instant('validData'),
-                  this.translate.instant('errorVerificate')
-                );
-              } */
           },
           (error: HttpErrorResponse) => {
             this._toastr.error(
@@ -135,22 +119,12 @@ export class LoginComponent implements OnInit {
               this._translate.instant('error')
             );
           }
-        ); //En vez de toasts de error, un mensaje que salga debajo de los campos incorrectos
-      /* } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
-      this.toastr.error(
-        this.translate.instant('enterData'),
-        this.translate.instant('errorVerificate')
+        );
+    } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
+      this._toastr.error(
+        this._translate.instant('enterData'),
+        this._translate.instant('errorVerificate')
       );
-    } else if (!this.form.value.dniLogin) {
-      this.toastr.error(
-        this.translate.instant('enterUser'),
-        this.translate.instant('errorVerificate')
-      );
-    } else if (!this.form.value.passwordLogin) {
-      this.toastr.error(
-        this.translate.instant('enterPassword'),
-        this.translate.instant('errorVerificate')
-      ); */
     }
   }
 
