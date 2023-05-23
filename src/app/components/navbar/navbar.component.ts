@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { fromEvent, map } from 'rxjs';
+import { Subscription, fromEvent, map } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { LanguageService } from 'src/app/services/language.service';
 
@@ -11,12 +11,22 @@ import { LanguageService } from 'src/app/services/language.service';
 export class NavbarComponent implements OnInit {
   @Input() cashierList: ICashier[];
   showCard: boolean = false;
+  slider: boolean = false;
 
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
+  subscription: Subscription;
 
   constructor(private _langService: LanguageService) {}
 
   ngOnInit(): void {}
+
+  sliderbtn() {
+    if (this._langService.getCurrentLanguage() == 'es') {
+      this.slider = false;
+    } else {
+      this.slider = true;
+    }
+  }
 
   setLang() {
     if (this._langService.getCurrentLanguage() != 'es') {
@@ -26,13 +36,23 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  resetLanguage() {
+    const lang = this._langService.get();
+    this._langService.set(lang);
+  }
+
   showCardMap() {
+    this.sliderbtn();
     this.showCard = !this.showCard;
     if (this.showCard) {
-      this.clickOut$.subscribe((event) => {
-        console.log(event);
+      this.subscription = this.clickOut$.subscribe((event) => {
         if (event.target['className'] !== 'img') {
-              this.showCard = false;
+          if (event.target['className'] === 'mat-slide-toggle-thumb') {
+            this.showCard = true;
+          } else {
+            this.showCard = false;
+            this.subscription.unsubscribe();
+          }
         }
       });
     }

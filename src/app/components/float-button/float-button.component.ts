@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { Subscription, fromEvent, map, take } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
@@ -7,13 +7,17 @@ import { LanguageService } from 'src/app/services/language.service';
   templateUrl: './float-button.component.html',
   styleUrls: ['./float-button.component.scss'],
 })
-export class FloatButtonComponent {
+export class FloatButtonComponent implements OnInit {
   showCard: boolean = false;
   showCardLang: boolean = false;
+  slider: boolean = false;
 
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
+  subscription: Subscription;
 
   constructor(private _langService: LanguageService) {}
+
+  ngOnInit(): void {}
 
   setLang() {
     if (this._langService.getCurrentLanguage() != 'es') {
@@ -24,16 +28,25 @@ export class FloatButtonComponent {
   }
 
   showCardMap() {
+    this.sliderbtn();
     this.showCard = !this.showCard;
     if (this.showCard) {
-      this.showCardLang = false;
-      this.clickOut$.subscribe((event) => {
+      this.subscription = this.clickOut$.pipe(take(3)).subscribe((event) => {
         console.log(event);
+        console.log(this.showCard, this.showCardLang);
         if (event.target['className'] !== 'btn-flotante') {
           if (event.target['className'] !== 'btn') {
             if (event.target['id'] !== 'biHouse') {
-              this.showCard = false;
-              this.showCardLang = false;
+              if (event.target['className'] === 'mat-slide-toggle-thumb') {
+                this.showCardLang = true;
+                if (this.showCardLang) {
+                  this.showCard = false;
+                }
+              } else {
+                this.showCard = false;
+                this.showCardLang = false;
+                this.clickUnsubscribe();
+              }
             }
           }
         }
@@ -43,5 +56,24 @@ export class FloatButtonComponent {
 
   showCardLangMap() {
     this.showCardLang = !this.showCardLang;
+  }
+
+  clickUnsubscribe() {
+    if (!this.showCard && !this.showCardLang) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  sliderbtn() {
+    if (this._langService.getCurrentLanguage() === 'es') {
+      this.slider = false;
+    } else {
+      this.slider = true;
+    }
+  }
+
+  resetLanguage() {
+    const lang = this._langService.get();
+    this._langService.set(lang);
   }
 }
