@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { MapComponent } from '../components/map/map.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class MapService {
   private street:string;
   private streetSubject: BehaviorSubject<string>;
 
-  constructor(private http: HttpClient,
-              private mapComponent: MapComponent) {
+  constructor(private http: HttpClient) {
     this.locationSubject = new BehaviorSubject<{ lat: number, lng: number }>({ lat: 0, lng: 0 });
     this.streetSubject = new BehaviorSubject<string>(this.street);
   }
