@@ -5,6 +5,8 @@ import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { Toast, ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-details',
@@ -22,7 +24,9 @@ export class DetailsComponent implements OnInit {
   constructor(
     private _cashierS: CashierService,
     private _clientS: ClientService,
-    private modalS: ModalTService
+    private modalS: ModalTService,
+    private _toastrSevice: ToastrService,
+    private _translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -64,7 +68,7 @@ export class DetailsComponent implements OnInit {
           //this.cashierS.addItem(this.cashiers);
         });
     } catch (error) {
-      console.error(error);
+      this._toastrSevice.info(this._translateService.instant("gpsError", "GPS Error" ));
     }
   }
 

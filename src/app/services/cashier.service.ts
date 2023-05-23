@@ -47,9 +47,9 @@ export class CashierService {
   }
 
   getCashiersByRadius(client,lat,lng,distance):Observable<any>{
-    if(!client || !lat || !lng || !distance || distance <=0 ){
+    if(!client || !lat || !lng || !distance ||distance <=0){
       throw new Error("Error en datos");
-    };
+    }
 
     let data:DTO_CashierByRadius_Request={
       client:client,
