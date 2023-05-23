@@ -102,6 +102,7 @@ export class MapComponent implements OnInit {
 
     this._clientS.getUserObservable().subscribe((client) => {
       if (client) {
+        /* this.client = {
         this.client = client; /*{
           id: 184,
           account: 'ES12 1234 1234 1234 1234 1234',
@@ -109,6 +110,8 @@ export class MapComponent implements OnInit {
             '9091505ae1d48b05c3288c37c3b3eb544ea8d8be46f34fed8d7a5f739c9d917b',
           dni: '64987961N',
           email: 'email@email.com',
+        }; */
+        client = this.client
         };*/
       }
     });
