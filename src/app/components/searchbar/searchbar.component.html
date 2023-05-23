@@ -1,8 +1,9 @@
 <div class="searchbar">
   <form (ngSubmit)="onSubmit()">
     <input matInput class="searchInput" type="search" aria-label="Search" placeholder="{{'search' | translate}}"
-      [formControl]="streetControl" [(ngModel)]="street" name="searchInput">
-    <mat-autocomplete #auto="matAutocomplete">
+      [formControl]="streetControl" [(ngModel)]="street" name="searchInput"
+      [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
       <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
         {{ street }}
       </mat-option>

@@ -45,9 +45,7 @@ export class ModalTransactionComponent implements AfterViewInit {
     this._clientS.getUserObservable().subscribe((client) => {
       this.client = client;
     });
-
     this.cashier = null;
-    console.log(this.cashier)
   }
 
   ngAfterViewInit(): void {
