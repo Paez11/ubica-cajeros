@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { debounceTime, map, startWith } from 'rxjs/operators';
 import { MapService } from 'src/app/services/map.service';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ICashier } from 'src/app/model/ICashier';
@@ -24,11 +24,7 @@ export class SearchbarComponent implements OnInit {
   @Output() street:string;
 
   constructor(private _cashierService:CashierService, private http: HttpClient, private _mapService:MapService){
-    // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
-    this.filteredStreets = this.streetControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+    
   }
   ngOnInit(): void {
     this._cashierService.getAll()
@@ -41,6 +37,13 @@ export class SearchbarComponent implements OnInit {
       )
     )
     .subscribe();
+
+    // Initialize filteredStreets with an observable that maps the search input to a filtered array of streets
+    this.filteredStreets = this.streetControl.valueChanges.pipe(
+      debounceTime(500),
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   search(){

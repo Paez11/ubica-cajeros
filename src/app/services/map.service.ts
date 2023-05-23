@@ -21,8 +21,11 @@ export class MapService {
   }
 
   public searchByPostalCode(postalCode: string){
-    if(postalCode==null){
-      throw new Error("Error en datos");
+
+    console.log(postalCode)
+
+    if(postalCode===null){
+      throw new Error("Error en datos codigo postal");
     }
     const endpoint =environment.nominatimAPI.url;
     this.http.
