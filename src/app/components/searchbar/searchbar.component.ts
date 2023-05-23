@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 import { MapService } from 'src/app/services/map.service';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ICashier } from 'src/app/model/ICashier';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-searchbar',
@@ -23,9 +24,13 @@ export class SearchbarComponent implements OnInit {
   
   @Output() street:string;
 
-  constructor(private _cashierService:CashierService, private http: HttpClient, private _mapService:MapService){
-    
+  constructor(private _cashierService:CashierService,  
+              private _mapService:MapService,
+              private _toastrservice: ToastrService,
+              private _translateService: TranslateService){
+                
   }
+
   ngOnInit(): void {
     this._cashierService.getAll()
     .pipe(
@@ -48,8 +53,7 @@ export class SearchbarComponent implements OnInit {
 
   search(){
     if(this.street==""){
-      //algo
-      console.log("no hay calle o codigo postal");
+      this._toastrservice.info(this._translateService.instant("emptySearchbar", "Search empty"));
     }
   }
 
