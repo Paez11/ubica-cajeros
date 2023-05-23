@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { MapComponent } from '../components/map/map.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class MapService {
   private street:string;
   private streetSubject: BehaviorSubject<string>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private mapComponent: MapComponent) {
     this.locationSubject = new BehaviorSubject<{ lat: number, lng: number }>({ lat: 0, lng: 0 });
     this.streetSubject = new BehaviorSubject<string>(this.street);
   }
@@ -31,13 +33,15 @@ export class MapService {
         if (data.length > 0) {
           const lat = data[0].lat;
           const lng = data[0].lon;
-          console.log("Hay calles -->", data)
+          
           this.setLocation(lat, lng);
           const polygonGeoJSON = data[0]?.geojson;
-          console.log("este es el poligono -->", polygonGeoJSON)
+          
           if(polygonGeoJSON){
             this.setPolygon(polygonGeoJSON);
           }
+
+        
         }
       });
   }
