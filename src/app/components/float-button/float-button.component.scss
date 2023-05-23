@@ -1,48 +1,54 @@
 .btn-flotante {
-    display: none;
+  display: none;
 }
 
 @media only screen and (max-width: 484px) {
- 	.btn-flotante {
-		display: inline;
-	    color: #ffffff; /* Color del texto */
-	    border-radius: 50px; /* Borde del boton */
-	    background-color: #005540; /* Color de fondo */
-	    padding: 20px 22px; /* Relleno del boton */
-	    position: fixed;
-	    bottom: 40px;
-	    right: 20px;
-	    transition: all 300ms ease 0ms;
-	    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	    z-index: 1000;
-	}
+  .btn-flotante {
+    display: inline;
+    color: #ffffff; /* Color del texto */
+    border-radius: 50px; /* Borde del boton */
+    background-color: #005540; /* Color de fondo */
+    padding: 20px 22px; /* Relleno del boton */
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    transition: all 300ms ease 0ms;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
 
-    .btn-flotante:hover {
-        background-color: #1f8c71; /* Color de fondo al pasar el cursor */
-        box-shadow: 0px 15px 20px rgba(17, 75, 45, 0.3);
-        transform: translateY(-7px);
-		cursor: pointer;
-    }
+  .btn-flotante:hover {
+    background-color: #1f8c71; /* Color de fondo al pasar el cursor */
+    box-shadow: 0px 15px 20px rgba(17, 75, 45, 0.3);
+    transform: translateY(-7px);
+    cursor: pointer;
+  }
 
-    svg {
-        position: relative;
-        bottom: 2px;
-    }
+  svg {
+    position: relative;
+    bottom: 2px;
+  }
 
-	span {
-		color: #005540;
-		font-weight: bold;
-	}
+  span {
+    color: #005540;
+    font-weight: bold;
+  }
 
-	span:hover {
-		border-bottom: 2px solid #005540;
-	}
+  span:hover {
+    border-bottom: 2px solid #005540;
+  }
 
-	.active-link {
-		background-color: rgba($color: #f0f0f0, $alpha: 0.5);
-	}
+  .active-link {
+    background-color: rgba($color: #f0f0f0, $alpha: 0.5);
+  }
 
-	.active-link span {
-		border-bottom: 2px solid #005540;	
-	}
+  .active-link span {
+    border-bottom: 2px solid #005540;
+  }
+
+  .divLang {
+    display: flex;
+    align-items: center;
+    width: 33%;
+  }
 }

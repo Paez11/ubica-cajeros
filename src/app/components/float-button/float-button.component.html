@@ -53,6 +53,7 @@
         <div class="row">
           <button
             routerLink="/login"
+            (click)="resetLanguage()"
             class="btn"
             routerLinkActive="active-link"
           >
@@ -78,7 +79,10 @@
           <img class="imgLang" src="../../../assets/img/icon-spain.png" />
         </div>
         <div class="divLang">
-          <mat-slide-toggle (click)="setLang()"></mat-slide-toggle>
+          <mat-slide-toggle
+            [(ngModel)]="slider"
+            (click)="setLang()"
+          ></mat-slide-toggle>
         </div>
         <div class="divLang">
           <img class="imgLang" src="../../../assets/img/icon-england.png" />
