@@ -111,8 +111,7 @@ export class MapComponent implements OnInit {
           dni: '64987961N',
           email: 'email@email.com',
         }; */
-        client = this.client
-        };*/
+        this.client = client;
       }
     });
   }

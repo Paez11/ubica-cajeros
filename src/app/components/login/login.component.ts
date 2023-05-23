@@ -1,3 +1,4 @@
+import { error } from 'jquery';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +8,7 @@ import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
-import { Subscription, map } from 'rxjs';
+import { Subscription, map, catchError } from 'rxjs';
 
 declare var bootstrap: any;
 @Component({
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
@@ -73,44 +74,41 @@ export class LoginComponent implements OnInit {
         .getByDni(this.form.value.dniLogin)
         .subscribe(
           (client) => {
-            if (
-              this.form.value.dniLogin == client.dni &&
-              this.hash(this.form.value.passwordLogin) == client.password
-            ) {
-              this.isValidPassword = true;
-              this.isValidUser = true;
-              this.showSpinner = true;
-              let auxClient = {
-                id: client.id,
-                dni: client.dni,
-                account: client.account,
-                email: client.email,
-                password: client.password,
-              };
-              this.client = auxClient;
-              this._clientS.setUser(this.client);
-              this._toastr.success(
-                this._translate.instant('userVerified'),
-                this._translate.instant('verificate'),
-                { timeOut: 1500 }
-              );
-              setTimeout(() => {
-                this.showSpinner = false;
-                this.router.navigate(['/main']);
-              }, 2000);
-              this.form.reset();
-              this.showPassWord = false;
-            } else if (
-              this.form.value.dniLogin != client.dni ||
-              this.form.value.passwordLogin != client.password
-            ) {
-              if (this.form.value.dniLogin != client.dni) {
-                this.isValidUser = false;
-                this.noValid = this._translate.instant('validUser');
+            if (client) {
+              if (
+                this.form.value.dniLogin === client.dni &&
+                this.hash(this.form.value.passwordLogin) === client.password
+              ) {
+                this.isValidPassword = true;
+                this.isValidUser = true;
+                this.showSpinner = true;
+                let auxClient = {
+                  id: client.id,
+                  dni: client.dni,
+                  account: client.account,
+                  email: client.email,
+                  password: client.password,
+                };
+                this.client = auxClient;
+                this._clientS.setUser(this.client);
+                this._toastr.success(
+                  this._translate.instant('userVerified'),
+                  this._translate.instant('verificate'),
+                  { timeOut: 1500 }
+                );
+                setTimeout(() => {
+                  this.showSpinner = false;
+                  this.router.navigate(['/main']);
+                }, 2000);
+                this.form.reset();
+                this.showPassWord = false;
               } else if (this.form.value.passwordLogin != client.password) {
                 this.isValidPassword = false;
                 this.noValid = this._translate.instant('validPassword');
               }
+            } else {
+              this.isValidUser = false;
+              this.noValid = this._translate.instant('validUser');
             }
           },
           (error: HttpErrorResponse) => {
@@ -120,6 +118,7 @@ export class LoginComponent implements OnInit {
             );
           }
         );
+
     } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
       this._toastr.error(
         this._translate.instant('enterData'),
