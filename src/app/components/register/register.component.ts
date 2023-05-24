@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -95,18 +96,31 @@ export class RegisterComponent implements OnInit {
           account: this.formRegister.value.account,
           email: this.formRegister.value.email,
         };
-        this._clientS.getByDni(this.client.dni).subscribe((client) => {
-          try {
+        this._clientS.getByDni(this.client.dni).subscribe(
+          (client) => {
+            /* try { */
             if (client.dni) {
               this.exist = true;
+            } else {
+              this._toastr.info(
+                this._translate.instant('userNotExists'),
+                this._translate.instant('notExist')
+              );
             }
-          } catch (error) {
-            this._toastr.info(
-              this._translate.instant('userNotExists'),
-              this._translate.instant('notExist')
+            /* } catch (error) {
+              this._toastr.info(
+                this._translate.instant('userNotExists'),
+                this._translate.instant('notExist')
+              );
+            } */
+          },
+          (error: HttpErrorResponse) => {
+            this._toastr.error(
+              this._translate.instant('errorServer'),
+              this._translate.instant('error')
             );
           }
-        });
+        );
 
         if (this.exist) {
           this.formRegister.reset();
@@ -123,14 +137,22 @@ export class RegisterComponent implements OnInit {
               this.client.password,
               this.client.email
             )
-            .subscribe((client) => {
-              this.client = client;
-              this._clientS.setUser(this.client);
-              this._toastr.success(
-                this._translate.instant('userCreated'),
-                this._translate.instant('create')
-              );
-            });
+            .subscribe(
+              (client) => {
+                this.client = client;
+                this._clientS.setUser(this.client);
+                this._toastr.success(
+                  this._translate.instant('userCreated'),
+                  this._translate.instant('create')
+                );
+              },
+              (error: HttpErrorResponse) => {
+                this._toastr.error(
+                  this._translate.instant('errorServer'),
+                  this._translate.instant('error')
+                );
+              }
+            );
         }
       } catch (Error) {
         this._toastr.error('Error');
