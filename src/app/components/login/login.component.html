@@ -1,6 +1,6 @@
 <div class="background">
   <div class="container">
-    <form class="form" [formGroup]="form" (ngSubmit)="auth()">
+    <form class="form" [formGroup]="form">
       <div class="window">
         <div>
           <div class="mb-3">
@@ -19,7 +19,7 @@
               required
             />
             <span *ngIf="!isValidUser" style="font-size: 14px">{{
-              noValid
+              noValidUser
             }}</span>
           </div>
           <div class="col mb-3">
@@ -79,15 +79,15 @@
                 </svg>
               </div>
               <span *ngIf="!isValidPassword" style="font-size: 14px">{{
-                noValid
+                noValidPassword
               }}</span>
             </div>
           </div>
           <div class="mb-3">
-            <button type="submit" class="btn">
+            <button (click)="auth()" [disabled]="form.invalid" class="btn">
               {{ "login" | translate }}
             </button>
-            <p routerLink="/restablishPassword" style="cursor: pointer">
+            <p routerLink="/restablishPassword" style="cursor: pointer; margin-top: 10px;">
               {{ "forgotPassword" | translate }}
             </p>
           </div>

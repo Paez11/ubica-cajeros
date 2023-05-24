@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
   isValidUser: boolean = true;
   isValidPassword: boolean = true;
 
-  noValid: string = '';
+  noValidUser: string = '';
+  noValidPassword: string = '';
 
   showSpinner: boolean = false;
 
@@ -66,7 +67,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
@@ -104,11 +105,20 @@ export class LoginComponent implements OnInit {
                 this.showPassWord = false;
               } else if (this.form.value.passwordLogin != client.password) {
                 this.isValidPassword = false;
-                this.noValid = this._translate.instant('validPassword');
+                this.noValidPassword = this._translate.instant('validPassword');
+                if (this.form.value.dniLogin == client.dni) {
+                  this.isValidUser = true;
+                }
               }
             } else {
               this.isValidUser = false;
-              this.noValid = this._translate.instant('validUser');
+              this.noValidUser = this._translate.instant('validUser');
+              if (this.form.value.passwordLogin) {
+                this.isValidPassword = false;
+                this.noValidPassword = this._translate.instant(
+                  'validNoUserPassword'
+                );
+              }
             }
           },
           (error: HttpErrorResponse) => {
@@ -118,7 +128,6 @@ export class LoginComponent implements OnInit {
             );
           }
         );
-
     } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
       this._toastr.error(
         this._translate.instant('enterData'),

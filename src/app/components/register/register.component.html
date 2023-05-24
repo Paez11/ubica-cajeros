@@ -1,6 +1,6 @@
 <div class="background">
   <div class="container">
-    <form class="form" [formGroup]="formRegister" (ngSubmit)="createAccount()">
+    <form class="form" [formGroup]="formRegister">
       <div class="row">
         <h1 class="fs-1 mb-3">
           {{ "newAccount" | translate }}
@@ -39,7 +39,7 @@
               minlength="9"
             />
             <span *ngIf="showDniInfo" id="dni" style="font-size: 14px">{{
-              'dniInfo' | translate
+              "dniInfo" | translate
             }}</span>
           </div>
           <div class="col-1">
@@ -137,7 +137,7 @@
               *ngIf="showPasswordInfo"
               id="password"
               style="font-size: 14px"
-              >{{ 'passwordInfo' | translate }}</span
+              >{{ "passwordInfo" | translate }}</span
             >
           </div>
           <div class="col-1">
@@ -201,7 +201,7 @@
               *ngIf="showAccountInfo"
               id="account"
               style="font-size: 14px"
-              >{{ 'accountInfo' | translate }}</span
+              >{{ "accountInfo" | translate }}</span
             >
           </div>
           <div class="col-1">
@@ -251,7 +251,7 @@
               type="email"
               class="form-control"
             /><span *ngIf="showMailInfo" id="mail" style="font-size: 14px">{{
-              'mailInfo' | translate
+              "mailInfo" | translate
             }}</span>
           </div>
           <div class="col-1">
@@ -274,7 +274,11 @@
           </div>
         </div>
         <div class="row mb-3">
-          <button type="submit" class="btn btn2">
+          <button
+            (click)="createAccount()"
+            [disabled]="formRegister.invalid"
+            class="btn btn2"
+          >
             {{ "send" | translate }}
           </button>
           <button routerLink="/login" type="reset" class="btn btn2">
