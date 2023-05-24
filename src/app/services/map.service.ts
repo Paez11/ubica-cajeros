@@ -20,7 +20,7 @@ export class MapService {
     this.streetSubject = new BehaviorSubject<string>(this.street);
   }
 
-  public searchByPostalCode(postalCode: string){
+  public searchByPostalCode(postalCode: string) {
     if(postalCode===null){
       throw new Error("Error en datos codigo postal");
     }
