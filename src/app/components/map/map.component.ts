@@ -9,6 +9,7 @@ import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { ModalTService } from 'src/app/services/modal-t.service';
+import { TranslateService } from '@ngx-translate/core';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -90,7 +91,8 @@ export class MapComponent implements OnInit {
     private _clientS: ClientService,
     private _mapService: MapService,
     private searchBar: SearchbarComponent,
-    public _modalS: ModalTService
+    public _modalS: ModalTService,
+    private _translateService: TranslateService
   ) {
     this.slideSubscription = this._slideService.circleRadius.subscribe((e) => {
       this.radius = e.radius;
@@ -203,7 +205,7 @@ export class MapComponent implements OnInit {
       icon: this.userIcon,
     })
       .addTo(this.map)
-      .bindPopup('<p>${"clientLocation" | translate}</p>');
+      .bindPopup('<p>'+ this._translateService.instant("clientLocation","") +'</p>');
     this.map.setView(e.latlng, 18);
   }
 
@@ -221,7 +223,7 @@ export class MapComponent implements OnInit {
         icon: this.userIcon,
       })
         .addTo(this.map)
-        .bindPopup('<p>${"clientLocation" | translate}</p>');
+        .bindPopup('<p>'+ this._translateService.instant("clientLocation","") +'</p>');
     });
 
     //Cannot read properties of null (reading 'layerPointToLatLng')
