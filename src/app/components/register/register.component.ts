@@ -19,11 +19,6 @@ export class RegisterComponent implements OnInit {
   account: string;
   email: string;
 
-  showDniInfo: boolean = false;
-  showPasswordInfo: boolean = false;
-  showAccountInfo: boolean = false;
-  showMailInfo: boolean = false;
-
   showPassWord: boolean = false;
 
   exist: boolean;
@@ -173,24 +168,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.showPassWord = false;
       passwordField.type = 'password';
-    }
-  }
-
-  showInfo(id: string): void {
-    const infoField = document.getElementById(id) as HTMLInputElement;
-    switch (id) {
-      case 'dni':
-        this.showDniInfo = !this.showDniInfo;
-        break;
-      case 'password':
-        this.showPasswordInfo = !this.showPasswordInfo;
-        break;
-      case 'account':
-        this.showAccountInfo = !this.showAccountInfo;
-        break;
-      case 'mail':
-        this.showMailInfo = !this.showMailInfo;
-        break;
     }
   }
 
