@@ -1,6 +1,32 @@
 <div class="background">
+  <div>
+    <div class="lang">
+      <button class="btnLang" (click)="showLangLogin()">
+        {{ "lang" | translate }}
+      </button>
+    </div>
+    <div *ngIf="showLang" class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="divLang">
+            <img class="imgLang" src="../../../assets/img/icon-spain.png" />
+          </div>
+          <div class="divLang">
+            <mat-slide-toggle
+              [(ngModel)]="slider"
+              (click)="setLang()"
+            ></mat-slide-toggle>
+          </div>
+          <div class="divLang">
+            <img class="imgLang" src="../../../assets/img/icon-england.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
-    <form class="form" [formGroup]="form" (ngSubmit)="auth()">
+    <form class="form" [formGroup]="form">
       <div class="window">
         <div>
           <div class="mb-3">
@@ -19,7 +45,7 @@
               required
             />
             <span *ngIf="!isValidUser" style="font-size: 14px">{{
-              noValid
+              noValidUser
             }}</span>
           </div>
           <div class="col mb-3">
@@ -79,15 +105,18 @@
                 </svg>
               </div>
               <span *ngIf="!isValidPassword" style="font-size: 14px">{{
-                noValid
+                noValidPassword
               }}</span>
             </div>
           </div>
           <div class="mb-3">
-            <button type="submit" class="btn">
+            <button (click)="auth()" [disabled]="form.invalid" class="btn">
               {{ "login" | translate }}
             </button>
-            <p routerLink="/restablishPassword" style="cursor: pointer">
+            <p
+              routerLink="/restablishPassword"
+              style="cursor: pointer; margin-top: 10px"
+            >
               {{ "forgotPassword" | translate }}
             </p>
           </div>

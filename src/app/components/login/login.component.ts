@@ -8,7 +8,8 @@ import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
-import { Subscription, map, catchError } from 'rxjs';
+import { Subscription, map, catchError, fromEvent, take } from 'rxjs';
+import { LanguageService } from 'src/app/services/language.service';
 
 declare var bootstrap: any;
 @Component({
@@ -18,11 +19,14 @@ declare var bootstrap: any;
 })
 export class LoginComponent implements OnInit {
   showPassWord: boolean = false;
+  showLang: boolean = false;
+  slider: boolean = false;
 
   isValidUser: boolean = true;
   isValidPassword: boolean = true;
 
-  noValid: string = '';
+  noValidUser: string = '';
+  noValidPassword: string = '';
 
   showSpinner: boolean = false;
 
@@ -37,13 +41,17 @@ export class LoginComponent implements OnInit {
     password: '',
   };
   private clientSubscription$: Subscription;
+  private subscription: Subscription;
+
+  clickOut$ = fromEvent(document, 'click');
 
   constructor(
     private _clientS: ClientService,
     private router: Router,
     private fb: FormBuilder,
     private _toastr: ToastrService,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _langService: LanguageService
   ) {
     this.form = this.fb.group({
       dniLogin: [
@@ -66,7 +74,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   auth() {
     if (this.form.value.dniLogin && this.form.value.passwordLogin) {
@@ -104,11 +112,20 @@ export class LoginComponent implements OnInit {
                 this.showPassWord = false;
               } else if (this.form.value.passwordLogin != client.password) {
                 this.isValidPassword = false;
-                this.noValid = this._translate.instant('validPassword');
+                this.noValidPassword = this._translate.instant('validPassword');
+                if (this.form.value.dniLogin == client.dni) {
+                  this.isValidUser = true;
+                }
               }
             } else {
               this.isValidUser = false;
-              this.noValid = this._translate.instant('validUser');
+              this.noValidUser = this._translate.instant('validUser');
+              if (this.form.value.passwordLogin) {
+                this.isValidPassword = false;
+                this.noValidPassword = this._translate.instant(
+                  'validNoUserPassword'
+                );
+              }
             }
           },
           (error: HttpErrorResponse) => {
@@ -118,7 +135,6 @@ export class LoginComponent implements OnInit {
             );
           }
         );
-
     } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
       this._toastr.error(
         this._translate.instant('enterData'),
@@ -150,5 +166,42 @@ export class LoginComponent implements OnInit {
       this.client = userData;
     }
     return this.client;
+  }
+
+  sliderbtn() {
+    if (this._langService.getCurrentLanguage() == 'es') {
+      this.slider = false;
+    } else {
+      this.slider = true;
+    }
+  }
+
+  showLangLogin() {
+    this.sliderbtn();
+    this.showLang = !this.showLang;
+    if (this.showLang) {
+      this.subscription = this.clickOut$.pipe(take(3)).subscribe((event) => {
+        if (event.target['className'] !== 'btnLang') {
+          if (event.target['className'] === 'mat-slide-toggle-thumb') {
+            this.showLang = true;
+          } else {
+            this.showLang = false;
+          }
+        }
+      });
+    }
+  }
+
+  setLang() {
+    if (this._langService.getCurrentLanguage() != 'es') {
+      this._langService.set('es');
+    } else if (this._langService.getCurrentLanguage() != 'en') {
+      this._langService.set('en');
+    }
+  }
+
+  resetLanguage() {
+    const lang = this._langService.get();
+    this._langService.set(lang);
   }
 }

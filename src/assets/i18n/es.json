@@ -47,6 +47,7 @@
   "enterData": "Por favor, introduzca los datos en sus respectivos campos.",
   "validUser": "El usuario no es válido, insértelo de nuevo",
   "validPassword": "La contraseña no es válida, insértela de nuevo o restablézca la misma",
+  "validNoUserPassword": "La contraseña no coincide porque el usuario no está registrado",
   "validData": "Usuario o contraseña no válidos, insértelos de nuevo",
   "userCreated": "El usuario ha sido creado con éxito",
   "userNotCreated": "El usuario introducido no ha sido creado porque ya existe",
@@ -64,7 +65,7 @@
   "noResults": "No hay resultados",
   "dniInfo": "Formato: 8 números de 0 a 9 y una letra mayúscula. El DNI debe ser real",
   "passwordInfo": "Formato: Combinación de números o letras y un símbolo(- _ . , º ª * + - Ç)",
-  "accountInfo": "Formato: ES más 2 números separado de 5 grupos de 4 números cada uno",
+  "accountInfo": "Formato: ES + 2 números separado de 5 grupos de 4 números cada uno",
   "mailInfo": "Formato: Combinación de números o letras con una mayúscula como mínimo, un @, el tipo de mail, un punto y el dominio de éste",
   "gpsError": "La localización no es precisa.",
   "emptySearchbar": "Buscador vacío"

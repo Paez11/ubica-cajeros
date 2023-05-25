@@ -47,6 +47,7 @@
   "enterData": "Enter user and password on the fileds, please",
   "validUser": "User isn't valid, insert it again",
   "validPassword": "Password isn't valid, insert it again or restablish it",
+  "validNoUserPassword": "Password is not valid because the user is not registered",
   "validData": "User or password isn't valid, insert it again",
   "userCreated": "User has been created successfully",
   "userNotCreated": "User hasn't been created because exists",
@@ -64,7 +65,7 @@
   "noResults": "No results",
   "dniInfo": "Format: 8 numbers from 0 to 9 and a capital letter. DNI must be real",
   "passwordInfo": "Format: Combination of numbers or letters and a symbol(- _ . , º ª * + - Ç)",
-  "accountInfo": "Format: ES with 2 numbers away fron 5 groups of 4 numbers all of them",
+  "accountInfo": "Format: ES + 2 numbers away fron 5 groups of 4 numbers all of them",
   "mailInfo": "Format: Combination of numbers or letters with at least one capital letter, an @, type of mail, dot and the mail's domain",
   "gpsError": "The location is not accurate.",
   "emptySearchbar": "Empty searchbar"
