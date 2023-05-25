@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Injectable, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { ICashier } from '../model/ICashier';
+import { MapComponent } from '../components/map/map.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
+  @ViewChild (MapComponent, {static:true}) mapComponent: MapComponent;
 
   private lat: number;
   private lng: number;
@@ -33,13 +36,15 @@ export class MapService {
           const lng = data[0].lon;
           
           this.setLocation(lat, lng);
+
+          //llamar a funcion de map.component
+          this.mapComponent.setLocationBySearch(lat, lng);
+
           const polygonGeoJSON = data[0]?.geojson;
           
           if(polygonGeoJSON){
             this.setPolygon(polygonGeoJSON);
           }
-
-        
         }
       });
   }

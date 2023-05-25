@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -177,6 +177,8 @@ export class MapComponent implements OnInit {
       });
   }
 
+  
+
   loadMap() {
     this.map = L.map('map', {
       zoomControl: false,
@@ -223,7 +225,7 @@ export class MapComponent implements OnInit {
         icon: this.userIcon,
       })
         .addTo(this.map)
-        .bindPopup('<p>'+ this._translateService.instant("clientLocation","") +'</p>');
+        .bindPopup('<p>{{"clientLocation" | translate}}</p>');
     });
 
     //Cannot read properties of null (reading 'layerPointToLatLng')
