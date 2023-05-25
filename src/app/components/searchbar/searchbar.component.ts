@@ -28,7 +28,6 @@ export class SearchbarComponent implements OnInit {
               private _mapService:MapService,
               private _toastrservice: ToastrService,
               private _translateService: TranslateService){
-                
   }
 
   ngOnInit(): void {
@@ -60,7 +59,6 @@ export class SearchbarComponent implements OnInit {
   onSubmit(){
     this._mapService.setStreet(this.street);
     this._mapService.searchByPostalCode(this.street);
-    this._mapService.getLocationObservable();
   }
 
   private _filter(value: string): string[] {
