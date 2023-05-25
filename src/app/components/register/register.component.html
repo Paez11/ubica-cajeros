@@ -38,13 +38,12 @@
               maxlength="9"
               minlength="9"
             />
-            <span *ngIf="showDniInfo" id="dni" style="font-size: 14px">{{
-              "dniInfo" | translate
-            }}</span>
           </div>
           <div class="col-1">
             <svg
-              (click)="showInfo('dni')"
+              mat-raised-button
+              matTooltipPosition="right"
+              matTooltip="{{ 'dniInfo' | translate }}"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -133,16 +132,12 @@
                 </svg>
               </div>
             </div>
-            <span
-              *ngIf="showPasswordInfo"
-              id="password"
-              style="font-size: 14px"
-              >{{ "passwordInfo" | translate }}</span
-            >
           </div>
           <div class="col-1">
             <svg
-              (click)="showInfo('password')"
+              mat-raised-button
+              matTooltipPosition="right"
+              matTooltip="{{ 'passwordInfo' | translate }}"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -197,16 +192,12 @@
               type="text"
               class="form-control"
             />
-            <span
-              *ngIf="showAccountInfo"
-              id="account"
-              style="font-size: 14px"
-              >{{ "accountInfo" | translate }}</span
-            >
           </div>
           <div class="col-1">
             <svg
-              (click)="showInfo('account')"
+              mat-raised-button
+              matTooltipPosition="right"
+              matTooltip="{{ 'accountInfo' | translate }}"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -250,13 +241,13 @@
               placeholder="{{ 'email' | translate }}"
               type="email"
               class="form-control"
-            /><span *ngIf="showMailInfo" id="mail" style="font-size: 14px">{{
-              "mailInfo" | translate
-            }}</span>
+            />
           </div>
           <div class="col-1">
             <svg
-              (click)="showInfo('mail')"
+              mat-raised-button
+              matTooltipPosition="right"
+              matTooltip="{{ 'mailInfo' | translate }}"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
