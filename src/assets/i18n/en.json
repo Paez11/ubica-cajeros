@@ -55,6 +55,7 @@
   "notCreate": "User not created",
   "notExist": "User not exists",
   "userNotExists": "The user doesn't exists",
+  "userExists": "The user already exists",
   "globalPosition": "Global position",
   "accounts": "Accounts",
   "receipts": "Receipts",
