@@ -70,5 +70,6 @@
   "mailInfo": "Format: Combination of numbers or letters with at least one capital letter, an @, type of mail, dot and the mail's domain",
   "gpsError": "The location is not accurate.",
   "emptySearchbar": "Empty searchbar",
-  "underConstruction": "Page under construction"
+  "underConstruction": "Page under construction",
+  "pageNotFound": "Page not found"
 }

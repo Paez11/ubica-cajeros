@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'transfers', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', component: Error404Component },
+  { path: '**', component: Error404Component }
 ];
 
 @NgModule({
