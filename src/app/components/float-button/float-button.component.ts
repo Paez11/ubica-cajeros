@@ -32,8 +32,6 @@ export class FloatButtonComponent implements OnInit {
     this.showCard = !this.showCard;
     if (this.showCard) {
       this.subscription = this.clickOut$.pipe(take(3)).subscribe((event) => {
-        console.log(event);
-        console.log(this.showCard, this.showCardLang);
         if (event.target['className'] !== 'btn-flotante') {
           if (event.target['className'] !== 'btn') {
             if (event.target['id'] !== 'biHouse') {
