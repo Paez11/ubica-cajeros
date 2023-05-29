@@ -133,17 +133,6 @@ export class MapComponent implements OnInit {
           event: 'located',
           pos: e.latlng,
         });
-        /*
-      this.client = {
-        id:1,
-        account:"mock",
-        dni:"",
-        password:"",
-        lat:e.latlng.lat,
-        lng:e.latlng.lng,
-        distance:this.radius
-      }
-      */
         (this.client.lat = e?.latlng?.lat),
           (this.client.lng = e?.latlng?.lng),
           this.setCashiers(this.radius);
@@ -176,8 +165,6 @@ export class MapComponent implements OnInit {
         }
       });
   }
-
-  
 
   loadMap() {
     this.map = L.map('map', {
@@ -299,8 +286,7 @@ export class MapComponent implements OnInit {
           .getCashiersByCP(street)
           .subscribe((cashier) => {
             cashier.forEach((mark) => {
-              if ((mark.lattitude && mark.longitude) != undefined) {
-                console.log(mark);
+              if ((mark.lattitude && mark.longitude) != undefined) {                
                 this.markers.push({
                   id: mark.id,
                   lat: mark.lattitude,
@@ -316,7 +302,6 @@ export class MapComponent implements OnInit {
           .subscribe((cashier) => {
             cashier.forEach((mark) => {
               if ((mark.lattitude && mark.longitude) != undefined) {
-                console.log(mark);
                 this.markers.push({
                   id: mark.id,
                   lat: mark.lattitude,
@@ -328,7 +313,6 @@ export class MapComponent implements OnInit {
           });
       }
       this.addMarkers2(this.markers);
-      console.log('hola? -->', this.markers);
     } catch (error) {
       console.error(error);
     }

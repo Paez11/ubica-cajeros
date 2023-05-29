@@ -69,5 +69,6 @@
   "accountInfo": "Format: ES + 2 numbers away fron 5 groups of 4 numbers all of them",
   "mailInfo": "Format: Combination of numbers or letters with at least one capital letter, an @, type of mail, dot and the mail's domain",
   "gpsError": "The location is not accurate.",
-  "emptySearchbar": "Empty searchbar"
+  "emptySearchbar": "Empty searchbar",
+  "underConstruction": "Page under construction"
 }

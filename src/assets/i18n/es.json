@@ -69,5 +69,6 @@
   "accountInfo": "Formato: ES + 2 números separado de 5 grupos de 4 números cada uno",
   "mailInfo": "Formato: Combinación de números o letras con una mayúscula como mínimo, un @, el tipo de mail, un punto y el dominio de éste",
   "gpsError": "La localización no es precisa.",
-  "emptySearchbar": "Buscador vacío"
+  "emptySearchbar": "Buscador vacío",
+  "underConstruction": "Página en construcción"
 }

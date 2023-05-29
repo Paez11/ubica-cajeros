@@ -1,93 +1,53 @@
 <nav class="navbar bg-body-tertiary fixed-top">
   <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
-      aria-label="Toggle navigation"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="35"
-        height="35"
-        fill="#005540"
-        class="bi bi-list"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-        />
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#005540" class="bi bi-list"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
       </svg>
     </button>
-    <div
-      class="offcanvas offcanvas-start"
-      tabindex="-1"
-      id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel"
-    >
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
           {{ "atm" | translate }}
         </h5>
-        <button
-          type="button"
-          class="btn-close btn-close-yellow"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close btn-close-yellow" data-bs-dismiss="offcanvas"
+          aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <app-details [cashiersList]="cashierList"></app-details>
       </div>
     </div>
-    <span
-      class="navbar-brand"
-      routerLink="/main"
-      routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >{{ "globalPosition" | translate }}</span
-    >
-    <span class="navbar-brand" routerLinkActive="active-link"
-      >{{ "accounts" | translate }}/{{ "receipts" | translate }}</span
-    >
-    <span class="navbar-brand" routerLinkActive="active-link">{{
+    <span class="navbar-brand" routerLink="/main" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">{{ "globalPosition" | translate }}</span>
+    <span class="navbar-brand" routerLink="/accounts" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">{{ "accounts" | translate }}/{{ "receipts" | translate
+      }}</span>
+    <span class="navbar-brand" routerLink="/cards" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">{{
       "cards" | translate
-    }}</span>
-    <span class="navbar-brand" routerLinkActive="active-link">{{
+      }}</span>
+    <span class="navbar-brand" routerLink="/transfers" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">{{
       "transfers" | translate
-    }}</span>
-    <span class="navbar-brand" routerLinkActive="active-link">{{
+      }}</span>
+    <span class="navbar-brand" routerLink="/deposits" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">{{
       "deposits" | translate
-    }}</span>
+      }}</span>
     <div (click)="showCardMap()" class="navbar-brand">
-      <img
-        class="img"
-        src="../../../assets/img/logo-verde.png"
-        alt="Logo"
-        height="30"
-      />
+      <img class="img" src="../../../assets/img/logo-verde.png" alt="Logo" height="30" />
     </div>
-    <img
-      class="fullLogo"
-      src="../../../assets/img/logo-grande-verde.png"
-      alt="IES Banco"
-      height="35"
-    />
+    <img class="fullLogo" src="../../../assets/img/logo-grande-verde.png" alt="IES Banco" height="35" />
   </div>
   <div *ngIf="showCard" class="card">
     <div class="card-body">
       <div class="col">
         <div class="row">
-          <button
-            class="btn"
-            (click)="resetLanguage()"
-            routerLink="/login"
-            routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <button class="btn" (click)="resetLanguage()" routerLink="/login" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">
             {{ "logout" | translate }}
           </button>
         </div>
@@ -96,10 +56,7 @@
             <img class="imgLang" src="../../../assets/img/icon-spain.png" />
           </div>
           <div class="divLang">
-            <mat-slide-toggle
-              [(ngModel)]="slider"
-              (click)="setLang()"
-            ></mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="slider" (click)="setLang()"></mat-slide-toggle>
           </div>
           <div class="divLang">
             <img class="imgLang" src="../../../assets/img/icon-england.png" />

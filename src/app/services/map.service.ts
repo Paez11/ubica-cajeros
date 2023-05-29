@@ -37,7 +37,6 @@ export class MapService {
           
           this.setLocation(lat, lng);
 
-          //llamar a funcion de map.component
           this.mapComponent.setLocationBySearch(lat, lng);
 
           const polygonGeoJSON = data[0]?.geojson;
