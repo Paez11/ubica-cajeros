@@ -55,6 +55,7 @@
   "notCreate": "Usuario no creado",
   "notExist": "Usuario inexistente",
   "userNotExists": "El usuario no existe",
+  "userExists": "El usuario ya existe",
   "globalPosition": "Posición global",
   "accounts": "Cuentas",
   "receipts": "Recibos",

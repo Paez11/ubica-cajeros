@@ -84,74 +84,59 @@ export class RegisterComponent implements OnInit {
       this.formRegister.value.account &&
       this.formRegister.value.email
     ) {
-      try {
-        this.client = {
-          dni: this.formRegister.value.dni,
-          password: this.formRegister.value.password,
-          account: this.formRegister.value.account,
-          email: this.formRegister.value.email,
-        };
-        this._clientS.getByDni(this.client.dni).subscribe(
-          (client) => {
-            /* try { */
-            if (client.dni) {
-              this.exist = true;
-            } else {
-              this._toastr.info(
-                this._translate.instant('userNotExists'),
-                this._translate.instant('notExist')
-              );
-            }
-            /* } catch (error) {
-              this._toastr.info(
-                this._translate.instant('userNotExists'),
-                this._translate.instant('notExist')
-              );
-            } */
-          },
-          (error: HttpErrorResponse) => {
+      this.client = {
+        dni: this.formRegister.value.dni,
+        password: this.formRegister.value.password,
+        account: this.formRegister.value.account,
+        email: this.formRegister.value.email,
+      };
+      this._clientS.getByDni(this.client.dni).subscribe(
+        (client) => {
+          if (client) {
+            this.formRegister.reset();
             this._toastr.error(
-              this._translate.instant('errorServer'),
-              this._translate.instant('error')
+              this._translate.instant('userExists'),
+              this._translate.instant('notCreate')
             );
+          } else {
+            this.exist = false;
           }
-        );
-
-        if (this.exist) {
-          this.formRegister.reset();
+          if (this.exist) {
+          } else {
+            this.formRegister.reset();
+            this.router.navigate(['/']);
+            this.clientSubscription = this._clientS
+              .create(
+                this.client.account,
+                this.client.dni,
+                this.client.password,
+                this.client.email
+              )
+              .subscribe(
+                (client) => {
+                  this.client = client;
+                  this._clientS.setUser(this.client);
+                  this._toastr.success(
+                    this._translate.instant('userCreated'),
+                    this._translate.instant('create')
+                  );
+                },
+                (error: HttpErrorResponse) => {
+                  this._toastr.error(
+                    this._translate.instant('errorServer'),
+                    this._translate.instant('error')
+                  );
+                }
+              );
+          }
+        },
+        (error: HttpErrorResponse) => {
           this._toastr.error(
-            this._translate.instant('userNotCreated'),
-            this._translate.instant('notCreate')
+            this._translate.instant('errorServer'),
+            this._translate.instant('error')
           );
-        } else {
-          this.formRegister.reset();
-          this.clientSubscription = this._clientS
-            .create(
-              this.client.account,
-              this.client.dni,
-              this.client.password,
-              this.client.email
-            )
-            .subscribe(
-              (client) => {
-                this.client = client;
-                this._clientS.setUser(this.client);
-                this._toastr.success(
-                  this._translate.instant('userCreated'),
-                  this._translate.instant('create')
-                );
-              },
-              (error: HttpErrorResponse) => {
-                this._toastr.error(
-                  this._translate.instant('errorServer'),
-                  this._translate.instant('error')
-                );
-              }
-            );
         }
-      } catch (Error) {
-        this._toastr.error('Error');
-      }
+      );
     } else {
       this._toastr.error(
         this._translate.instant('enterData'),
