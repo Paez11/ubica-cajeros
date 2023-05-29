@@ -70,5 +70,6 @@
   "mailInfo": "Formato: Combinación de números o letras con una mayúscula como mínimo, un @, el tipo de mail, un punto y el dominio de éste",
   "gpsError": "La localización no es precisa.",
   "emptySearchbar": "Buscador vacío",
-  "underConstruction": "Página en construcción"
+  "underConstruction": "Página en construcción",
+  "pageNotFound": "Página no encontrada"
 }
