@@ -43,6 +43,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
+import { BlankPageComponent } from './components/blank-page/blank-page.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -65,6 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     SpinnerComponent,
     FloatButtonComponent,
     RestablishPasswordComponent,
+    BlankPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import { LoginGuard } from './guards/login.guard';
 import { MapGuard } from './guards/map.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
+import { BlankPageComponent } from './components/blank-page/blank-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,10 @@ const routes: Routes = [
   { path: 'main', canActivate: [LoginGuard], component: ContainerComponent },
   { path: 'restablishPassword', component: RestablishPasswordComponent },
   { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
+  { path: 'accounts', canActivate: [LoginGuard], component: BlankPageComponent },
+  { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },
+  { path: 'transfers', canActivate: [LoginGuard], component: BlankPageComponent },
+  { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: Error404Component },
 ];
