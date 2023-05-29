@@ -181,7 +181,8 @@ export class LoginComponent implements OnInit {
     this.showLang = !this.showLang;
     if (this.showLang) {
       this.subscription = this.clickOut$.pipe(take(3)).subscribe((event) => {
-        if (event.target['className'] !== 'btnLang') {
+        console.log(event)
+        if (event.target['className'] !== 'btn btnLang') {
           if (event.target['className'] === 'mat-slide-toggle-thumb') {
             this.showLang = true;
           } else {
