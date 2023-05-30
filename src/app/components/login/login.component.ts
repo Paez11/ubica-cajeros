@@ -96,6 +96,7 @@ export class LoginComponent implements OnInit {
                   account: client.account,
                   email: client.email,
                   password: client.password,
+                  admin: client.admin
                 };
                 this.client = auxClient;
                 this._clientS.setUser(this.client);

@@ -71,5 +71,6 @@
   "gpsError": "The location is not accurate.",
   "emptySearchbar": "Empty searchbar",
   "underConstruction": "Page under construction",
-  "pageNotFound": "Page not found"
+  "pageNotFound": "Page not found",
+  "adminPanel": "Admin panel"
 }

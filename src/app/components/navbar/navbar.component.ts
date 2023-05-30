@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription, fromEvent, map } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
+import { IClient } from 'src/app/model/IClient';
+import { ClientService } from 'src/app/services/client.service';
 import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
@@ -12,13 +14,18 @@ export class NavbarComponent implements OnInit {
   @Input() cashierList: ICashier[];
   showCard: boolean = false;
   slider: boolean = false;
+  user: IClient;
+  showAdmin: string = 'display: none;';
 
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
   subscription: Subscription;
 
-  constructor(private _langService: LanguageService) {}
+  constructor(private _langService: LanguageService, private _clientService: ClientService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this._clientService.user.admin) this.showAdmin = 'display: block;'
+    console.log(this._clientService.user)
+  }
 
   sliderbtn() {
     if (this._langService.getCurrentLanguage() == 'es') {

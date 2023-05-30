@@ -9,6 +9,7 @@ import { MapGuard } from './guards/map.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
 import { BlankPageComponent } from './components/blank-page/blank-page.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: 'transfers', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
+  { path: 'admin', component: AdminPanelComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: Error404Component }
 ];
