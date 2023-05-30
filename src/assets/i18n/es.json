@@ -71,5 +71,6 @@
   "gpsError": "La localización no es precisa.",
   "emptySearchbar": "Buscador vacío",
   "underConstruction": "Página en construcción",
-  "pageNotFound": "Página no encontrada"
+  "pageNotFound": "Página no encontrada",
+  "adminPanel": "Panel de administrador"
 }

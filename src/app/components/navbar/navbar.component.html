@@ -45,6 +45,14 @@
   <div *ngIf="showCard" class="card">
     <div class="card-body">
       <div class="col">
+        
+        <div class="row" [style]="showAdmin">
+          <button class="btn" routerLink="/admin" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ "adminPanel" | translate }}
+          </button>
+        </div>
+
         <div class="row">
           <button class="btn" (click)="resetLanguage()" routerLink="/login" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
