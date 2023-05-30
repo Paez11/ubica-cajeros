@@ -6,6 +6,7 @@ import { IClient } from '../model/IClient';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { throwError as observableThrowError } from 'rxjs';
+import { DTO_Client } from '../model/DTO_Client';
 
 @Injectable({
   providedIn: 'root',
@@ -64,9 +65,12 @@ export class ClientService {
     );
   }
 
-  /* getNewPassword():Observable<IClient>{
-
-  } */
+  getNewPassword(dtoClient: DTO_Client): Observable<DTO_Client> {
+    return this.http.put<DTO_Client>(
+      this.url + environment.api.endpoint.newPassword + '/' + dtoClient.dni,
+      dtoClient
+    );
+  }
 
   create(account, dni, password, email): Observable<any> {
     if (!account || !dni || !password || !email) {
