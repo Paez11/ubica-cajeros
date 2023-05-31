@@ -72,7 +72,7 @@ export class ClientService {
     );
   }
 
-  create(account, dni, password, email): Observable<any> {
+  create(account, dni, password, email, id?): Observable<any> {
     if (!account || !dni || !password || !email) {
       throw new Error('Data error.');
     }
@@ -91,7 +91,7 @@ export class ClientService {
   }
 
   update(client: IClient): Observable<IClient> {
-    return this.http.put<IClient>(this.url, client);
+    return this.http.put<IClient>(this.url + environment.api.endpoint.clientbyid + '/' + client.id, client);
   }
 
   delete(id: number): Observable<IClient> {

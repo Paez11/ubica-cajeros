@@ -46,6 +46,13 @@
     <div class="card-body">
       <div class="col">
         
+        <div class="row">
+          <button class="btn" routerLink="/profile" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ "profilePage" | translate }}
+          </button>
+        </div>
+
         <div class="row" [style]="showAdmin">
           <button class="btn" routerLink="/admin" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
