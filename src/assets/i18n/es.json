@@ -72,5 +72,8 @@
   "emptySearchbar": "Buscador vacío",
   "underConstruction": "Página en construcción",
   "pageNotFound": "Página no encontrada",
-  "adminPanel": "Panel de administrador"
+  "adminPanel": "Panel de administrador",
+  "restorePass":"Los datos no son los que se esperaban. Inserte el correo de éste usuario",
+  "sendPass":"Contraseña enviada",
+  "lookEmail":"Mire su correo electrónico"
 }

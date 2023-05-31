@@ -44,7 +44,7 @@
   "errorServer": "Server connection error",
   "enterUser": "Enter user, please",
   "enterPassword": "Enter password, please",
-  "enterData": "Enter user and password on the fileds, please",
+  "enterData": "Enter data on the fileds, please",
   "validUser": "User isn't valid, insert it again",
   "validPassword": "Password isn't valid, insert it again or restablish it",
   "validNoUserPassword": "Password is not valid because the user is not registered",
@@ -72,5 +72,8 @@
   "emptySearchbar": "Empty searchbar",
   "underConstruction": "Page under construction",
   "pageNotFound": "Page not found",
-  "adminPanel": "Admin panel"
+  "adminPanel": "Admin panel",
+  "restorePass":"Data is not correct. Put this user's email",
+  "sendPass":"Password sended",
+  "lookEmail":"Look at your email"
 }

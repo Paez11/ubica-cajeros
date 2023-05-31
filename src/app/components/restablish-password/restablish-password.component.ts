@@ -66,9 +66,7 @@ export class RestablishPasswordComponent implements OnInit {
         (data) => {
           if (this.form.value.email !== data.email) {
             this._toastr.error(
-              this._translate.instant(
-                '"los datos no son los que se esperaban"'
-              ),
+              this._translate.instant('restorePass'),
               this._translate.instant('error')
             );
           } else {
@@ -77,7 +75,10 @@ export class RestablishPasswordComponent implements OnInit {
             this.dtoClient.subject = 'Recuperacion de contraseña';
             this.dtoClient.message = 'Su nueva contraseña es ';
             this._clientService.getNewPassword(this.dtoClient).subscribe();
-
+            this._toastr.success(
+              this._translate.instant('lookEmail'),
+              this._translate.instant('sendPass')
+            );
             this.router.navigate(['/']);
           }
         },
