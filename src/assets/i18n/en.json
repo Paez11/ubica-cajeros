@@ -72,5 +72,6 @@
   "emptySearchbar": "Empty searchbar",
   "underConstruction": "Page under construction",
   "pageNotFound": "Page not found",
-  "adminPanel": "Admin panel"
+  "adminPanel": "Admin panel",
+  "adminMode": "Admin mode on"
 }

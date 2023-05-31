@@ -72,5 +72,6 @@
   "emptySearchbar": "Buscador vacío",
   "underConstruction": "Página en construcción",
   "pageNotFound": "Página no encontrada",
-  "adminPanel": "Panel de administrador"
+  "adminPanel": "Panel de administrador",
+  "adminMode": "Opciones de administrador activadas"
 }

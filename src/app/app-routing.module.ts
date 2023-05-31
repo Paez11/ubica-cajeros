@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: 'transfers', canActivate: [LoginGuard], component: BlankPageComponent },
   { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
-  { path: 'admin', component: AdminPanelComponent },
+  { path: 'admin', canActivate: [LoginGuard], component: AdminPanelComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: Error404Component }
 ];
