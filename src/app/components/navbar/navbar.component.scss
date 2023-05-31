@@ -69,13 +69,20 @@
   border-color: #005540;
 }
 
-.btn:hover {
+.btn {
   border-color: #005540;
   color: #005540;
+  
 }
+
+.btn:hover{
+    background-color: #005540;
+    color: white;
+  }
 
 .row {
   height: 50%;
+  margin: 3px;
 }
 
 .divLang {

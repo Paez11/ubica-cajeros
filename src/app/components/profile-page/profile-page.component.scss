@@ -1,0 +1,51 @@
+.background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
+    center;
+  z-index: 1;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.row {
+  justify-content: center;
+}
+
+.col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card {
+  width: 95%;
+  height: 80%;
+}
+
+@media only screen and (max-width: 430px) {
+  .background {
+    background: none;
+  }
+
+  .card {
+    background-color: #005540;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-body {
+    background-color: white;
+    width: 90%;
+    flex: 0.9;
+  }
+}

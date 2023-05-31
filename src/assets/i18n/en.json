@@ -73,6 +73,7 @@
   "underConstruction": "Page under construction",
   "pageNotFound": "Page not found",
   "adminPanel": "Admin panel",
+  "profilePage":"Profile",
   "restorePass":"Data is not correct. Put this user's email",
   "sendPass":"Password sended",
   "lookEmail":"Look at your email"

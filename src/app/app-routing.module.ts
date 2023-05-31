@@ -10,10 +10,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
 import { BlankPageComponent } from './components/blank-page/blank-page.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfilePageComponent },
   { path: 'main', canActivate: [LoginGuard], component: ContainerComponent },
   { path: 'restablishPassword', component: RestablishPasswordComponent },
   { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },

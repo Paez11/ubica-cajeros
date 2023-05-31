@@ -73,6 +73,7 @@
   "underConstruction": "Página en construcción",
   "pageNotFound": "Página no encontrada",
   "adminPanel": "Panel de administrador",
+  "profilePage":"Perfil",
   "restorePass":"Los datos no son los que se esperaban. Inserte el correo de éste usuario",
   "sendPass":"Contraseña enviada",
   "lookEmail":"Mire su correo electrónico"

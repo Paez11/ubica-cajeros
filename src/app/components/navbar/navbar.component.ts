@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     if(this._clientService.user.admin) this.showAdmin = 'display: block;'
-    console.log(this._clientService.user)
   }
 
   sliderbtn() {
