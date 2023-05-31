@@ -76,5 +76,6 @@
   "profilePage":"Profile",
   "restorePass":"Data is not correct. Put this user's email",
   "sendPass":"Password sended",
-  "lookEmail":"Look at your email"
+  "lookEmail":"Look at your email",
+  "adminMode": "Admin mode on"
 }

@@ -76,5 +76,6 @@
   "profilePage":"Perfil",
   "restorePass":"Los datos no son los que se esperaban. Inserte el correo de éste usuario",
   "sendPass":"Contraseña enviada",
-  "lookEmail":"Mire su correo electrónico"
+  "lookEmail":"Mire su correo electrónico",
+  "adminMode": "Opciones de administrador activadas"
 }
