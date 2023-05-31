@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription, fromEvent, map } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -20,11 +22,16 @@ export class NavbarComponent implements OnInit {
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
   subscription: Subscription;
 
-  constructor(private _langService: LanguageService, private _clientService: ClientService) {}
+  constructor(private _langService: LanguageService, 
+              private _clientService: ClientService,
+              private _toastrService: ToastrService,
+              private _translate: TranslateService ) {}
 
   ngOnInit(): void {
-    if(this._clientService.user.admin) this.showAdmin = 'display: block;'
-    console.log(this._clientService.user)
+    if(this._clientService.user.admin) {
+      this.showAdmin = 'display: block;';
+      this._toastrService.info(this._translate.instant('adminMode'));
+    }
   }
 
   sliderbtn() {

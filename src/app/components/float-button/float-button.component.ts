@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription, fromEvent, map, take } from 'rxjs';
+import { ClientService } from 'src/app/services/client.service';
 import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
@@ -11,13 +14,21 @@ export class FloatButtonComponent implements OnInit {
   showCard: boolean = false;
   showCardLang: boolean = false;
   slider: boolean = false;
+  showAdmin: string = 'display: none;';
 
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
   subscription: Subscription;
 
-  constructor(private _langService: LanguageService) {}
+  constructor(private _langService: LanguageService,
+              private _clientService: ClientService,
+              private _toastrService: ToastrService,
+              private _translate: TranslateService ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this._clientService.user.admin) {
+      this.showAdmin = 'display: block;';
+    }
+  }
 
   setLang() {
     if (this._langService.getCurrentLanguage() != 'es') {
