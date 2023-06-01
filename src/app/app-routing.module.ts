@@ -15,7 +15,7 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfilePageComponent },
+  { path: 'profile', canActivate: [LoginGuard], component: ProfilePageComponent },
   { path: 'main', canActivate: [LoginGuard], component: ContainerComponent },
   { path: 'restablishPassword', component: RestablishPasswordComponent },
   { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },

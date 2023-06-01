@@ -5,6 +5,7 @@
   background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
     center;
   z-index: 1;
+  text-align: center;
 }
 
 .container {
@@ -16,19 +17,54 @@
 }
 
 .row {
+  width: 75%;
   justify-content: center;
+}
+
+.bi:hover {
+  cursor: pointer;
+}
+
+.btn {
+  width: 40%;
+  margin: 10px;
+  background-color: #005540;
+  color: white;
+}
+
+.bi {
+  width: 13%;
 }
 
 .col {
   height: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .card {
-  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
   height: 80%;
+}
+
+.card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.col {
+  align-items: center;
+}
+
+input {
+  width: 70%;
 }
 
 @media only screen and (max-width: 430px) {
