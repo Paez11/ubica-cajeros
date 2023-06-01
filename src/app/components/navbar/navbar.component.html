@@ -20,20 +20,20 @@
         <app-details [cashiersList]="cashierList"></app-details>
       </div>
     </div>
-    <span class="navbar-brand" routerLink="/main" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="map" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{ "globalPosition" | translate }}</span>
-    <span class="navbar-brand" routerLink="/accounts" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="accounts" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{ "accounts" | translate }}/{{ "receipts" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/cards" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="cards" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "cards" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/transfers" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="transfers" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "transfers" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/deposits" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="deposits" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "deposits" | translate
       }}</span>
@@ -46,8 +46,8 @@
     <div class="card-body">
       <div class="col">
         
-        <div class="row" [style]="showAdmin">
-          <button class="btn" routerLink="/admin" routerLinkActive="active-link"
+        <div class="row" *ngIf="showAdmin">
+          <button class="btn" routerLink="/main/admin" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
             {{ "adminPanel" | translate }}
           </button>
@@ -74,3 +74,4 @@
     </div>
   </div>
 </nav>
+<router-outlet></router-outlet>

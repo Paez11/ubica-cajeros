@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, fromEvent, map } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
@@ -10,14 +10,14 @@ import { LanguageService } from 'src/app/services/language.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   @Input() cashierList: ICashier[];
   showCard: boolean = false;
   slider: boolean = false;
   user: IClient;
-  showAdmin: string = 'display: none;';
+  showAdmin: boolean = false;
 
   clickOut$ = fromEvent<PointerEvent>(document, 'click');
   subscription: Subscription;
@@ -25,12 +25,12 @@ export class NavbarComponent implements OnInit {
   constructor(private _langService: LanguageService, 
               private _clientService: ClientService,
               private _toastrService: ToastrService,
-              private _translate: TranslateService ) {}
+              private _translate: TranslateService ) { }
 
   ngOnInit(): void {
     if(this._clientService.user.admin) {
-      this.showAdmin = 'display: block;';
-      this._toastrService.info(this._translate.instant('adminMode'));
+      this.showAdmin = true;
+      this._toastrService.info(this._translate.instant("adminMode"));
     }
   }
 
