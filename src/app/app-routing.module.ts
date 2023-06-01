@@ -15,6 +15,8 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfilePageComponent },
   { path: 'main', component:NavbarComponent, children: [
     { path: 'map', canActivate: [LoginGuard], component: MapComponent },
     { path: 'restablishPassword', component: RestablishPasswordComponent },
@@ -25,8 +27,6 @@ const routes: Routes = [
     { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
     { path: 'admin', canActivate: [LoginGuard], component: AdminPanelComponent },
   ]},
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfilePageComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: Error404Component }
 ];
