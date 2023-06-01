@@ -20,11 +20,15 @@
             </svg>
           </div>
           <div class="row">
-            <label>{{ "newPassword" | translate }}</label>
-            <input [(ngModel)]="newPassword" type="text" />
+            <label style="margin: 5px;">{{ "newPassword" | translate }}</label>
+            <input
+              [(ngModel)]="newPassword"
+              placeholder="{{ 'enterPassword' | translate }}"
+              type="text"
+            />
           </div>
           <div class="row">
-            <button (click)="changePassword()">
+            <button class="btn" (click)="changePassword()">
               {{ "confirm" | translate }}
             </button>
           </div>
