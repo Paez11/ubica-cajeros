@@ -5,6 +5,12 @@ import { environment } from 'src/environments/environment.development';
 import { IClient } from '../model/IClient';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+<<<<<<< HEAD
+=======
+import { throwError as observableThrowError } from 'rxjs';
+import { DTO_Client } from '../model/DTO_Client';
+
+>>>>>>> f2016ac5505c6d4788a9b8c0755b095f8aa0efd7
 @Injectable({
   providedIn: 'root',
 })
@@ -62,11 +68,14 @@ export class ClientService {
     );
   }
 
-  /* getNewPassword():Observable<IClient>{
+  getNewPassword(dtoClient: DTO_Client): Observable<DTO_Client> {
+    return this.http.put<DTO_Client>(
+      this.url + environment.api.endpoint.newPassword + '/' + dtoClient.dni,
+      dtoClient
+    );
+  }
 
-  } */
-
-  create(account, dni, password, email): Observable<any> {
+  create(account, dni, password, email, id?): Observable<any> {
     if (!account || !dni || !password || !email) {
       throw new Error('Data error.');
     }
@@ -85,7 +94,7 @@ export class ClientService {
   }
 
   update(client: IClient): Observable<IClient> {
-    return this.http.put<IClient>(this.url, client);
+    return this.http.put<IClient>(this.url + environment.api.endpoint.clientbyid + '/' + client.id, client);
   }
 
   delete(id: number): Observable<IClient> {

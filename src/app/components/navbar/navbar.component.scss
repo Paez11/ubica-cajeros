@@ -10,17 +10,29 @@
   svg {
     height: 28px;
   }
+
+  .navbar {
+    --bs-navbar-brand-padding-y: 0rem;
+  }
 }
 
 @media only screen and (max-width: 657px) {
   .navbar-brand {
     font-size: smaller;
   }
+
+  .navbar-toggler {
+    margin-bottom: 1.5%;
+  }
 }
 
 @media only screen and (max-width: 576px) {
   .navbar-brand {
     font-size: x-small;
+  }
+
+  .navbar-toggler {
+    margin-bottom: 1.8%;
   }
 }
 
@@ -36,6 +48,14 @@
     left: 35%;
     height: 50%;
   }
+
+  .navbar-toggler {
+    margin-bottom: 2%;
+  }
+}
+
+.navbar-toggler {
+  padding: 0;
 }
 
 .img {
@@ -49,13 +69,20 @@
   border-color: #005540;
 }
 
-.btn:hover{
-    border-color: #005540;
-    color: #005540;
+.btn {
+  border-color: #005540;
+  color: #005540;
+  
 }
+
+.btn:hover{
+    background-color: #005540;
+    color: white;
+  }
 
 .row {
   height: 50%;
+  margin: 3px;
 }
 
 .divLang {

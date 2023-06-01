@@ -45,11 +45,17 @@
   <div *ngIf="showCard" class="card">
     <div class="card-body">
       <div class="col">
-        
         <div class="row" *ngIf="showAdmin">
           <button class="btn" routerLink="/main/admin" routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: true }">
+          [routerLinkActiveOptions]="{ exact: true }">
             {{ "adminPanel" | translate }}
+          </button>
+        </div>
+
+        <div class="row">
+          <button class="btn" routerLink="/profile" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ "profilePage" | translate }}
           </button>
         </div>
 
