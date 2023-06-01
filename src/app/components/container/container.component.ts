@@ -10,11 +10,17 @@ import { ICashier } from 'src/app/model/ICashier';
 export class ContainerComponent implements OnInit, AfterViewInit {
   cashierList: ICashier[];
   @ViewChild('tdetail') modal: ModalTransactionComponent;
+  
   constructor(private _modalS: ModalTService) {}
+  
   ngAfterViewInit(): void {
     this._modalS.modal = this.modal;
   }
-  ngOnInit(): void {}
+  
+  ngOnInit(): void {
+
+  }
+
   updateCashierList(List: ICashier[]) {
     this.cashierList = [...List];
   }

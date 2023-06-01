@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -18,6 +18,7 @@ L.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+
   client: IClient = {
     id: 1,
     account: '',

@@ -20,20 +20,20 @@
         <app-details [cashiersList]="cashierList"></app-details>
       </div>
     </div>
-    <span class="navbar-brand" routerLink="/main" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="map" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{ "globalPosition" | translate }}</span>
-    <span class="navbar-brand" routerLink="/accounts" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="accounts" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{ "accounts" | translate }}/{{ "receipts" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/cards" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="cards" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "cards" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/transfers" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="transfers" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "transfers" | translate
       }}</span>
-    <span class="navbar-brand" routerLink="/deposits" routerLinkActive="active-link"
+    <span class="navbar-brand" routerLink="deposits" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }">{{
       "deposits" | translate
       }}</span>
@@ -45,18 +45,17 @@
   <div *ngIf="showCard" class="card">
     <div class="card-body">
       <div class="col">
-        
+        <div class="row" *ngIf="showAdmin">
+          <button class="btn" routerLink="/main/admin" routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }">
+            {{ "adminPanel" | translate }}
+          </button>
+        </div>
+
         <div class="row">
           <button class="btn" routerLink="/profile" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
             {{ "profilePage" | translate }}
-          </button>
-        </div>
-
-        <div class="row" [style]="showAdmin">
-          <button class="btn" routerLink="/admin" routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: true }">
-            {{ "adminPanel" | translate }}
           </button>
         </div>
 
@@ -81,3 +80,6 @@
     </div>
   </div>
 </nav>
+<app-modal-transaction></app-modal-transaction>
+<app-float-button></app-float-button>
+<router-outlet></router-outlet>
