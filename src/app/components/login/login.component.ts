@@ -1,4 +1,3 @@
-import { error } from 'jquery';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +7,7 @@ import { SHA256 } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
-import { Subscription, map, catchError, fromEvent, take } from 'rxjs';
+import { Subscription, fromEvent, take } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
 
 declare var bootstrap: any;
@@ -107,7 +106,7 @@ export class LoginComponent implements OnInit {
                 );
                 setTimeout(() => {
                   this.showSpinner = false;
-                  this.router.navigate(['/main']);
+                  this.router.navigate(['/main/map']);
                 }, 2000);
                 this.form.reset();
                 this.showPassWord = false;

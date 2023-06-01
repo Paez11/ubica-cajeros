@@ -5,9 +5,12 @@ import { environment } from 'src/environments/environment.development';
 import { IClient } from '../model/IClient';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+<<<<<<< HEAD
+=======
 import { throwError as observableThrowError } from 'rxjs';
 import { DTO_Client } from '../model/DTO_Client';
 
+>>>>>>> f2016ac5505c6d4788a9b8c0755b095f8aa0efd7
 @Injectable({
   providedIn: 'root',
 })

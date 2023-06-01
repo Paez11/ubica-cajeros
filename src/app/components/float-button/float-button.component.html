@@ -9,37 +9,37 @@
     <div class="card-body">
       <div class="col">
         <div class="row">
-          <button class="btn" routerLink="/main" routerLinkActive="active-link"
+          <button class="btn" routerLink="map" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
             {{ "globalPosition" | translate }}
           </button>
         </div>
         <div class="row">
-          <button class="btn" routerLink="/accounts" routerLinkActive="active-link"
+          <button class="btn" routerLink="accounts" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
             {{ "accounts" | translate }}/{{ "receipts" | translate }}
           </button>
         </div>
         <div class="row">
-          <button class="btn" routerLink="/cards" routerLinkActive="active-link"
+          <button class="btn" routerLink="cards" routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }">
             {{ "cards" | translate }}
           </button>
         </div>
         <div class="row">
-          <button class="btn" routerLink="/transfers" routerLinkActive="active-link"
+          <button class="btn" routerLink="transfers" routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }">
             {{ "transfers" | translate }}
           </button>
         </div>
         <div class="row">
-          <button class="btn" routerLink="/deposits" routerLinkActive="active-link"
+          <button class="btn" routerLink="deposits" routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }">
             {{ "deposits" | translate }}
           </button>
         </div>
         <div class="row" [style]="showAdmin">
-          <button class="btn" routerLink="/admin" routerLinkActive="active-link"
+          <button class="btn" routerLink="/main/admin" routerLinkActive="active-link"
             [routerLinkActiveOptions]="{ exact: true }">
             {{ "adminPanel" | translate }}
           </button>

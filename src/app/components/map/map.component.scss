@@ -84,3 +84,12 @@
   margin: auto;
   text-align: center;
 }
+
+.overlaySlider {
+  position: absolute;
+  z-index: 1000;
+  bottom: 110px;
+  justify-self: start;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
