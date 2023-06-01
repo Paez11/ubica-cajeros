@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -17,7 +18,8 @@ L.Icon.Default.imagePath = 'assets/';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
+  @ViewChild('tdetail') modal: ModalTransactionComponent;
 
   client: IClient = {
     id: 1,
@@ -117,6 +119,9 @@ export class MapComponent implements OnInit {
         this.client = client;
       }
     });
+  }
+  ngAfterViewInit(): void {
+    this._modalS.modal = this.modal;
   }
 
   ngOnInit(): void {
