@@ -31,7 +31,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   };
 
   cashiers: ICashier[] = [];
-  @Output() cashiersList: EventEmitter<ICashier[]> = new EventEmitter();
 
   /*
   mockCashiers:L.Marker = [
@@ -264,7 +263,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         .subscribe((cashier) => {
           this.cashiers = [];
           this.cashiers.push(...cashier);
-          this.cashiersList.emit(this.cashiers);
+          this._mapService.updateCashierList(this.cashiers);
           cashier.forEach((mark) => {
             if ((mark.lattitude && mark.longitude) != undefined) {
               this.markers.push({
