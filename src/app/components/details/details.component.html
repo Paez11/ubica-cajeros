@@ -1,5 +1,5 @@
-<div class="empty" *ngIf="!cashiersList?.length">{{ "noResults" | translate }}</div>
-<div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiersList">
+<div class="empty" *ngIf="!cashiers?.length">{{ "noResults" | translate }}</div>
+<div class="card mb-2 border border-2 border-primary" *ngFor="let cashier of cashiers">
   <ng-template [ngIf]="cashier.photo != null" [ngIfElse]="notImage">
     <div class="image">
       <img [src]="decodeImg(cashier.photo)" class="card-img-top" alt="imagen de cajero"/>

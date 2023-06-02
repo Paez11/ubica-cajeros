@@ -14,9 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  @Input() cashiersList: ICashier[];
+  //@Input() cashiersList: ICashier[];
 
-  public cashiers: ICashier[] = [];
+ @Input() public cashiers: ICashier[] = [];
 
   private clientSubscription: Subscription;
   private cashierSubscription: Subscription;
