@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, fromEvent } from 'rxjs';
@@ -14,7 +14,7 @@ import { MapService } from 'src/app/services/map.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
-  cashierList: ICashier[];
+  cashierList: ICashier[] = [];
   showCard: boolean = false;
   slider: boolean = false;
   user: IClient;
@@ -27,7 +27,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
               private _clientService: ClientService,
               private _toastrService: ToastrService,
               private _translate: TranslateService,
-              private _mapService: MapService ) { }
+              private _mapService: MapService)
+  { }
 
   ngAfterViewInit(): void {
     this._mapService.cashiersList$.subscribe( (data) => {
