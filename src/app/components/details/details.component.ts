@@ -5,7 +5,7 @@ import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { Toast, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -14,8 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  //@Input() cashiersList: ICashier[];
-
  @Input() public cashiers: ICashier[] = [];
 
   private clientSubscription: Subscription;
