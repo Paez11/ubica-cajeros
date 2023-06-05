@@ -77,7 +77,7 @@ export class ModalTransactionComponent implements AfterViewInit {
       };
       this._transactionS.setTransaction(this.transaction);
       this.close();
-      this.router.navigate(['/QR']);
+      this.router.navigate(['/main/QR']);
     }
   }
 
