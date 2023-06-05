@@ -40,6 +40,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { FloatButtonComponent } from './components/float-button/float-button.component';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RestablishPasswordComponent } from './components/restablish-password/restablish-password.component';
@@ -98,6 +99,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatMenuModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    MatTableModule,
   ],
   providers: [
     CashierService,
