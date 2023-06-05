@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { from, fromEvent, map, take } from 'rxjs';
+import { fromEvent, map } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
@@ -16,6 +16,7 @@ export class AdminPanelComponent implements OnInit {
   cashierList: ICashier[];
   cashier: ICashier;
   user: IClient;
+  atmPhoto: SafeResourceUrl;
 
   displayedColumns: string[];
   noDisponible: boolean = false;
@@ -51,25 +52,19 @@ export class AdminPanelComponent implements OnInit {
           this.cashierList.sort((a, b) => a.id - b.id);
           this.cashierList.forEach((cashier, i) => {
             this.displayedColumns = ['id', 'locality'];
-            if (!cashier.photo || cashier.photo === null) {
-              this.noDisponible = true;
-            }
           });
         })
       )
       .subscribe();
   }
 
-  choseCashier(elem: any) {
-    console.log(elem.photo);
-    console.log(this._cashierService.getDecodeImg(elem.photo));
-
+  chooseCashier(elem: any) {
     if (elem.photo) {
       this.noDisponible = false;
     } else {
       this.noDisponible = true;
     }
-    console.log(elem);
+    this.atmPhoto = this._cashierService.getDecodeImg(elem.photo);
     this.formCashier.patchValue({
       id: elem.id,
       address: elem.address,
@@ -78,12 +73,10 @@ export class AdminPanelComponent implements OnInit {
       latitude: elem.lattitude,
       longitude: elem.longitude,
       balance: elem.balance,
-      photo: elem.photo,
     });
   }
 
   decodeImg(photo: string): SafeResourceUrl {
-    console.log(photo);
     return this._cashierService.getDecodeImg(photo);
   }
 }
