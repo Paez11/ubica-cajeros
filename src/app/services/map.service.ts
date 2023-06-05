@@ -3,12 +3,16 @@ import { Injectable, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { MapComponent } from '../components/map/map.component';
+import { ICashier } from '../model/ICashier';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
   @ViewChild (MapComponent, {static:true}) mapComponent: MapComponent;
+
+  private cashierListSubject = new BehaviorSubject<ICashier[]>([]);
+  cashiersList$ = this.cashierListSubject.asObservable();
 
   private lat: number;
   private lng: number;
@@ -71,5 +75,9 @@ export class MapService {
 
   public getstreetObservable(): Observable<string> {
     return this.streetSubject.asObservable();
+  }
+
+  updateCashierList(list: ICashier[]) {
+    this.cashierListSubject.next(list);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, fromEvent } from 'rxjs';
@@ -6,14 +6,15 @@ import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { ClientService } from 'src/app/services/client.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
-  @Input() cashierList: ICashier[];
+export class NavbarComponent implements OnInit, AfterViewInit {
+  cashierList: ICashier[] = [];
   showCard: boolean = false;
   slider: boolean = false;
   user: IClient;
@@ -25,7 +26,15 @@ export class NavbarComponent implements OnInit {
   constructor(private _langService: LanguageService, 
               private _clientService: ClientService,
               private _toastrService: ToastrService,
-              private _translate: TranslateService ) { }
+              private _translate: TranslateService,
+              private _mapService: MapService)
+  { }
+
+  ngAfterViewInit(): void {
+    this._mapService.cashiersList$.subscribe( (data) => {
+      this.cashierList = data;
+    });
+  }
 
   ngOnInit(): void {
     if(this._clientService.user.admin) {
