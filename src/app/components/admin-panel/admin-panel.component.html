@@ -10,17 +10,10 @@
         </div>
         <div class="row row2">
           <h1>{{ "cashiers" | translate }}</h1>
-          <mat-table
-            [dataSource]="cashierList"
-            class="mat-table mat-elevation-z8"
-          >
+          <mat-table [dataSource]="cashierList" class="mat-table mat-elevation-z8">
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-              <mat-cell
-                id="id"
-                *matCellDef="let cashier"
-                (click)="choseCashier(cashier)"
-              >
+              <mat-cell id="id" *matCellDef="let cashier" (click)="chooseCashier(cashier)">
                 {{ cashier.id }}
               </mat-cell>
             </ng-container>
@@ -29,26 +22,18 @@
               <mat-header-cell *matHeaderCellDef>
                 {{ "locality" | translate }}
               </mat-header-cell>
-              <mat-cell
-                *matCellDef="let cashier"
-                (click)="choseCashier(cashier)"
-              >
+              <mat-cell *matCellDef="let cashier" (click)="chooseCashier(cashier)">
                 {{ cashier.locality }}
               </mat-cell>
             </ng-container>
 
-            <mat-header-row
-              *matHeaderRowDef="displayedColumns"
-            ></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
           </mat-table>
         </div>
       </div>
       <div class="col center">
-        <div
-          class="row"
-          style="height: 50%; border: 2px solid #005540; border-bottom: none"
-        >
+        <div class="row" style="height: 50%; border: 2px solid #005540; border-bottom: none">
           <div class="col space">
             <div class="row align">
               <label>ID</label>
@@ -89,37 +74,24 @@
             </div>
           </div>
         </div>
-        <div
-          class="row center"
-          style="
-            border: 2px solid #005540;
-            border-top: none;
-            border-bottom: none;
-            padding-bottom: 2%;
-          "
-        >
-          <ng-template #notImage>
-            <img
-              *ngIf="!noDisponible"
-              [src]="decodeImg(cashier.photo)"
-              formControlName="photo"
-            />
+        
+        <div class="row center" style="border: 2px solid #005540; border-top: none; border-bottom: none; padding-bottom: 2%;">
+          <ng-template [ngIf]="!noDisponible" [ngIfElse]="notImage">
+            <img [src]="atmPhoto" />
           </ng-template>
-
-          <img
-            *ngIf="noDisponible"
-            src="../../../assets/icons/image-not-found.png"
-          />
+          <ng-template #notImage>
+            <div class="image">
+              <img src="./assets/icons/image-not-found.png" class="card-img-top" alt="Image not found" />
+            </div>
+          </ng-template>
         </div>
-        <div
-          class="row space"
-          style="
+        
+        <div class="row space" style="
             border: 2px solid #005540;
             border-top: none;
             padding-bottom: 2%;
             padding-top: 1%;
-          "
-        >
+          ">
           <div class="button">
             <button class="btn">{{ "update" | translate }}</button>
           </div>
