@@ -95,5 +95,7 @@
   "balance": "Balance",
   "deleteCashier": "Cashier removed successfully",
   "cashierNotFound": "Cashier not found",
-  "cashierIdMissing": "ID missing"
+  "cashierIdMissing": "ID missing",
+  "serviceError": "Service error",
+  "cashierCreated": "Cashier created succesfully"
 }

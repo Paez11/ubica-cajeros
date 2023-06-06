@@ -5,6 +5,7 @@ import { DTO_CashierByRadius_Request } from '../model/DTO_CashierByRadius_Reques
 import { ICashier } from '../model/ICashier';
 import { environment } from '../../environments/environment.development';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DTO_Cashier_Response } from '../model/DTO_Cashier_Response';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,16 @@ export class CashierService {
 
   update(cashier:ICashier):Observable<ICashier>{
     return this.http.put<ICashier>(this.url, cashier);
+  }
+
+  createOrUpdate(cashier: ICashier): Observable<DTO_Cashier_Response> {
+    if(!cashier) {
+      throw new Error("data error");
+    }
+    const endpoint = this.url+environment.api.endpoint.createOrUpdate;
+    return this.http.post<DTO_Cashier_Response>(endpoint, cashier, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   remove(id:number):Observable<ICashier>{

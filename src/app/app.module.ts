@@ -47,6 +47,7 @@ import { RestablishPasswordComponent } from './components/restablish-password/re
 import { BlankPageComponent } from './components/blank-page/blank-page.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -72,6 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
     BlankPageComponent,
     AdminPanelComponent,
     ProfilePageComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
