@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { fromEvent, map } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription, fromEvent, map } from 'rxjs';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
@@ -17,6 +19,8 @@ export class AdminPanelComponent implements OnInit {
   cashier: ICashier;
   user: IClient;
   atmPhoto: SafeResourceUrl;
+  atm: ICashier;
+  cashiersSubs: Subscription;
 
   displayedColumns: string[];
   noDisponible: boolean = false;
@@ -28,7 +32,9 @@ export class AdminPanelComponent implements OnInit {
   constructor(
     private _cashierService: CashierService,
     private _clientService: ClientService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _toastrService: ToastrService,
+    private _translateService: TranslateService
   ) {
     this.formCashier = this.formBuilder.group({
       id: ['', [Validators.required]],
@@ -44,7 +50,11 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this._clientService.user;
-    this._cashierService
+    this.refreshCashiersTable();
+  }
+
+  refreshCashiersTable() {
+    this.cashiersSubs = this._cashierService
       .getAll()
       .pipe(
         map((data) => {
@@ -74,9 +84,48 @@ export class AdminPanelComponent implements OnInit {
       longitude: elem.longitude,
       balance: elem.balance,
     });
+
+    this.cashier = {
+      id: elem.id,
+      address: elem.address,
+      cp: elem.cp,
+      locality: elem.locality,
+      latitude: elem.lattitude,
+      longitude: elem.longitude,
+      balance: elem.balance,
+      photo: elem.photo,
+      available: elem.available
+    }
   }
 
   decodeImg(photo: string): SafeResourceUrl {
     return this._cashierService.getDecodeImg(photo);
+  }
+
+  createCashier(cashier: ICashier){
+    
+  }
+
+  updateCashier(cashier: ICashier) {
+
+  }
+
+  deleteCashier() {
+    if(this.cashier.id) {
+      
+
+      if(this._cashierService.remove(this.cashier.id).subscribe()){
+        this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
+        this.formCashier.reset();
+        this.cashiersSubs.unsubscribe();
+        this.refreshCashiersTable();
+      }
+      else {
+        this._toastrService.info(this._translateService.instant("cashierNotFound", "Cashier not found"));
+      }
+    }
+    else {
+      this._toastrService.info(this._translateService.instant("cashierIdMissing", "Missing ID"));
+    }
   }
 }

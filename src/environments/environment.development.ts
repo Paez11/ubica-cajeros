@@ -15,6 +15,7 @@ export const environment = {
       clientbyid: '/api/client',
       newclient: '/api/client',
       newPassword: '/api/client/rp',
+      deleteCashierById: '/api/cashiers',
     },
   },
   nominatimAPI: {
