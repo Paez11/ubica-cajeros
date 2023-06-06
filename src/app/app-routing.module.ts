@@ -17,10 +17,10 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfilePageComponent },
+  { path: 'restablishPassword', component: RestablishPasswordComponent },
   { path: 'main', component:NavbarComponent, children: [
     { path: 'map', canActivate: [LoginGuard], component: MapComponent },
-    { path: 'restablishPassword', component: RestablishPasswordComponent },
+    { path: 'profile', component: ProfilePageComponent },
     { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
     { path: 'accounts', canActivate: [LoginGuard], component: BlankPageComponent },
     { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },
