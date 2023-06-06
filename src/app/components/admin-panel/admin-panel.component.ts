@@ -52,6 +52,8 @@ export class AdminPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let input = document.getElementById('idInput');
+    input.setAttribute('disabled', 'true');
     this.user = this._clientService.user;
     this.refreshCashiersTable();
   }
@@ -108,8 +110,6 @@ export class AdminPanelComponent implements OnInit {
   }
 
   createOrUpdateCashier() {
-    console.log(this.selectedValue)
-
     this.cashier = {
       id: this.formCashier.value.id,
       address: this.formCashier.value.address,
@@ -137,20 +137,7 @@ export class AdminPanelComponent implements OnInit {
         } else {
           this._toastrService.info(this._translateService.instant("cashierNotCreated", "cashier not created"));
         }
-      });
-      available: this.formCashier.value.available,
-    };
-
-    try {
-      this._cashierService
-        .createOrUpdate(this.cashier)
-        .subscribe((response) => {
-          if (response.response === 1) {
-            this._toastrService.info(
-              this._translateService.instant('cashierCreated', 'ATM insert')
-            );
-          }
-        });
+      }); 
     } catch (error) {
       this._toastrService.error(
         this._translateService.instant('serviceError', 'Error service')
@@ -161,28 +148,14 @@ export class AdminPanelComponent implements OnInit {
   deleteCashier() {
     try {
       if (this.cashier.id) {
-        this._cashierService.remove(this.cashier.id).subscribe( (response) => {
-          if(response) {
-            this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
-
-  deleteCashier() {
-    try {
-      if (this.cashier.id) {
-        this._cashierService.remove(this.cashier.id).subscribe((result) => {
-          if (result) {
-            this._toastrService.info(
-              this._translateService.instant('deleteCashier', 'Delete cashier')
-            );
+        this._cashierService.remove(this.cashier.id).subscribe((response) => {
+          if (response) {
+            this._toastrService.info(this._translateService.instant('deleteCashier', 'Delete cashier'));
             this.formCashier.reset();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
           } else {
-            this._toastrService.info(
-              this._translateService.instant(
-                'cashierNotFound',
-                'Cashier not found'
-              )
-            );
+            this._toastrService.info(this._translateService.instant('cashierNotFound', 'Cashier not found'));
           }
         });
       } else {
@@ -197,10 +170,6 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  onSelectedChange() {
-    console.log(this.selectedValue)  
-  }
-}
   resetForm() {
     this.noDisponible = true;
     this.formCashier.reset();
