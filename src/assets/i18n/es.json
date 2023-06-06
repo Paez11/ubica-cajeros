@@ -96,6 +96,7 @@
   "deleteCashier": "Cajero eliminado satisfactoriamente",
   "cashierNotFound": "Cajero no encontrado",
   "cashierIdMissing": "ID no introducida",
+  "reset":"Restaurar",
   "serviceError": "Error en el servicio",
   "cashierCreated": "Cajero insertado satisfactoriamente"
 }
