@@ -9,10 +9,16 @@
       </div>
       <div class="row row2">
         <h1>{{ "cashiers" | translate }}</h1>
-        <mat-table [dataSource]="cashierList" class="mat-table mat-elevation-z8">
+        <mat-table
+          [dataSource]="cashierList"
+          class="mat-table mat-elevation-z8"
+        >
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-            <mat-cell *matCellDef="let cashier" (click)="chooseCashier(cashier)">
+            <mat-cell
+              *matCellDef="let cashier"
+              (click)="chooseCashier(cashier)"
+            >
               {{ cashier.id }}
             </mat-cell>
           </ng-container>
@@ -21,7 +27,10 @@
             <mat-header-cell *matHeaderCellDef>
               {{ "locality" | translate }}
             </mat-header-cell>
-            <mat-cell *matCellDef="let cashier" (click)="chooseCashier(cashier)">
+            <mat-cell
+              *matCellDef="let cashier"
+              (click)="chooseCashier(cashier)"
+            >
               {{ cashier.locality }}
             </mat-cell>
           </ng-container>
@@ -32,7 +41,10 @@
       </div>
     </div>
     <div class="col center">
-      <div class="row" style="height: 50%; border: 2px solid #005540; border-bottom: none">
+      <div
+        class="row"
+        style="height: 50%; border: 2px solid #005540; border-bottom: none"
+      >
         <div class="col space">
           <div class="row align">
             <label>ID</label>
@@ -74,29 +86,40 @@
         </div>
       </div>
 
-      <div class="row center" style="
+      <div
+        class="row center"
+        style="
           border: 2px solid #005540;
           border-top: none;
           border-bottom: none;
           padding-bottom: 2%;
           height: 120px;
-        ">
+        "
+      >
         <ng-template [ngIf]="!noDisponible" [ngIfElse]="notImage">
-          <img [src]="atmPhoto" />
+          <img (click)="changeImage()" [src]="atmPhoto" />
         </ng-template>
         <ng-template #notImage>
           <div class="image">
-            <img src="./assets/icons/image-not-found.png" class="card-img-top" alt="Image not found" />
+            <img
+              (click)="changeImage()"
+              [src]="notFoundPhoto"
+              class="card-img-top"
+              alt="Image not found"
+            />
           </div>
         </ng-template>
       </div>
 
-      <div class="row space" style="
+      <div
+        class="row space"
+        style="
           border: 2px solid #005540;
           border-top: none;
           padding-bottom: 2%;
           padding-top: 1%;
-        ">
+        "
+      >
         <div class="button">
           <button class="btn" (click)="updateCashier()">
             {{ "update" | translate }}
@@ -113,7 +136,7 @@
           </button>
         </div>
         <div class="button">
-          <button class="btn">
+          <button class="btn" (click)="resetForm()">
             {{ "reset" | translate }}
           </button>
         </div>

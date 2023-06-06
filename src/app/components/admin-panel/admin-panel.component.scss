@@ -76,7 +76,12 @@ select {
 }
 
 img {
-  width: 25%;
+  padding-left: 0;
+  padding-right: 0;
+  border: 1px solid #005540;
+  cursor: pointer;
+  width: 180px;
+  height: 110px;
 }
 
 .row {
@@ -185,7 +190,7 @@ img {
     max-width: 100%;
   }
 
-  .button{
+  .button {
     width: 40%;
   }
 }
@@ -209,15 +214,15 @@ img {
     }
   }
 
-  img{
+  img {
     width: 40%;
   }
 
-  .button{
+  .button {
     width: 50%;
   }
 
-  .btn{
+  .btn {
     width: 100%;
   }
 }
