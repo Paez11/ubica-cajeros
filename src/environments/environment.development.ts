@@ -16,6 +16,7 @@ export const environment = {
       newclient: '/api/client',
       newPassword: '/api/client/rp',
       deleteCashierById: '/api/cashiers',
+      createOrUpdate: '/api/atm'
     },
   },
   nominatimAPI: {

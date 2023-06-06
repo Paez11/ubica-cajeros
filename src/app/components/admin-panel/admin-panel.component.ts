@@ -19,7 +19,6 @@ export class AdminPanelComponent implements OnInit {
   cashier: ICashier;
   user: IClient;
   atmPhoto: SafeResourceUrl;
-  atm: ICashier;
   cashiersSubs: Subscription;
 
   displayedColumns: string[];
@@ -102,30 +101,52 @@ export class AdminPanelComponent implements OnInit {
     return this._cashierService.getDecodeImg(photo);
   }
 
-  createCashier(cashier: ICashier){
+  createCashier() {
+    this.cashier = {
+      id: null,
+      address: this.formCashier.value.address,
+      cp: this.formCashier.value.cp,
+      locality: this.formCashier.value.locality,
+      latitude: this.formCashier.value.lattitude,
+      longitude: this.formCashier.value.longitude,
+      balance: this.formCashier.value.balance,
+      photo: this.formCashier.value.photo,
+      available: this.formCashier.value.available
+    }
     
+    try {
+      this._cashierService.createOrUpdate(this.cashier).subscribe( (response) => {
+        if(response.response === 1) {
+          this._toastrService.info(this._translateService.instant("cashierCreated", "ATM insert"));  
+        }
+      });
+    } catch (error) {
+      this._toastrService.error(this._translateService.instant("serviceError", "Error service"));  
+    }
   }
 
-  updateCashier(cashier: ICashier) {
+  updateCashier() {
 
   }
 
   deleteCashier() {
-    if(this.cashier.id) {
-      
-
-      if(this._cashierService.remove(this.cashier.id).subscribe()){
-        this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
-        this.formCashier.reset();
-        this.cashiersSubs.unsubscribe();
-        this.refreshCashiersTable();
+    try {
+      if (this.cashier.id) {
+        this._cashierService.remove(this.cashier.id).subscribe( (result) => {
+          if(result) {
+            this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
+            this.formCashier.reset();
+            this.cashiersSubs.unsubscribe();
+            this.refreshCashiersTable();
+          } else {
+            this._toastrService.info(this._translateService.instant("cashierNotFound", "Cashier not found"));
+          }
+        });
+      } else {
+        this._toastrService.info(this._translateService.instant("cashierIdMissing", "Missing ID"));
       }
-      else {
-        this._toastrService.info(this._translateService.instant("cashierNotFound", "Cashier not found"));
-      }
-    }
-    else {
-      this._toastrService.info(this._translateService.instant("cashierIdMissing", "Missing ID"));
+    } catch(error) {
+        this._toastrService.error(this._translateService.instant("serviceError", "Error service"));
     }
   }
 }
