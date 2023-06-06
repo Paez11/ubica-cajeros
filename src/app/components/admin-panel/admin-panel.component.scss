@@ -1,14 +1,3 @@
-.background {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
-    center;
-}
-
 .container {
   display: flex;
   justify-content: center;
@@ -16,9 +5,25 @@
   height: 100%;
   width: 100%;
   padding-top: 5%;
-  padding-bottom: 15%;
+  padding-bottom: 10%;
   margin-left: 0;
   margin-right: 0;
+}
+
+.form-control {
+  background: url("../../../assets/img/fondo-proyecto.jpg") no-repeat center
+    center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-row:hover {
+  cursor: pointer;
 }
 
 h1 {
@@ -62,6 +67,10 @@ select {
 .btn {
   background-color: #005540;
   color: white;
+}
+
+.image {
+  width: 70%;
 }
 
 img {

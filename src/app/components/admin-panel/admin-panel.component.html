@@ -1,106 +1,138 @@
 <form class="form-control" [formGroup]="formCashier">
-  <div class="background">
-    <div class="container">
-      <div class="col">
-        <div class="row row1">
-          <h1>
-            {{ "admin" | translate }}:
-            <!-- {{ user.dni }} -->
-          </h1>
+  <div class="container">
+    <div class="col">
+      <div class="row row1">
+        <h1>
+          {{ "admin" | translate }}:
+          <!-- {{ user.dni }} -->
+        </h1>
+      </div>
+      <div class="row row2">
+        <h1>{{ "cashiers" | translate }}</h1>
+        <mat-table
+          [dataSource]="cashierList"
+          class="mat-table mat-elevation-z8"
+        >
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell
+              *matCellDef="let cashier"
+              (click)="chooseCashier(cashier)"
+            >
+              {{ cashier.id }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="locality">
+            <mat-header-cell *matHeaderCellDef>
+              {{ "locality" | translate }}
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let cashier"
+              (click)="chooseCashier(cashier)"
+            >
+              {{ cashier.locality }}
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+    <div class="col center">
+      <div
+        class="row"
+        style="height: 50%; border: 2px solid #005540; border-bottom: none"
+      >
+        <div class="col space">
+          <div class="row align">
+            <label>ID</label>
+            <input type="text" formControlName="id" />
+          </div>
+          <div class="row align">
+            <label>{{ "address" | translate }}</label>
+            <input type="text" formControlName="address" />
+          </div>
+          <div class="row align">
+            <label>{{ "cp" | translate }}</label>
+            <input type="text" formControlName="cp" />
+          </div>
+          <div class="row align">
+            <label>{{ "locality" | translate }}</label>
+            <input type="text" formControlName="locality" />
+          </div>
         </div>
-        <div class="row row2">
-          <h1>{{ "cashiers" | translate }}</h1>
-          <mat-table [dataSource]="cashierList" class="mat-table mat-elevation-z8">
-            <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-              <mat-cell id="id" *matCellDef="let cashier" (click)="chooseCashier(cashier)">
-                {{ cashier.id }}
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="locality">
-              <mat-header-cell *matHeaderCellDef>
-                {{ "locality" | translate }}
-              </mat-header-cell>
-              <mat-cell *matCellDef="let cashier" (click)="chooseCashier(cashier)">
-                {{ cashier.locality }}
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-          </mat-table>
+        <div class="col space">
+          <div class="row align">
+            <label>{{ "latitude" | translate }}</label>
+            <input type="text" formControlName="latitude" />
+          </div>
+          <div class="row align">
+            <label>{{ "longitude" | translate }}</label>
+            <input type="text" formControlName="longitude" />
+          </div>
+          <div class="row align">
+            <label>{{ "balance" | translate }}</label>
+            <input type="text" formControlName="balance" />
+          </div>
+          <div class="row align">
+            <label>{{ "available" | translate }}</label>
+            <select formControlName="available">
+              <option>{{ "yes" | translate }}</option>
+              <option>{{ "no" | translate }}</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div class="col center">
-        <div class="row" style="height: 50%; border: 2px solid #005540; border-bottom: none">
-          <div class="col space">
-            <div class="row align">
-              <label>ID</label>
-              <input type="text" formControlName="id" />
-            </div>
-            <div class="row align">
-              <label>{{ "address" | translate }}</label>
-              <input type="text" formControlName="address" />
-            </div>
-            <div class="row align">
-              <label>{{ "cp" | translate }}</label>
-              <input type="text" formControlName="cp" />
-            </div>
-            <div class="row align">
-              <label>{{ "locality" | translate }}</label>
-              <input type="text" formControlName="locality" />
-            </div>
+
+      <div
+        class="row center"
+        style="
+          border: 2px solid #005540;
+          border-top: none;
+          border-bottom: none;
+          padding-bottom: 2%;
+          height: 120px;
+        "
+      >
+        <ng-template [ngIf]="!noDisponible" [ngIfElse]="notImage">
+          <img [src]="atmPhoto" />
+        </ng-template>
+        <ng-template #notImage>
+          <div class="image">
+            <img
+              src="./assets/icons/image-not-found.png"
+              class="card-img-top"
+              alt="Image not found"
+            />
           </div>
-          <div class="col space">
-            <div class="row align">
-              <label>{{ "latitude" | translate }}</label>
-              <input type="text" formControlName="latitude" />
-            </div>
-            <div class="row align">
-              <label>{{ "longitude" | translate }}</label>
-              <input type="text" formControlName="longitude" />
-            </div>
-            <div class="row align">
-              <label>{{ "balance" | translate }}</label>
-              <input type="text" formControlName="balance" />
-            </div>
-            <div class="row align">
-              <label>{{ "available" | translate }}</label>
-              <select>
-                <option>{{ "yes" | translate }}</option>
-                <option>{{ "no" | translate }}</option>
-              </select>
-            </div>
-          </div>
+        </ng-template>
+      </div>
+
+      <div
+        class="row space"
+        style="
+          border: 2px solid #005540;
+          border-top: none;
+          padding-bottom: 2%;
+          padding-top: 1%;
+        "
+      >
+        <div class="button">
+          <button class="btn">
+            {{ "update" | translate }}
+          </button>
         </div>
-        
-        <div class="row center" style="border: 2px solid #005540; border-top: none; border-bottom: none; padding-bottom: 2%;">
-          <ng-template [ngIf]="!noDisponible" [ngIfElse]="notImage">
-            <img [src]="atmPhoto" />
-          </ng-template>
-          <ng-template #notImage>
-            <div class="image">
-              <img src="./assets/icons/image-not-found.png" class="card-img-top" alt="Image not found" />
-            </div>
-          </ng-template>
+        <div class="button">
+          <button class="btn">
+            {{ "delete" | translate }}
+          </button>
         </div>
-        
-        <div class="row space" style="
-            border: 2px solid #005540;
-            border-top: none;
-            padding-bottom: 2%;
-            padding-top: 1%;
-          ">
-          <div class="button">
-            <button class="btn">{{ "update" | translate }}</button>
-          </div>
-          <div class="button">
-            <button class="btn" (click)="deleteCashier()">{{ "delete" | translate }}</button>
-          </div>
-          <div class="button">
-            <button class="btn">{{ "new" | translate }}</button>
-          </div>
+        <div class="button">
+          <button class="btn">
+            {{ "new" | translate }}
+          </button>
         </div>
       </div>
     </div>
