@@ -8,6 +8,7 @@ import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-panel',
@@ -20,6 +21,7 @@ export class AdminPanelComponent implements OnInit {
   user: IClient;
   atmPhoto: SafeResourceUrl;
   cashiersSubs: Subscription;
+  selectedValue: string;
 
   displayedColumns: string[];
   noDisponible: boolean = false;
@@ -40,10 +42,11 @@ export class AdminPanelComponent implements OnInit {
       address: ['', [Validators.required]],
       cp: ['', [Validators.required]],
       locality: ['', [Validators.required]],
-      latitude: ['', [Validators.required]],
+      lattitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
       balance: ['', [Validators.required]],
       photo: ['', [Validators.required]],
+      available: ['', [Validators.required]],
     });
   }
 
@@ -79,9 +82,10 @@ export class AdminPanelComponent implements OnInit {
       address: elem.address,
       cp: elem.cp,
       locality: elem.locality,
-      latitude: elem.lattitude,
+      lattitude: elem.lattitude,
       longitude: elem.longitude,
       balance: elem.balance,
+      available: elem.available
     });
 
     this.cashier = {
@@ -89,7 +93,7 @@ export class AdminPanelComponent implements OnInit {
       address: elem.address,
       cp: elem.cp,
       locality: elem.locality,
-      latitude: elem.lattitude,
+      lattitude: elem.lattitude,
       longitude: elem.longitude,
       balance: elem.balance,
       photo: elem.photo,
@@ -101,23 +105,35 @@ export class AdminPanelComponent implements OnInit {
     return this._cashierService.getDecodeImg(photo);
   }
 
-  createCashier() {
+  createOrUpdateCashier() {
+    console.log(this.selectedValue)
+
     this.cashier = {
-      id: null,
+      id: this.formCashier.value.id,
       address: this.formCashier.value.address,
       cp: this.formCashier.value.cp,
       locality: this.formCashier.value.locality,
-      latitude: this.formCashier.value.lattitude,
+      lattitude: this.formCashier.value.lattitude,
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
       photo: this.formCashier.value.photo,
       available: this.formCashier.value.available
     }
-    
+
+    if(this.formCashier.value.id === "") {
+      this.cashier.id = null;
+      this.cashier.available = false;
+    }
+
     try {
       this._cashierService.createOrUpdate(this.cashier).subscribe( (response) => {
         if(response.response === 1) {
-          this._toastrService.info(this._translateService.instant("cashierCreated", "ATM insert"));  
+          this._toastrService.info(this._translateService.instant("cashierCreated", "Cashier insert"));
+          this.formCashier.reset();
+          this.cashiersSubs.unsubscribe();
+          this.refreshCashiersTable();  
+        } else {
+          this._toastrService.info(this._translateService.instant("cashierNotCreated", "cashier not created"));
         }
       });
     } catch (error) {
@@ -125,15 +141,11 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  updateCashier() {
-
-  }
-
   deleteCashier() {
     try {
       if (this.cashier.id) {
-        this._cashierService.remove(this.cashier.id).subscribe( (result) => {
-          if(result) {
+        this._cashierService.remove(this.cashier.id).subscribe( (response) => {
+          if(response) {
             this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
             this.formCashier.reset();
             this.cashiersSubs.unsubscribe();
@@ -148,5 +160,9 @@ export class AdminPanelComponent implements OnInit {
     } catch(error) {
         this._toastrService.error(this._translateService.instant("serviceError", "Error service"));
     }
+  }
+
+  onSelectedChange() {
+    console.log(this.selectedValue)  
   }
 }

@@ -54,7 +54,7 @@
         <div class="col space">
           <div class="row align">
             <label>{{ "latitude" | translate }}</label>
-            <input type="text" formControlName="latitude" />
+            <input type="text" formControlName="lattitude" />
           </div>
           <div class="row align">
             <label>{{ "longitude" | translate }}</label>
@@ -66,9 +66,9 @@
           </div>
           <div class="row align">
             <label>{{ "available" | translate }}</label>
-            <select formControlName="available">
-              <option>{{ "yes" | translate }}</option>
-              <option>{{ "no" | translate }}</option>
+            <select formControlName="available" [(ngModel)]="selectedValue" (ngModelChange)="onSelectedChange()">
+              <option value="opc1">{{ "yes" | translate }}</option>
+              <option value="opc2">{{ "no" | translate }}</option>
             </select>
           </div>
         </div>
@@ -98,7 +98,7 @@
           padding-top: 1%;
         ">
         <div class="button">
-          <button class="btn" (click)="updateCashier()">
+          <button class="btn" (click)="createOrUpdateCashier()">
             {{ "update" | translate }}
           </button>
         </div>
@@ -108,7 +108,7 @@
           </button>
         </div>
         <div class="button">
-          <button class="btn" (click)="createCashier()">
+          <button class="btn" (click)="createOrUpdateCashier()">
             {{ "new" | translate }}
           </button>
         </div>

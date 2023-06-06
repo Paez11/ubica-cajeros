@@ -97,5 +97,6 @@
   "cashierNotFound": "Cajero no encontrado",
   "cashierIdMissing": "ID no introducida",
   "serviceError": "Error en el servicio",
-  "cashierCreated": "Cajero insertado satisfactoriamente"
+  "cashierCreated": "Cajero insertado satisfactoriamente",
+  "cashierNotCreated": "No se pudo insertar el cajero"
 }

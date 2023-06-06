@@ -97,5 +97,6 @@
   "cashierNotFound": "Cashier not found",
   "cashierIdMissing": "ID missing",
   "serviceError": "Service error",
-  "cashierCreated": "Cashier created succesfully"
+  "cashierCreated": "Cashier created succesfully",
+  "cashierNotCreated": "Could not insert cashier"
 }
