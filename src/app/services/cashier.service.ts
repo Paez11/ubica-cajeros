@@ -44,9 +44,6 @@ export class CashierService {
   }
 
   createOrUpdate(cashier: ICashier): Observable<DTO_Cashier_Response> {
-
-    console.log(cashier)
-
     if(!cashier) {
       throw new Error("data error");
     }
