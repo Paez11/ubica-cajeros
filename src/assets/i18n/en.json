@@ -95,5 +95,6 @@
   "balance": "Balance",
   "deleteCashier": "Cashier removed successfully",
   "cashierNotFound": "Cashier not found",
-  "cashierIdMissing": "ID missing"
+  "cashierIdMissing": "ID missing",
+  "reset":"Reset"
 }
