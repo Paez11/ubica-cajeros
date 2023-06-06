@@ -4,7 +4,7 @@ export interface ICashier{
     address: string,
     cp: string,
     locality: string,
-    latitude: number,
+    lattitude: number,
     longitude: number,
     balance: number,
     available: boolean
