@@ -1,4 +1,5 @@
 .container {
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,8 +7,8 @@
   width: 100%;
   padding-top: 5%;
   padding-bottom: 10%;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .form-control {
@@ -16,7 +17,6 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,6 +24,10 @@
 
 mat-row:hover {
   cursor: pointer;
+}
+
+.button {
+  width: 25%;
 }
 
 h1 {
@@ -60,11 +64,9 @@ select {
   width: 50%;
 }
 
-.button {
-  width: 15%;
-}
-
 .btn {
+  margin-top: 5px;
+  width: 100%;
   background-color: #005540;
   color: white;
 }
@@ -74,17 +76,24 @@ select {
 }
 
 img {
-  width: 25%;
+  padding-left: 0;
+  padding-right: 0;
+  border: 1px solid #005540;
+  cursor: pointer;
+  width: 180px;
+  height: 110px;
 }
 
 .row {
   &.row1 {
     height: 13%;
+    align-items: center;
   }
 
   &.row2 {
-    height: 65%;
-    width: 70%;
+    padding-bottom: 4%;
+    height: 78%;
+    width: 90%;
   }
 
   &.space {
@@ -104,4 +113,116 @@ img {
   overflow: auto;
   height: 150%;
   max-height: 100%;
+}
+
+@media (min-width: 425px) and (max-width: 767px) {
+  .container {
+    font-size: 14px;
+    flex-direction: column;
+    padding-bottom: none;
+    padding-top: 10%;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .row {
+    align-items: center;
+    text-align: start;
+
+    &.row2 {
+      height: 70%;
+      width: 104%;
+    }
+
+    &.space {
+      flex-direction: row;
+    }
+
+    &.align {
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 5px;
+      margin-right: 2px;
+    }
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
+  }
+
+  img {
+    width: 30%;
+  }
+
+  select {
+    width: 37%;
+  }
+
+  .col {
+    height: 40%;
+    width: 100%;
+  }
+}
+
+@media (min-width: 425px) and (max-width: 484px) {
+  .row {
+    &.row2 {
+      width: 106%;
+    }
+    &.space {
+      margin-bottom: 16%;
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  .container,
+  .container-sm {
+    max-width: 100%;
+  }
+
+  .button {
+    width: 40%;
+  }
+}
+
+@media (min-width: 650px) and (max-width: 767px) {
+  img {
+    width: 25%;
+  }
+
+  .row {
+    &.row1 {
+      align-items: flex-start;
+    }
+  }
+}
+
+@media (min-width: 767px) and (max-width: 900px) {
+  .row {
+    &.row2 {
+      width: 80%;
+    }
+  }
+
+  img {
+    width: 40%;
+  }
+
+  .button {
+    width: 50%;
+  }
+
+  .btn {
+    width: 100%;
+  }
 }

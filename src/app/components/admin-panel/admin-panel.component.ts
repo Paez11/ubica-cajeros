@@ -20,6 +20,7 @@ export class AdminPanelComponent implements OnInit {
   cashier: ICashier;
   user: IClient;
   atmPhoto: SafeResourceUrl;
+  notFoundPhoto: SafeResourceUrl = './assets/icons/image-not-found.png';
   cashiersSubs: Subscription;
   selectedValue: string;
 
@@ -75,6 +76,7 @@ export class AdminPanelComponent implements OnInit {
       this.noDisponible = false;
     } else {
       this.noDisponible = true;
+      this.notFoundPhoto = './assets/icons/image-not-found.png';
     }
     this.atmPhoto = this._cashierService.getDecodeImg(elem.photo);
     this.formCashier.patchValue({
@@ -97,8 +99,8 @@ export class AdminPanelComponent implements OnInit {
       longitude: elem.longitude,
       balance: elem.balance,
       photo: elem.photo,
-      available: elem.available
-    }
+      available: elem.available,
+    };
   }
 
   decodeImg(photo: string): SafeResourceUrl {
@@ -136,8 +138,23 @@ export class AdminPanelComponent implements OnInit {
           this._toastrService.info(this._translateService.instant("cashierNotCreated", "cashier not created"));
         }
       });
+      available: this.formCashier.value.available,
+    };
+
+    try {
+      this._cashierService
+        .createOrUpdate(this.cashier)
+        .subscribe((response) => {
+          if (response.response === 1) {
+            this._toastrService.info(
+              this._translateService.instant('cashierCreated', 'ATM insert')
+            );
+          }
+        });
     } catch (error) {
-      this._toastrService.error(this._translateService.instant("serviceError", "Error service"));  
+      this._toastrService.error(
+        this._translateService.instant('serviceError', 'Error service')
+      );
     }
   }
 
@@ -147,22 +164,65 @@ export class AdminPanelComponent implements OnInit {
         this._cashierService.remove(this.cashier.id).subscribe( (response) => {
           if(response) {
             this._toastrService.info(this._translateService.instant("deleteCashier", "Delete cashier"));
+
+  deleteCashier() {
+    try {
+      if (this.cashier.id) {
+        this._cashierService.remove(this.cashier.id).subscribe((result) => {
+          if (result) {
+            this._toastrService.info(
+              this._translateService.instant('deleteCashier', 'Delete cashier')
+            );
             this.formCashier.reset();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
           } else {
-            this._toastrService.info(this._translateService.instant("cashierNotFound", "Cashier not found"));
+            this._toastrService.info(
+              this._translateService.instant(
+                'cashierNotFound',
+                'Cashier not found'
+              )
+            );
           }
         });
       } else {
-        this._toastrService.info(this._translateService.instant("cashierIdMissing", "Missing ID"));
+        this._toastrService.info(
+          this._translateService.instant('cashierIdMissing', 'Missing ID')
+        );
       }
-    } catch(error) {
-        this._toastrService.error(this._translateService.instant("serviceError", "Error service"));
+    } catch (error) {
+      this._toastrService.error(
+        this._translateService.instant('serviceError', 'Error service')
+      );
     }
   }
 
   onSelectedChange() {
     console.log(this.selectedValue)  
+  }
+}
+  resetForm() {
+    this.noDisponible = true;
+    this.formCashier.reset();
+  }
+
+  changeImage() {
+    const inputElement: HTMLInputElement = document.createElement('input');
+    inputElement.type = 'file';
+    inputElement.accept = 'image/*';
+    inputElement.addEventListener('change', (event: any) => {
+      const selectedFile = event.target.files[0];
+      console.log('Nueva imagen seleccionada:', selectedFile);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const fileContent = e.target.result; // Aquí tienes acceso al contenido del archivo seleccionado
+        // Puedes utilizar el contenido del archivo como necesites en tu aplicación
+        console.log('Contenido del archivo:', fileContent);
+        this.atmPhoto = fileContent;
+        this.notFoundPhoto = fileContent;
+      };
+      reader.readAsDataURL(selectedFile);
+    });
+    inputElement.click();
   }
 }

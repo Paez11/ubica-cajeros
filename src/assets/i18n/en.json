@@ -96,6 +96,7 @@
   "deleteCashier": "Cashier removed successfully",
   "cashierNotFound": "Cashier not found",
   "cashierIdMissing": "ID missing",
+  "reset":"Reset",
   "serviceError": "Service error",
   "cashierCreated": "Cashier created succesfully",
   "cashierNotCreated": "Could not insert cashier"
