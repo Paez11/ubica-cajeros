@@ -43,7 +43,7 @@ export class CashierService {
   }
 
   remove(id:number):Observable<ICashier>{
-    return this.http.delete<ICashier>(this.url+'/'+id);
+    return this.http.delete<ICashier>(this.url+environment.api.endpoint.deleteCashierById+'/'+id);
   }
 
   getCashiersByRadius(client,lat,lng,distance):Observable<any>{

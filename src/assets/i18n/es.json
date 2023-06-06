@@ -92,5 +92,8 @@
   "locality": "Localidad",
   "latitude": "Latitud",
   "longitude": "Longitud",
-  "balance": "Balance"
+  "balance": "Balance",
+  "deleteCashier": "Cajero eliminado satisfactoriamente",
+  "cashierNotFound": "Cajero no encontrado",
+  "cashierIdMissing": "ID no introducida"
 }

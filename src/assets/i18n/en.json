@@ -92,5 +92,8 @@
   "locality": "Locality",
   "latitude": "Latitude",
   "longitude": "Longitude",
-  "balance": "Balance"
+  "balance": "Balance",
+  "deleteCashier": "Cashier removed successfully",
+  "cashierNotFound": "Cashier not found",
+  "cashierIdMissing": "ID missing"
 }
