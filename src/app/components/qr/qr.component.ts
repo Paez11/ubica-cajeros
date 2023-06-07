@@ -60,7 +60,7 @@ export class QrComponent implements OnInit {
       });
 
     const timeout = setTimeout(() => {
-      this.router.navigate(['/main']);
+      this.router.navigate(['/main/map']);
     }, this.timeLeft);
     setInterval(() => {
       this.timeLeft = this.timeLeft - 1000; // reduce the time left by 1 second

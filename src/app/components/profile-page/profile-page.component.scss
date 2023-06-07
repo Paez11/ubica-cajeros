@@ -72,16 +72,21 @@ input {
     background: none;
   }
 
+  .bi{
+    width: 30%;
+  }
+
+  input {
+    width: 100%;
+  }
+
   .card {
-    background-color: #005540;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .card-body {
-    background-color: white;
-    width: 90%;
-    flex: 0.9;
+    width: 100%;
   }
 }
