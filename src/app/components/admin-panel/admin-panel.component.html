@@ -122,30 +122,28 @@
         "
       >
         <div class="button">
-          <button
-            [disabled]="updateBtn"
-            class="btn"
-            (click)="createOrUpdateCashier()"
-          >
+          <button [disabled]="!this.formCashier.valid || this.updateBtn" 
+                  class="btn" (click)="createOrUpdateCashier()">
             {{ "update" | translate }}
           </button>
         </div>
         <div class="button">
-          <button [disabled]="deleteBtn" class="btn" (click)="deleteCashier()">
+          <button [disabled]="!this.formCashier.valid || this.deleteBtn"
+                  class="btn" (click)="deleteCashier()">
             {{ "delete" | translate }}
           </button>
         </div>
         <div class="button">
-          <button
-            [disabled]="newBtn"
-            class="btn"
-            (click)="createOrUpdateCashier()"
-          >
+          <button [disabled]="!this.formCashier.valid && 
+                  (this.formCashier.get('id').value !== null || this.formCashier.get('id').value !== '')
+                  || this.chooseIdFlag"
+                   
+                  class="btn" (click)="createOrUpdateCashier()">
             {{ "new" | translate }}
           </button>
         </div>
         <div class="button">
-          <button [disabled]="resetBtn" class="btn" (click)="resetForm()">
+          <button [disabled]="!this.formCashier.valid" class="btn" (click)="resetForm()">
             {{ "reset" | translate }}
           </button>
         </div>
