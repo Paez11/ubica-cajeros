@@ -193,7 +193,8 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
         this._toastrService.info(this._translateService.instant("emptyFields", "Empty fields"));
       }
     } catch (error) {
-      this._toastrService.error(this._translateService.instant('serviceError', 'Error service')
+      this._toastrService.error(
+        this._translateService.instant('serviceError', 'Error service')
       );
     }
   }
@@ -253,7 +254,6 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     });
     inputElement.click();
   }
-
   setDisabledBtn(status: boolean) {
     this.deleteBtn = status;
     this.updateBtn = status;

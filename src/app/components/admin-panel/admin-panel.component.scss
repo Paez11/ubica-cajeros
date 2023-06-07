@@ -129,7 +129,7 @@ img {
   }
 
   .btn {
-    width: 100%;
+    width: 80%;
   }
 
   .row {
@@ -159,11 +159,12 @@ img {
   }
 
   img {
+    padding-top: 5px;
     width: 30%;
   }
 
   select {
-    width: 37%;
+    width: 41%;
   }
 
   .col {
@@ -207,10 +208,22 @@ img {
 }
 
 @media (min-width: 767px) and (max-width: 900px) {
+  .container{
+    font-size: 14px;
+  }
+
   .row {
     &.row2 {
       width: 80%;
     }
+    &.align {
+      justify-content: space-between;
+      margin-right: 2px;
+    }
+  }
+
+  select {
+    width: 41%;
   }
 
   img {
