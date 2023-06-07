@@ -99,5 +99,6 @@
   "reset":"Restaurar",
   "serviceError": "Error en el servicio",
   "cashierCreated": "Cajero insertado satisfactoriamente",
-  "cashierNotCreated": "No se pudo insertar el cajero"
+  "cashierNotCreated": "No se pudo insertar el cajero",
+  "emptyFields": "Campos vacíos"
 }

@@ -98,22 +98,22 @@
           padding-top: 1%;
         ">
         <div class="button">
-          <button class="btn" (click)="createOrUpdateCashier()">
+          <button [disabled]="updateBtn" class="btn" (click)="createOrUpdateCashier()">
             {{ "update" | translate }}
           </button>
         </div>
         <div class="button">
-          <button class="btn" (click)="deleteCashier()">
+          <button [disabled]="deleteBtn" class="btn" (click)="deleteCashier()">
             {{ "delete" | translate }}
           </button>
         </div>
         <div class="button">
-          <button class="btn" (click)="createOrUpdateCashier()">
+          <button [disabled]="newBtn" class="btn" (click)="createOrUpdateCashier()">
             {{ "new" | translate }}
           </button>
         </div>
         <div class="button">
-          <button class="btn" (click)="resetForm()">
+          <button [disabled]="resetBtn" class="btn" (click)="resetForm()">
             {{ "reset" | translate }}
           </button>
         </div>

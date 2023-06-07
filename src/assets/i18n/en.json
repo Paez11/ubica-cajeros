@@ -99,5 +99,6 @@
   "reset":"Reset",
   "serviceError": "Service error",
   "cashierCreated": "Cashier created succesfully",
-  "cashierNotCreated": "Could not insert cashier"
+  "cashierNotCreated": "Could not insert cashier",
+  "emptyFields": "Fields empty"
 }
