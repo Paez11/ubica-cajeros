@@ -19,7 +19,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   cashier: ICashier;
   user: IClient;
   atmPhoto: SafeResourceUrl;
-  notFoundPhoto: SafeResourceUrl = './assets/icons/image-not-found.png';
+  notFoundPhoto: SafeResourceUrl;
   cashiersSubs: Subscription;
   selectedValue: string;
   displayedColumns: string[];
@@ -74,6 +74,8 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit(): void {
+    this.notFoundPhoto = './assets/icons/image-not-found.png';
+    this.noDisponible = true;
     document.getElementById('idInput').setAttribute('disabled', 'true');
     this.user = this._clientService.user;
     this.refreshCashiersTable();
@@ -115,7 +117,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       lattitude: elem.lattitude,
       longitude: elem.longitude,
       balance: elem.balance,
-      available: elem.available
+      available: elem.available,
     });
 
     this.cashier = {
@@ -145,14 +147,33 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
       photo: this.formCashier.value.photo,
-      available: this.formCashier.value.available
-    }
+      available: this.formCashier.value.available,
+    };
 
-    if(this.formCashier.value.id === "") {
+    if (this.formCashier.value.id === '') {
       this.cashier.id = null;
     }
 
     try {
+      this._cashierService
+        .createOrUpdate(this.cashier)
+        .subscribe((response) => {
+          if (response.response === 1) {
+            this._toastrService.info(
+              this._translateService.instant('cashierCreated', 'Cashier insert')
+            );
+            this.formCashier.reset();
+            this.cashiersSubs.unsubscribe();
+            this.refreshCashiersTable();
+          } else {
+            this._toastrService.info(
+              this._translateService.instant(
+                'cashierNotCreated',
+                'cashier not created'
+              )
+            );
+          }
+        });
       if(this.formCashier.valid) {
         this._cashierService.createOrUpdate(this.cashier).subscribe( (response) => {
           if(response.response === 1) {
@@ -179,13 +200,20 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       if (this.cashier.id) {
         this._cashierService.remove(this.cashier.id).subscribe((response) => {
           if (response) {
-            this._toastrService.info(this._translateService.instant('deleteCashier', 'Delete cashier'));
+            this._toastrService.info(
+              this._translateService.instant('deleteCashier', 'Delete cashier')
+            );
             this.formCashier.reset();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
             this.setDisabledBtn(true);
           } else {
-            this._toastrService.info(this._translateService.instant('cashierNotFound', 'Cashier not found'));
+            this._toastrService.info(
+              this._translateService.instant(
+                'cashierNotFound',
+                'Cashier not found'
+              )
+            );
           }
         });
       } else {
@@ -230,7 +258,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     });
     inputElement.click();
   }
-
+}
   setDisabledBtn(status: boolean) {
     this.deleteBtn = status;
     this.updateBtn = status;
