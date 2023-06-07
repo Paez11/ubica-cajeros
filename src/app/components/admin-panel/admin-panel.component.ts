@@ -28,6 +28,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   updateBtn: boolean = true;
   newBtn: boolean = true;
   resetBtn: boolean = true;
+  chooseIdFlag: boolean = false;
 
   clickCashier$ = fromEvent<PointerEvent>(document, 'click');
 
@@ -41,36 +42,40 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     private _translateService: TranslateService
   ) {
     this.formCashier = this.formBuilder.group({
-      id: ['', [Validators.required]],
+      id: [''],
       address: ['', [Validators.required]],
       cp: ['', [Validators.required]],
       locality: ['', [Validators.required]],
       lattitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
       balance: ['', [Validators.required]],
-      photo: ['', [Validators.required]],
+      photo: [''],
       available: ['', [Validators.required]],
     });
   }
 
   ngAfterContentInit(): void {
-    let filledFields: any;
-    this.formCashier.valueChanges.subscribe( () => { //Escucha cambios en los campos
+    if (this.noDisponible && !this.chooseIdFlag){
+        let filledFields: any;
 
-      console.log(this.formCashier.value.photo)
+      this.formCashier.valueChanges.subscribe(() => { //Escucha cambios en los campos
+        filledFields = Object.keys(this.formCashier.controls) //Matriz con claves de todos los campos
+          .filter((key) => key !== 'id') //filtra el campo a excluir
+          .every((key) => this.formCashier.get(key).valid && //verifica si todos los campos restantes son válidos y tienen un valor
+            (this.formCashier.get(key).value !== '' || this.formCashier.get(key).value !== null));
 
-      filledFields = Object.keys(this.formCashier.controls) //Matriz con claves de todos los campos
-      .filter( (key) => key !== 'id') //filtra el campo a excluir
-      .every( (key) => this.formCashier.get(key).valid && (this.formCashier.get(key).value !== '' || this.formCashier.get(key).value !== null) ); //verifica si todos los campos restantes son válidos y tienen un valor
+        if (filledFields) {
+          this.newBtn = false;
+          console.log('Todos los campos, excepto id, están llenos');
+        } else {
+          console.log(this.formCashier.valid, this.formCashier.value)
+          this.resetBtn = false;
+          console.log('Al menos uno de los campos, excepto id, no está lleno');
+        }
+      });
+    }
 
-      if (filledFields) {
-        this.newBtn = false;
-        console.log('Todos los campos, excepto id, están llenos');
-      } else {
-        this.resetBtn = false;
-        console.log('Al menos uno de los campos, excepto id, no está lleno');
-      }
-    });
+    console.log(this.formCashier.valid, this.formCashier.value)
   }
 
   ngOnInit(): void {
@@ -97,10 +102,12 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   }
 
   chooseCashier(elem: any) {
+    this.chooseIdFlag = true;
     this.setDisabledBtn(false);
-    if(elem.id != null || elem.id != '') {
-      this.newBtn = true;
-    }
+
+    // if (elem.id != null || elem.id != '') {
+    //   this.newBtn = true;
+    // }
 
     if (elem.photo) {
       this.noDisponible = false;
@@ -167,28 +174,24 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
             this.refreshCashiersTable();
           } else {
             this._toastrService.info(
-              this._translateService.instant(
-                'cashierNotCreated',
-                'cashier not created'
-              )
-            );
+              this._translateService.instant('cashierNotCreated', 'cashier not created'));
           }
         });
-      if(this.formCashier.valid) {
-        this._cashierService.createOrUpdate(this.cashier).subscribe( (response) => {
-          if(response.response === 1) {
+      if (this.formCashier.valid) {
+        this._cashierService.createOrUpdate(this.cashier).subscribe((response) => {
+          if (response.response === 1) {
             this._toastrService.info(this._translateService.instant("cashierCreated", "Cashier insert"));
             this.formCashier.reset();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
-            this.setDisabledBtn(true); 
+            this.setDisabledBtn(true);
           } else {
             this._toastrService.info(this._translateService.instant("cashierNotCreated", "cashier not created"));
           }
         });
       } else {
         this._toastrService.info(this._translateService.instant("emptyFields", "Empty fields"));
-      } 
+      }
     } catch (error) {
       this._toastrService.error(this._translateService.instant('serviceError', 'Error service')
       );
@@ -208,12 +211,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
             this.refreshCashiersTable();
             this.setDisabledBtn(true);
           } else {
-            this._toastrService.info(
-              this._translateService.instant(
-                'cashierNotFound',
-                'Cashier not found'
-              )
-            );
+            this._toastrService.info(this._translateService.instant('cashierNotFound', 'Cashier not found'));
           }
         });
       } else {
@@ -229,6 +227,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   }
 
   resetForm() {
+    this.chooseIdFlag = false;
     this.noDisponible = true;
     this.formCashier.reset();
     this.setDisabledBtn(true);
@@ -241,10 +240,6 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     inputElement.accept = 'image/*';
     inputElement.addEventListener('change', (event: any) => {
       const selectedFile = event.target.files[0];
-      const file: File = event.target.files[0];
-      const filePath: string = file.name;
-      console.log(filePath)
-      
       //console.log('Nueva imagen seleccionada:', selectedFile);
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -258,7 +253,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     });
     inputElement.click();
   }
-}
+
   setDisabledBtn(status: boolean) {
     this.deleteBtn = status;
     this.updateBtn = status;
