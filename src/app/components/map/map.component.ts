@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -11,6 +18,8 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { ModalTService } from 'src/app/services/modal-t.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -94,7 +103,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     private _mapService: MapService,
     private searchBar: SearchbarComponent,
     public _modalS: ModalTService,
-    private _translateService: TranslateService
+    private _translateService: TranslateService,
+    private router: Router,
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {
     
 
@@ -145,7 +157,13 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.setClient();
       })
       .once('locationerror', (e) => {
+        this._ready = true;
         this.onLocationError(e);
+        this.toastr.error(
+          this.translate.instant('locationErrorInfo'),
+          this.translate.instant('locationError')
+        );
+        this.map.setView([40.41831, -3.70275], 13);
       });
 
     this.map.on('click', (e) => {
@@ -200,7 +218,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       icon: this.userIcon,
     })
       .addTo(this.map)
-      .bindPopup('<p>'+ this._translateService.instant("clientLocation","") +'</p>');
+      .bindPopup(
+        '<p>' + this._translateService.instant('clientLocation', '') + '</p>'
+      );
     this.map.setView(e.latlng, 18);
   }
 
@@ -292,7 +312,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           .getCashiersByCP(street)
           .subscribe((cashier) => {
             cashier.forEach((mark) => {
-              if ((mark.lattitude && mark.longitude) != undefined) {                
+              if ((mark.lattitude && mark.longitude) != undefined) {
                 this.markers.push({
                   id: mark.id,
                   lat: mark.lattitude,
@@ -451,7 +471,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   markOnClick(id: number) {
-    this._modalS.modal.open(this.cashiers.find( val => val.id === id));
+    this._modalS.modal.open(this.cashiers.find((val) => val.id === id));
     //this.isModalOpen=true;
   }
 

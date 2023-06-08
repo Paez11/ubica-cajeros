@@ -1,4 +1,7 @@
 <div class="background">
+  <div class="row logo">
+    <img class="logo" src="../../../assets/img/logo-grande-verde.png" alt="" />
+  </div>
   <div>
     <div class="lang">
       <button class="btn btnLang" (click)="showLangLogin()">
@@ -28,7 +31,7 @@
     <form class="form" [formGroup]="form">
       <div class="window">
         <div>
-          <div class="mb-3">
+          <div class="mb-3" style="padding-top: 5%">
             <label class="form-label">{{ "user" | translate }}</label>
             <input
               [class.redInput]="

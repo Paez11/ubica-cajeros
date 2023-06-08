@@ -18,18 +18,47 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'restablishPassword', component: RestablishPasswordComponent },
-  { path: 'main', component:NavbarComponent, children: [
-    { path: 'map', canActivate: [LoginGuard], component: MapComponent },
-    { path: 'profile', component: ProfilePageComponent },
-    { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
-    { path: 'accounts', canActivate: [LoginGuard], component: BlankPageComponent },
-    { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },
-    { path: 'transfers', canActivate: [LoginGuard], component: BlankPageComponent },
-    { path: 'deposits', canActivate: [LoginGuard], component: BlankPageComponent },
-    { path: 'admin', canActivate: [LoginGuard], component: AdminPanelComponent },
-  ]},
+  {
+    path: 'main',
+    component: NavbarComponent,
+    children: [
+      { path: 'map', canActivate: [LoginGuard], component: MapComponent },
+      { path: 'profile', component: ProfilePageComponent },
+      {
+        path: 'QR',
+        canActivate: [LoginGuard, MapGuard],
+        component: QrComponent,
+      },
+      {
+        path: 'accounts',
+        canActivate: [LoginGuard],
+        component: BlankPageComponent,
+      },
+      {
+        path: 'cards',
+        canActivate: [LoginGuard],
+        component: BlankPageComponent,
+      },
+      {
+        path: 'transfers',
+        canActivate: [LoginGuard],
+        component: BlankPageComponent,
+      },
+      {
+        path: 'deposits',
+        canActivate: [LoginGuard],
+        component: BlankPageComponent,
+      },
+      {
+        path: 'admin',
+        canActivate: [LoginGuard],
+        component: AdminPanelComponent,
+      },
+    ],
+  },
+  { path: 'error404', component: Error404Component },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', component: Error404Component }
+  { path: '**', component: Error404Component },
 ];
 
 @NgModule({
