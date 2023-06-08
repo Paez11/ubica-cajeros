@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     private _toastrService: ToastrService,
     private _translate: TranslateService,
     private _mapService: MapService
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this._mapService.cashiersList$.subscribe((data) => {
@@ -47,11 +47,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if (this._clientService.user.admin) {
       this.showAdmin = true;
-      let map: L.Map;
-      map.setView([40.41831, -3.70275], 13);
-      if (!map) {
-        this._toastrService.info(this._translate.instant('adminMode'));
-      }
+      this._toastrService.info(this._translate.instant('adminMode'));
     }
   }
 
