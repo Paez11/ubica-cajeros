@@ -45,7 +45,7 @@ export class ModalTransactionComponent implements AfterViewInit {
     this._clientS.getUserObservable().subscribe((client) => {
       this.client = client;
     });
-    this.cashier = null;
+    //this.cashier = null;
   }
 
   ngAfterViewInit(): void {
@@ -56,6 +56,7 @@ export class ModalTransactionComponent implements AfterViewInit {
     this._modal.hide();
     this.show = false;
     this.isValid = true;
+    this._modal = null;
   }
   open(cashier: ICashier) {
     this.cashier = cashier;
