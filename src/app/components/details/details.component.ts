@@ -70,7 +70,7 @@ export class DetailsComponent implements OnInit {
   }
 
   openTransaction(cashier: ICashier) {
-    this.router.navigate(['/main/transaction'], { queryParams: cashier });
+    this.router.navigate(['/main/transaction', cashier]);
   }
 
   ngOnDestroy() {

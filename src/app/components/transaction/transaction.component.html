@@ -1,1 +1,28 @@
-<p>transaction works!</p>
+<div>
+    <div>
+        <h1>{{"operation" | translate}}</h1>
+        <button type="button" routerLink="/main/map"></button>
+    </div>
+    <div>
+        <ng-template [ngIf]="cashier != null" [ngIfElse]="notImage">
+            <img *ngIf="cashier.photo != null; else notPhoto" [src]="decodeImg(cashier.photo)" alt="Image not found"
+                    class="image">
+            <ng-template #notPhoto>
+                <img src="../../../assets/icons/image-not-found.png" class="card-img-top image" alt="Image not found" />    
+            </ng-template>
+        </ng-template>
+        <ng-template #notImage>
+            <img src="../../../assets/icons/image-not-found.png" class="card-img-top image" alt="Image not found" />
+        </ng-template>
+        <hr>
+        <div class="input-group">
+            <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" regexInput="^[0-9]*\.[0-9]{2}$ or ^[0-9]*\.[0-9][0-9]$" [(ngModel)]="amount" required>
+        </div>
+        <p>Min. 5.00 - Max. 3000.00</p>
+        <p *ngIf="!isValid" style="color: red;">{{"noAmount" | translate}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doTransaction(true)">{{'deposit' | translate}}</button>
+        <button type="button" class="btn btn-primary" (click)="doTransaction(false)">{{'draw' | translate}}</button>
+    </div>
+</div>

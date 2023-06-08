@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import { ICashier } from 'src/app/model/ICashier';
 import { IClient } from 'src/app/model/IClient';
@@ -15,9 +8,7 @@ import { ClientService } from '../../services/client.service';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
-import { ModalTService } from 'src/app/services/modal-t.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ModalTransactionComponent } from '../modal-transaction/modal-transaction.component';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -28,7 +19,6 @@ L.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  // @ViewChild('tdetail') modal: ModalTransactionComponent;
 
   client: IClient = {
     id: 1,
@@ -87,7 +77,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     private _clientS: ClientService,
     private _mapService: MapService,
     private searchBar: SearchbarComponent,
-    public _modalS: ModalTService,
     private _translateService: TranslateService,
     private router: Router,
     private toastr: ToastrService,
@@ -100,6 +89,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   ngAfterViewInit(): void {
     this.slideSubscription = this._slideService.circleRadius.subscribe((e) => {
       this.radius = e.radius;
@@ -447,12 +437,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   markOnClick(id: number) {
     this.selectedCashier = (this.cashiers.find( val => val.id === id));
     this.router.navigate(['/main/transaction'], { queryParams: this.selectedCashier });
-    console.log(this.selectedCashier)
   }
 
   markOnClose() {
-    //document.getElementById('myModal').style.display = 'none';
-    //this.isModalOpen=false;
+    
   }
 
   ngOnDestroy() {
