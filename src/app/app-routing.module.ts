@@ -29,8 +29,9 @@ const routes: Routes = [
     { path: 'admin', canActivate: [LoginGuard], component: AdminPanelComponent },
     { path: 'transaction', canActivate: [LoginGuard], component: TransactionComponent },
   ]},
+  { path: 'error404', component: Error404Component },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', component: Error404Component }
+  { path: '**', component: Error404Component },
 ];
 
 @NgModule({

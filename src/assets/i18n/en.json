@@ -95,9 +95,11 @@
   "deleteCashier": "Cashier removed successfully",
   "cashierNotFound": "Cashier not found",
   "cashierIdMissing": "ID missing",
-  "reset":"Reset",
+  "reset": "Reset",
   "serviceError": "Service error",
   "cashierCreated": "Cashier created succesfully",
   "cashierNotCreated": "Could not insert cashier",
-  "emptyFields": "Fields empty"
+  "emptyFields": "Fields empty",
+  "locationError": "Location error",
+  "locationErrorInfo": "Can't find your location. Look at your internet conection and try to login again"
 }

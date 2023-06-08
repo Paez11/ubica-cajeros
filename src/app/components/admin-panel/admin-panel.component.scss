@@ -158,11 +158,6 @@ img {
     justify-content: center;
   }
 
-  img {
-    padding-top: 5px;
-    width: 30%;
-  }
-
   select {
     width: 41%;
   }
@@ -182,6 +177,10 @@ img {
       margin-bottom: 16%;
     }
   }
+
+  img{
+    padding-top: 5px;
+  }
 }
 
 @media (min-width: 576px) {
@@ -196,9 +195,6 @@ img {
 }
 
 @media (min-width: 650px) and (max-width: 767px) {
-  img {
-    width: 25%;
-  }
 
   .row {
     &.row1 {
@@ -224,10 +220,6 @@ img {
 
   select {
     width: 41%;
-  }
-
-  img {
-    width: 40%;
   }
 
   .button {

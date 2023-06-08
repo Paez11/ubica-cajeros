@@ -95,9 +95,11 @@
   "deleteCashier": "Cajero eliminado satisfactoriamente",
   "cashierNotFound": "Cajero no encontrado",
   "cashierIdMissing": "ID no introducida",
-  "reset":"Restaurar",
+  "reset": "Restaurar",
   "serviceError": "Error en el servicio",
   "cashierCreated": "Cajero insertado satisfactoriamente",
   "cashierNotCreated": "No se pudo insertar el cajero",
-  "emptyFields": "Campos vacíos"
+  "emptyFields": "Campos vacíos",
+  "locationError": "Error de localización",
+  "locationErrorInfo": "No es posible encontrar su localización. Revise su conexión a internet y vuelva a iniciar sesión"
 }
