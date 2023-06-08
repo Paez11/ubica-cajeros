@@ -11,6 +11,7 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IATMParams } from 'src/app/model/IATMParams';
 
 L.Icon.Default.imagePath = 'assets/';
 @Component({
@@ -435,12 +436,19 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   markOnClick(id: number) {
-    this.selectedCashier = (this.cashiers.find( val => val.id === id));
-    this.router.navigate(['/main/transaction'], { queryParams: this.selectedCashier });
+    let params: IATMParams;
+    this.cashiers.find( (val) => {
+      if(val.id === id) {
+        params = {
+          id: val.id,
+          img: val.photo
+        }
+      }
+    });
+    this.router.navigate(['/main/transaction', params]);
   }
 
   markOnClose() {
-    
   }
 
   ngOnDestroy() {

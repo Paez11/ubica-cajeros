@@ -1,8 +1,10 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
-import { ICashier } from 'src/app/model/ICashier';
+import { IATMParams } from 'src/app/model/IATMParams';
 import { IClient } from 'src/app/model/IClient';
 import { CashierService } from 'src/app/services/cashier.service';
 import { ClientService } from 'src/app/services/client.service';
@@ -15,10 +17,9 @@ import { TransactionService } from 'src/app/services/transaction.service';
 })
 export class TransactionComponent implements OnInit {
   
-  @Output() amount: number;
-  
+  amount: number;
   isValid: boolean = true;
-  cashier: ICashier;
+  cashier: IATMParams;
   transaction: DTOTransaction;
   client: IClient;
 
@@ -26,8 +27,9 @@ export class TransactionComponent implements OnInit {
               private router: Router,
               private _cashierService: CashierService,
               private _transactionService: TransactionService,
-              private _clientService: ClientService
-              ){
+              private _clientService: ClientService,              
+              private toastr: ToastrService,
+              private _translateService: TranslateService ){
   }
 
   ngOnInit(): void {
@@ -36,10 +38,8 @@ export class TransactionComponent implements OnInit {
     });
 
     this.activatedRouter.params.subscribe( (params) => {
-      this.cashier = params as ICashier;
-      
+      this.cashier = params as IATMParams;
     });
-    console.log(this.cashier); 
   }
 
   doTransaction(type: boolean) {
@@ -54,6 +54,15 @@ export class TransactionComponent implements OnInit {
         type: type,
       };
       this._transactionService.setTransaction(this.transaction);
+      const transactionSub = this._transactionService.getTransaction().subscribe( (response) => {
+        if(response !== null) {
+          this.toastr.info(this._translateService.instant('successfulTransaction','Transaction Ok'))
+        }
+        else {
+          this.toastr.error(this._translateService.instant('notTransaction','Transaction not Ok'))
+        }
+      })
+      transactionSub.unsubscribe();
       this.router.navigate(['/main/QR']);
     }
   }

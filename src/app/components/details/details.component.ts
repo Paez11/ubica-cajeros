@@ -7,6 +7,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { IATMParams } from 'src/app/model/IATMParams';
 
 @Component({
   selector: 'app-details',
@@ -70,7 +71,11 @@ export class DetailsComponent implements OnInit {
   }
 
   openTransaction(cashier: ICashier) {
-    this.router.navigate(['/main/transaction', cashier]);
+    const params: IATMParams = {
+      id: cashier.id,
+      img: cashier.photo
+    }
+    this.router.navigate(['/main/transaction', params]);
   }
 
   ngOnDestroy() {

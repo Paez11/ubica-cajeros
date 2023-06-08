@@ -18,9 +18,8 @@ export class TransactionService {
     this.transactionSubject = new BehaviorSubject<DTOTransaction>(this.transaction);
   }
 
-  createTransaction(client, cashier, type, amount):Observable<any> {
+  createTransaction(client, cashier, type, amount) :Observable<DTOTransaction> {
     if(!client || !cashier || type==undefined || !amount || amount<0) {
-      console.log(client,cashier,type,amount)
       throw new Error("Data error.");
     }
 
@@ -32,7 +31,7 @@ export class TransactionService {
     }
 
     const endpoint = environment.api.url+environment.api.endpoint.transactions;
-    return this.http.post(endpoint, data, {
+    return this.http.post<DTOTransaction>(endpoint, data, {
         headers: { 'Content-Type': 'application/json' }
     });
   }
