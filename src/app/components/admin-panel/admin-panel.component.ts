@@ -56,26 +56,22 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     if (this.noDisponible && !this.chooseIdFlag){
-        let filledFields: any;
-
+      let filledFields: any;
       this.formCashier.valueChanges.subscribe(() => { //Escucha cambios en los campos
         filledFields = Object.keys(this.formCashier.controls) //Matriz con claves de todos los campos
           .filter((key) => key !== 'id') //filtra el campo a excluir
           .every((key) => this.formCashier.get(key).valid && //verifica si todos los campos restantes son válidos y tienen un valor
             (this.formCashier.get(key).value !== '' || this.formCashier.get(key).value !== null));
 
-        if (filledFields) {
+        if (filledFields) { //Todos los campos, excepto id, están llenos
+          console.log(this.formCashier.valid, this.formCashier.value)
           this.newBtn = false;
-          console.log('Todos los campos, excepto id, están llenos');
-        } else {
+        } else { //Al menos uno de los campos, excepto id, no está lleno
           console.log(this.formCashier.valid, this.formCashier.value)
           this.resetBtn = false;
-          console.log('Al menos uno de los campos, excepto id, no está lleno');
         }
       });
     }
-
-    console.log(this.formCashier.valid, this.formCashier.value)
   }
 
   ngOnInit(): void {
@@ -104,10 +100,6 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   chooseCashier(elem: any) {
     this.chooseIdFlag = true;
     this.setDisabledBtn(false);
-
-    // if (elem.id != null || elem.id != '') {
-    //   this.newBtn = true;
-    // }
 
     if (elem.photo) {
       this.noDisponible = false;
@@ -153,7 +145,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       lattitude: this.formCashier.value.lattitude,
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
-      photo: this.formCashier.value.photo,
+      photo: (this.atmPhoto as string).substring(23),
       available: this.formCashier.value.available,
     };
 
@@ -162,21 +154,20 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     }
 
     try {
-      this._cashierService
-        .createOrUpdate(this.cashier)
-        .subscribe((response) => {
-          if (response.response === 1) {
-            this._toastrService.info(
-              this._translateService.instant('cashierCreated', 'Cashier insert')
-            );
-            this.formCashier.reset();
-            this.cashiersSubs.unsubscribe();
-            this.refreshCashiersTable();
-          } else {
-            this._toastrService.info(
-              this._translateService.instant('cashierNotCreated', 'cashier not created'));
-          }
-        });
+      // this._cashierService
+      //   .createOrUpdate(this.cashier)
+      //   .subscribe((response) => {
+      //     if (response.response === 1) {
+      //       this._toastrService.info(
+      //         this._translateService.instant('cashierCreated', 'Cashier insert')
+      //       );
+      //       this.formCashier.reset();
+      //       this.cashiersSubs.unsubscribe();
+      //       this.refreshCashiersTable();
+      //     } else {
+      //       this._toastrService.info(this._translateService.instant('cashierNotCreated', 'cashier not created'));
+      //     }
+      //   });
       if (this.formCashier.valid) {
         this._cashierService.createOrUpdate(this.cashier).subscribe((response) => {
           if (response.response === 1) {
@@ -241,12 +232,9 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     inputElement.accept = 'image/*';
     inputElement.addEventListener('change', (event: any) => {
       const selectedFile = event.target.files[0];
-      //console.log('Nueva imagen seleccionada:', selectedFile);
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const fileContent = e.target.result; // Aquí tienes acceso al contenido del archivo seleccionado
-        // Puedes utilizar el contenido del archivo como necesites en tu aplicación
-        //console.log('Contenido del archivo:', fileContent);
         this.atmPhoto = fileContent;
         this.notFoundPhoto = fileContent;
       };
