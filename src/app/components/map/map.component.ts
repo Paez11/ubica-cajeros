@@ -28,7 +28,7 @@ L.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  @ViewChild('tdetail') modal: ModalTransactionComponent;
+  // @ViewChild('tdetail') modal: ModalTransactionComponent;
 
   client: IClient = {
     id: 1,
@@ -40,22 +40,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   };
 
   cashiers: ICashier[] = [];
-
-  /*
-  mockCashiers:L.Marker = [
-    {lat:37.687149, lng:-4.733906},
-    {lat:37.690776, lng:-4.736738},
-    {lat:37.69032, lng:-4.736127},
-    {lat:37.912357, lng:-4.800441},
-    {lat:37.912835, lng:-4.800317},
-    {lat:37.912585, lng:-4.799883},
-    {lat:37.911933, lng:-4.800172},
-    {lat:37.9114, lng:-4.800328},
-    {lat:37.66643, lng:-4.724818},
-    {lat:37.666714, lng:-4.723296},
-    {lat:37.667389, lng:-4.724084}
-  ];
-  */
+  selectedCashier: ICashier;
 
   //Marcas para el mapa
   map!: L.Map;
@@ -109,18 +94,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     private translate: TranslateService
   ) {
     
-
     this._clientS.getUserObservable().subscribe((client) => {
       if (client) {
-        /* this.client = {
-        this.client = client; /*{
-          id: 184,
-          account: 'ES12 1234 1234 1234 1234 1234',
-          password:
-            '9091505ae1d48b05c3288c37c3b3eb544ea8d8be46f34fed8d7a5f739c9d917b',
-          dni: '64987961N',
-          email: 'email@email.com',
-        }; */
         this.client = client;
       }
     });
@@ -133,7 +108,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.setCashiers(this.radius);
       }
     });
-    this._modalS.modal = this.modal;
   }
 
   ngOnInit(): void {
@@ -471,12 +445,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   markOnClick(id: number) {
-    this._modalS.modal.open(this.cashiers.find((val) => val.id === id));
-    //this.isModalOpen=true;
+    this.selectedCashier = (this.cashiers.find( val => val.id === id));
+    this.router.navigate(['/main/transaction'], { queryParams: this.selectedCashier });
+    console.log(this.selectedCashier)
   }
 
   markOnClose() {
-    document.getElementById('myModal').style.display = 'none';
+    //document.getElementById('myModal').style.display = 'none';
     //this.isModalOpen=false;
   }
 
