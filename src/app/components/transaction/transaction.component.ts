@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { ICashier } from 'src/app/model/ICashier';
+import { IClient } from 'src/app/model/IClient';
+import { CashierService } from 'src/app/services/cashier.service';
+import { ClientService } from 'src/app/services/client.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 @Component({
   selector: 'app-transaction',
@@ -8,17 +14,51 @@ import { ICashier } from 'src/app/model/ICashier';
   styleUrls: ['./transaction.component.scss']
 })
 export class TransactionComponent implements OnInit {
-
+  
+  @Output() amount: number;
+  
+  isValid: boolean = true;
   cashier: ICashier;
+  transaction: DTOTransaction;
+  client: IClient;
 
-  constructor(private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.route.queryParams.subscribe( (params) => {
-      this.cashier = params[''];
-    });
-    
-    console.log(this.cashier)
+  constructor(private activatedRouter: ActivatedRoute, 
+              private router: Router,
+              private _cashierService: CashierService,
+              private _transactionService: TransactionService,
+              private _clientService: ClientService
+              ){
   }
 
+  ngOnInit(): void {
+    this._clientService.getUserObservable().subscribe((client) => {
+      this.client = client;
+    });
+
+    this.activatedRouter.params.subscribe( (params) => {
+      this.cashier = params as ICashier;
+      
+    });
+    console.log(this.cashier); 
+  }
+
+  doTransaction(type: boolean) {
+    if (isNaN(this.amount) || this.amount < 5.0 || this.amount > 3000.0) {
+      this.isValid = false;
+    } else {
+      this.isValid = true;
+      this.transaction = {
+        client: this.client.id,
+        amount: this.amount,
+        cashier: this.cashier.id,
+        type: type,
+      };
+      this._transactionService.setTransaction(this.transaction);
+      this.router.navigate(['/main/QR']);
+    }
+  }
+
+  decodeImg(photo: string): SafeResourceUrl {
+    return this._cashierService.getDecodeImg(photo);
+  }
 }
