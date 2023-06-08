@@ -108,13 +108,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private translate: TranslateService
   ) {
-    this.slideSubscription = this._slideService.circleRadius.subscribe((e) => {
-      this.radius = e.radius;
-      this.updateRadius(this.radius);
-      if (e.request) {
-        this.setCashiers(this.radius);
-      }
-    });
+    
 
     this._clientS.getUserObservable().subscribe((client) => {
       if (client) {
@@ -132,6 +126,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
+    this.slideSubscription = this._slideService.circleRadius.subscribe((e) => {
+      this.radius = e.radius;
+      this.updateRadius(this.radius);
+      if (e.request) {
+        this.setCashiers(this.radius);
+      }
+    });
     this._modalS.modal = this.modal;
   }
 

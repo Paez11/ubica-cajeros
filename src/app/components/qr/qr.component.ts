@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DTOTransaction } from 'src/app/model/DTOTransaction';
 import { IClient } from 'src/app/model/IClient';
 import { TransactionService } from 'src/app/services/transaction.service';
-import {
-  DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl,
-} from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ClientService } from 'src/app/services/client.service';
