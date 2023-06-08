@@ -64,10 +64,8 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
             (this.formCashier.get(key).value !== '' || this.formCashier.get(key).value !== null));
 
         if (filledFields) { //Todos los campos, excepto id, están llenos
-          console.log(this.formCashier.valid, this.formCashier.value)
           this.newBtn = false;
         } else { //Al menos uno de los campos, excepto id, no está lleno
-          console.log(this.formCashier.valid, this.formCashier.value)
           this.resetBtn = false;
         }
       });
@@ -154,20 +152,6 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     }
 
     try {
-      // this._cashierService
-      //   .createOrUpdate(this.cashier)
-      //   .subscribe((response) => {
-      //     if (response.response === 1) {
-      //       this._toastrService.info(
-      //         this._translateService.instant('cashierCreated', 'Cashier insert')
-      //       );
-      //       this.formCashier.reset();
-      //       this.cashiersSubs.unsubscribe();
-      //       this.refreshCashiersTable();
-      //     } else {
-      //       this._toastrService.info(this._translateService.instant('cashierNotCreated', 'cashier not created'));
-      //     }
-      //   });
       if (this.formCashier.valid) {
         this._cashierService.createOrUpdate(this.cashier).subscribe((response) => {
           if (response.response === 1) {
