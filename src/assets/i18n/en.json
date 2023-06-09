@@ -1,6 +1,6 @@
 {
   "lang": "Language",
-  "cashiers": "cashiers",
+  "cashiers": "Cashiers",
   "admin": "Administrator",
   "loading": "Loading",
   "offices": "List of close offices",
@@ -103,5 +103,5 @@
   "locationError": "Location error",
   "locationErrorInfo": "Can't find your location. Look at your internet conection and try to login again",
   "successfulTransaction": "Transaction startes",
-  "notTransaction": "transaction not started"
+  "notTransaction": "Transaction not started"
 }
