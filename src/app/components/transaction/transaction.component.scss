@@ -1,16 +1,40 @@
-.main {
-    height: 100%;
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
-.transaction-card {
-    border: 1px solid #005540;
-    max-width: 400px;
-    height: 75%;    
+.body {
+    width: 550px;
+    border: 2px solid #005540;
+    border-radius: 2%;
+    padding: 20px;
 }
 
-.img {
-    max-width: 300px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    color: #005540;
+}
+
+.imgBody {
+    display: flex;
+    justify-content: center;
+
+    .cashierImg {
+        height: 300px;
+        padding: 10px;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+
+    button {
+        height: 45px;
+        width: 100px;    
+    }
 }
