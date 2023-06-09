@@ -50,7 +50,7 @@
   pointer-events: auto;
   position: absolute;
   z-index: 1000;
-  bottom: 80px;
+  bottom: 85px;
   margin-left: 10px;
   -webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
 }::after, ::before {
@@ -88,8 +88,7 @@
 .overlaySlider {
   position: absolute;
   z-index: 1000;
-  bottom: 110px;
+  bottom: 125px;
   justify-self: start;
   margin-left: 10px;
-  margin-bottom: 10px;
 }

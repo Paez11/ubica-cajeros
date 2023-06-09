@@ -2,7 +2,7 @@
     <div class="body">
         <div class="header">
             <h2>{{"operation" | translate}}</h2>
-            <button mat-raised-button color="primary" routerLink="/main/map">X</button>
+            <button routerLink="/main/map">X</button>
         </div>
         <div class="imgBody">
             <ng-template [ngIf]="cashier.img !== 'null'" [ngIfElse]="notImg">
@@ -21,8 +21,8 @@
         <p>Min. 5.00 - Max. 3000.00</p>
         <p *ngIf="!isValid" style="color: red;">{{"noAmount" | translate}}</p>
         <div class="buttons">
-            <button mat-raised-button color="primary" (click)="doTransaction(true)">{{'deposit' | translate}}</button>
-            <button mat-raised-button color="primary" (click)="doTransaction(false)">{{'draw' | translate}}</button>
+            <button class="btn" (click)="doTransaction(true)">{{'deposit' | translate}}</button>
+            <button class="btn" (click)="doTransaction(false)">{{'draw' | translate}}</button>
         </div>
     </div>
 </div>
