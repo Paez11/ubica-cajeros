@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'restablishPassword', component: RestablishPasswordComponent },
   { path: 'main', component:NavbarComponent, children: [
     { path: 'map', canActivate: [LoginGuard], component: MapComponent },
-    { path: 'profile', component: ProfilePageComponent },
+    { path: 'profile', canActivate: [LoginGuard], component: ProfilePageComponent },
     { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
     { path: 'accounts', canActivate: [LoginGuard], component: BlankPageComponent },
     { path: 'cards', canActivate: [LoginGuard], component: BlankPageComponent },

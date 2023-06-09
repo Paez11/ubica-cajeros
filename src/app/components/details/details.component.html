@@ -23,7 +23,7 @@
         {{ "cashierNotAvailable" | translate }}
       </h5>
     </ng-template>
-    <button type="button" class="bg-primary text-white border border-0 transactionBtn" *ngIf="cashier.available"
+    <button type="button" data-bs-dismiss="offcanvas" class="bg-primary text-white border border-0 transactionBtn" *ngIf="cashier.available"
       (click)="openTransaction(cashier)">
       {{ "transactions" | translate }}
     </button>

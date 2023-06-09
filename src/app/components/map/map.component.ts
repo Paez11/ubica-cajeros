@@ -124,11 +124,11 @@ export class MapComponent implements OnInit, AfterViewInit {
       .once('locationerror', (e) => {
         this._ready = true;
         this.onLocationError(e);
-        this.toastr.error(
+        /* this.toastr.error(
           this.translate.instant('locationErrorInfo'),
           this.translate.instant('locationError')
         );
-        this.map.setView([40.41831, -3.70275], 13);
+        this.router.navigate(['/login']) */
       });
 
     this.map.on('click', (e) => {
