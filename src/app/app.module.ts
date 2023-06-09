@@ -36,6 +36,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { FloatButtonComponent } from './components/float-button/float-button.component';
 
+import {MatButtonModule} from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -87,6 +88,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     BrowserAnimationsModule,
     MatCardModule,
+    MatButtonModule,
     MatSliderModule,
     MatAutocompleteModule,
     MatInputModule,
