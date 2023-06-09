@@ -1,5 +1,14 @@
+.main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .transaction-card {
-    max-width: 600px;
+    border: 1px solid #005540;
+    max-width: 400px;
+    height: 75%;    
 }
 
 .img {

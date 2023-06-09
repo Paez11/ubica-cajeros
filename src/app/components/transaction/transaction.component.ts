@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,13 +15,14 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss']
 })
-export class TransactionComponent implements OnInit {
+export class TransactionComponent implements OnInit, AfterContentInit {
   
   amount: number;
   isValid: boolean = true;
   cashier: IATMParams;
   transaction: DTOTransaction;
   client: IClient;
+  isImgEmpty: boolean = true;
 
   constructor(private activatedRouter: ActivatedRoute, 
               private router: Router,
@@ -30,6 +31,12 @@ export class TransactionComponent implements OnInit {
               private _clientService: ClientService,              
               private toastr: ToastrService,
               private _translateService: TranslateService ){
+  }
+
+  ngAfterContentInit(): void {
+    if(this.cashier.img !== null || this.cashier.img !== '') {
+      this.isImgEmpty = false;
+    }
   }
 
   ngOnInit(): void {
@@ -41,6 +48,8 @@ export class TransactionComponent implements OnInit {
       this.cashier = params as IATMParams;
     });
   }
+
+
 
   doTransaction(type: boolean) {
     if (isNaN(this.amount) || this.amount < 5.0 || this.amount > 3000.0) {
