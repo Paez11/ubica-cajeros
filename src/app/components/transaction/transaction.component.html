@@ -19,7 +19,7 @@
                 regexInput="^[0-9]*\.[0-9]{2}$ or ^[0-9]*\.[0-9][0-9]$" [(ngModel)]="amount" required>
         </div>
         <p>Min. 5.00 - Max. 3000.00</p>
-        <p *ngIf="!isValid" style="color: red;">{{"noAmount" | translate}}</p>
+        <p *ngIf="!isValid" style="color: red;" class="amountInput">{{"noAmount" | translate}}</p>
         <div class="buttons">
             <button class="btn" (click)="doTransaction(true)">{{'deposit' | translate}}</button>
             <button class="btn" (click)="doTransaction(false)">{{'draw' | translate}}</button>

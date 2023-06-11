@@ -48,3 +48,47 @@
         color: white;  
     }
 }
+
+@media only screen and (max-width: 767px) {  
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90%;
+    }
+
+    .imgBody {
+        display: flex;
+        justify-content: center;
+    
+        .cashierImg {
+            height: 150px;
+            padding: 10px;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-evenly;
+    
+        button {
+            width: 85px;
+            font-size: 14px;
+        }
+    }
+
+    .amountInput {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .imgBody {
+        display: flex;
+        justify-content: center;
+    
+        .cashierImg {
+            height: 200px;
+        }
+    }
+}
