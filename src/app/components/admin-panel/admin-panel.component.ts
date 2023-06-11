@@ -143,7 +143,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       lattitude: this.formCashier.value.lattitude,
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
-      photo: (this.atmPhoto as string).substring(23),
+      photo: this.formCashier.value.photo, //(this.atmPhoto as string).substring(23)
       available: this.formCashier.value.available,
     };
 
