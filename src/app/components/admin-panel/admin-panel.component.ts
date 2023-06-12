@@ -143,7 +143,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       lattitude: this.formCashier.value.lattitude,
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
-      photo: this.formCashier.value.photo, //(this.atmPhoto as string).substring(23)
+      photo: (this.atmPhoto as string).substring(23),
       available: this.formCashier.value.available,
     };
 
@@ -208,6 +208,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     this.formCashier.reset();
     this.setDisabledBtn(true);
     this.notFoundPhoto = './assets/icons/image-not-found.png';
+    this.formCashier.value.photo = './assets/icons/image-not-found.png';
   }
 
   changeImage() {
