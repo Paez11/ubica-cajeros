@@ -17,8 +17,8 @@ import { TransactionComponent } from './components/transaction/transaction.compo
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'restablishPassword', component: RestablishPasswordComponent },
-  { path: 'main', component:NavbarComponent, children: [
+  { path: 'restablishPassword', canActivate: [LoginGuard], component: RestablishPasswordComponent },
+  { path: 'main', canActivate: [LoginGuard], component:NavbarComponent, children: [
     { path: 'map', canActivate: [LoginGuard], component: MapComponent },
     { path: 'profile', canActivate: [LoginGuard], component: ProfilePageComponent },
     { path: 'QR', canActivate: [LoginGuard, MapGuard], component: QrComponent },
