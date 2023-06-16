@@ -87,7 +87,7 @@
   "yes": "Si",
   "no": "No",
   "address": "Dirección",
-  "cp": "Código Postal",
+  "cp": "C.P.",
   "locality": "Localidad",
   "latitude": "Latitud",
   "longitude": "Longitud",
@@ -103,5 +103,6 @@
   "locationError": "Error de localización",
   "locationErrorInfo": "No es posible encontrar su localización. Revise su conexión a internet y vuelva a iniciar sesión",
   "successfulTransaction": "Transacción iniciada",
-  "notTransaction": "No se pudo iniciar la transacción"
+  "notTransaction": "No se pudo iniciar la transacción",
+  "cashiersData": "Datos del ATM"
 }
