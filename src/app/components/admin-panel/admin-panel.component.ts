@@ -150,11 +150,12 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     const src = photo.src;
     let auxImg: SafeResourceUrl;
 
-    if(!this.auxPhoto){
+    if(this.auxPhoto === null || this.atmPhoto === undefined){
       auxImg = null;
     } else {
       auxImg = (this.atmPhoto as string).substring(23);
     }
+    
     this.cashier = {
       id: this.formCashier.value.id,
       address: this.formCashier.value.address,
