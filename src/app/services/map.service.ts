@@ -37,13 +37,9 @@ export class MapService {
         if (data.length > 0) {
           const lat = data[0].lat;
           const lng = data[0].lon;
-          
           this.setLocation(lat, lng);
-
           this.mapComponent.setLocationBySearch(lat, lng);
-
           const polygonGeoJSON = data[0]?.geojson;
-          
           if(polygonGeoJSON){
             this.setPolygon(polygonGeoJSON);
           }
