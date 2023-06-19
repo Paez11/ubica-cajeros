@@ -77,7 +77,7 @@
   "adminPanel": "Panel de administrador",
   "profilePage": "Perfil",
   "restorePass": "Los datos no son los que se esperaban. Inserte el correo de éste usuario",
-  "sendPass": "Contraseña enviada",
+  "changedPass": "Contraseña cambiada",
   "lookEmail": "Mire su correo electrónico",
   "adminMode": "Opciones de administrador activadas",
   "edit": "Editar",

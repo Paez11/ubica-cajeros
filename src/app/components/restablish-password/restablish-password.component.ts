@@ -59,7 +59,6 @@ export class RestablishPasswordComponent implements OnInit {
     if (!this.form.value.dni || !this.form.value.email) {
       this._toastr.error(
         this._translate.instant('enterData'),
-        this._translate.instant('error')
       );
     } else if (this.form.valid) {
       this._clientService.getByDni(this.form.value.dni).subscribe(
@@ -67,7 +66,6 @@ export class RestablishPasswordComponent implements OnInit {
           if (this.form.value.email !== data.email) {
             this._toastr.error(
               this._translate.instant('restorePass'),
-              this._translate.instant('error')
             );
           } else {
             this.dtoClient.dni = data.dni;
@@ -76,16 +74,14 @@ export class RestablishPasswordComponent implements OnInit {
             this.dtoClient.message = 'Su nueva contraseña es ';
             this._clientService.getNewPassword(this.dtoClient).subscribe();
             this._toastr.success(
-              this._translate.instant('lookEmail'),
-              this._translate.instant('sendPass')
+              this._translate.instant('lookEmail')
             );
             this.router.navigate(['/']);
           }
         },
         (error: HttpErrorResponse) => {
           this._toastr.error(
-            this._translate.instant('errorServer'),
-            this._translate.instant('error')
+            this._translate.instant('errorServer')
           );
         }
       );

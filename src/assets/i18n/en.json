@@ -77,7 +77,7 @@
   "adminPanel": "Admin panel",
   "profilePage": "Profile",
   "restorePass": "Data is not correct. Put this user's email",
-  "sendPass": "Password sended",
+  "changedPass": "Password changed",
   "lookEmail": "Look at your email",
   "adminMode": "Admin mode on",
   "edit": "Edit",
