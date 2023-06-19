@@ -76,71 +76,61 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   auth() {
-    if (this.form.value.dniLogin && this.form.value.passwordLogin) {
-      this.clientSubscription$ = this._clientS
-        .getByDni(this.form.value.dniLogin)
-        .subscribe(
-          (client) => {
-            if (client) {
-              if (
-                this.form.value.dniLogin === client.dni &&
-                this.hash(this.form.value.passwordLogin) === client.password
-              ) {
-                this.isValidPassword = true;
+    this.clientSubscription$ = this._clientS
+      .getByDni(this.form.value.dniLogin)
+      .subscribe(
+        (client) => {
+          if (client) {
+            if (
+              this.form.value.dniLogin === client.dni &&
+              this.hash(this.form.value.passwordLogin) === client.password
+            ) {
+              this.isValidPassword = true;
+              this.isValidUser = true;
+              this.showSpinner = true;
+              let auxClient = {
+                id: client.id,
+                dni: client.dni,
+                account: client.account,
+                email: client.email,
+                password: client.password,
+                admin: client.admin,
+              };
+              this.client = auxClient;
+              this._clientS.setUser(this.client);
+              this._toastr.success(
+                this._translate.instant('userVerified'),
+                this._translate.instant('verificate'),
+                { timeOut: 1500 }
+              );
+              setTimeout(() => {
+                this.showSpinner = false;
+                this.router.navigate(['/main/map']);
+              }, 2000);
+              this.form.reset();
+              this.showPassWord = false;
+            } else if (this.form.value.passwordLogin != client.password) {
+              this.isValidPassword = false;
+              this.noValidPassword = this._translate.instant('validPassword');
+              if (this.form.value.dniLogin == client.dni) {
                 this.isValidUser = true;
-                this.showSpinner = true;
-                let auxClient = {
-                  id: client.id,
-                  dni: client.dni,
-                  account: client.account,
-                  email: client.email,
-                  password: client.password,
-                  admin: client.admin
-                };
-                this.client = auxClient;
-                this._clientS.setUser(this.client);
-                this._toastr.success(
-                  this._translate.instant('userVerified'),
-                  this._translate.instant('verificate'),
-                  { timeOut: 1500 }
-                );
-                setTimeout(() => {
-                  this.showSpinner = false;
-                  this.router.navigate(['/main/map']);
-                }, 2000);
-                this.form.reset();
-                this.showPassWord = false;
-              } else if (this.form.value.passwordLogin != client.password) {
-                this.isValidPassword = false;
-                this.noValidPassword = this._translate.instant('validPassword');
-                if (this.form.value.dniLogin == client.dni) {
-                  this.isValidUser = true;
-                }
-              }
-            } else {
-              this.isValidUser = false;
-              this.noValidUser = this._translate.instant('validUser');
-              if (this.form.value.passwordLogin) {
-                this.isValidPassword = false;
-                this.noValidPassword = this._translate.instant(
-                  'validNoUserPassword'
-                );
               }
             }
-          },
-          (error: HttpErrorResponse) => {
-            this._toastr.error(
-              this._translate.instant('errorServer'),
-              this._translate.instant('error')
-            );
+          } else {
+            this.isValidUser = false;
+            this.noValidUser = this._translate.instant('validUser');
+            if (this.form.value.passwordLogin) {
+              this.isValidPassword = false;
+              this.noValidPassword = this._translate.instant(
+                'validNoUserPassword'
+              );
+            }
           }
-        );
-    } else if (!this.form.value.dniLogin && !this.form.value.passwordLogin) {
-      this._toastr.error(
-        this._translate.instant('enterData'),
-        this._translate.instant('errorVerificate')
+        },
+        (error: HttpErrorResponse) => {
+          this._toastr.error(this._translate.instant('errorServer'));
+        }
       );
-    }
   }
 
   hash(string) {
