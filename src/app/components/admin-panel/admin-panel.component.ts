@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,9 @@ import { ClientService } from 'src/app/services/client.service';
   styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit, AfterContentInit {
+
+  @ViewChild('photo', { static: false }) imageRef: ElementRef;
+
   cashierList: ICashier[];
   cashier: ICashier;
   user: IClient;
@@ -29,6 +32,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   newBtn: boolean = true;
   resetBtn: boolean = true;
   chooseIdFlag: boolean = false;
+  auxPhoto: SafeResourceUrl;
 
   clickCashier$ = fromEvent<PointerEvent>(document, 'click');
 
@@ -70,14 +74,16 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
         }
       });
     }
-  }
 
-  ngOnInit(): void {
     this.notFoundPhoto = './assets/icons/image-not-found.png';
     this.noDisponible = true;
     document.getElementById('idInput').setAttribute('disabled', 'true');
     this.user = this._clientService.user;
     this.refreshCashiersTable();
+  }
+
+  ngOnInit(): void {
+    
   }
 
   refreshCashiersTable() {
@@ -99,13 +105,17 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
     this.chooseIdFlag = true;
     this.setDisabledBtn(false);
 
+    const photo: HTMLImageElement = this.imageRef.nativeElement;
+    const src = photo.src;
+
     if (elem.photo) {
       this.noDisponible = false;
+      this.atmPhoto = this._cashierService.getDecodeImg(elem.photo);
     } else {
       this.noDisponible = true;
       this.notFoundPhoto = './assets/icons/image-not-found.png';
     }
-    this.atmPhoto = this._cashierService.getDecodeImg(elem.photo);
+    
     this.formCashier.patchValue({
       id: elem.id,
       address: elem.address,
@@ -115,6 +125,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       longitude: elem.longitude,
       balance: elem.balance,
       available: elem.available,
+      //photo: this.auxPhoto
     });
 
     this.cashier = {
@@ -135,6 +146,15 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
   }
 
   createOrUpdateCashier() {
+    const photo: HTMLImageElement = this.imageRef.nativeElement;
+    const src = photo.src;
+    let auxImg: SafeResourceUrl;
+
+    if(!this.auxPhoto){
+      auxImg = null;
+    } else {
+      auxImg = (this.atmPhoto as string).substring(23);
+    }
     this.cashier = {
       id: this.formCashier.value.id,
       address: this.formCashier.value.address,
@@ -143,7 +163,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
       lattitude: this.formCashier.value.lattitude,
       longitude: this.formCashier.value.longitude,
       balance: this.formCashier.value.balance,
-      photo: (this.atmPhoto as string).substring(23),
+      photo: auxImg as string,
       available: this.formCashier.value.available,
     };
 
@@ -156,7 +176,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
         this._cashierService.createOrUpdate(this.cashier).subscribe((response) => {
           if (response.response === 1) {
             this._toastrService.info(this._translateService.instant("cashierCreated", "Cashier insert"));
-            this.formCashier.reset();
+            this.resetForm();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
             this.setDisabledBtn(true);
@@ -182,7 +202,7 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
             this._toastrService.info(
               this._translateService.instant('deleteCashier', 'Delete cashier')
             );
-            this.formCashier.reset();
+            this.resetForm();
             this.cashiersSubs.unsubscribe();
             this.refreshCashiersTable();
             this.setDisabledBtn(true);
@@ -213,20 +233,31 @@ export class AdminPanelComponent implements OnInit, AfterContentInit {
 
   changeImage() {
     const inputElement: HTMLInputElement = document.createElement('input');
+    //let fileName: File;
     inputElement.type = 'file';
     inputElement.accept = 'image/*';
     inputElement.addEventListener('change', (event: any) => {
       const selectedFile = event.target.files[0];
       const reader = new FileReader();
+      const fileName: File = event.target.files[0];
       reader.onload = (e: any) => {
         const fileContent = e.target.result; // Aquí tienes acceso al contenido del archivo seleccionado
         this.atmPhoto = fileContent;
         this.notFoundPhoto = fileContent;
+        if(fileName.name.includes('image-not-found.png')) {
+          console.log('si')
+
+          this.auxPhoto = null;
+        } else {
+          this.auxPhoto = this.atmPhoto;
+        }
+
       };
       reader.readAsDataURL(selectedFile);
     });
     inputElement.click();
   }
+
   setDisabledBtn(status: boolean) {
     this.deleteBtn = status;
     this.updateBtn = status;

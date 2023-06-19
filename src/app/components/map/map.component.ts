@@ -316,9 +316,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this._clientS.user.distance = this.radius;
   }
 
-  addMarkers(
-    markers: Array<{ id: number; lat: number; lng: number; available: boolean }>
-  ) {
+  addMarkers(markers: Array<{ id: number; lat: number; lng: number; available: boolean }>) {
     let m: any;
     markers.forEach((marker) => {
       if (

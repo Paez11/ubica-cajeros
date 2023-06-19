@@ -67,11 +67,12 @@
         </div>
         <div class="atmRow">
           <ng-template [ngIf]="!noDisponible" [ngIfElse]="notImage">
-            <img (click)="changeImage()" [src]="atmPhoto" />
+            <img (click)="changeImage()" [src]="atmPhoto" #photo/>
           </ng-template>
           <ng-template #notImage>
             <div class="image">
-              <img (click)="changeImage()" [src]="notFoundPhoto" class="card-img-top" alt="Image not found" />
+              <img (click)="changeImage()" [src]="notFoundPhoto" class="card-img-top" alt="Image not found" 
+                #photo/>
             </div>
           </ng-template>
         </div>
